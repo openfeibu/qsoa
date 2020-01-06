@@ -37,6 +37,11 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
             {
                 $this->refund($data['id']);
             }
+            app(OperationRepository::class)->createOperation([
+                'operationable_id' => $data['id'],
+                'operationable_type' => config('model.airline.airline_bill.model'),
+                'content' => trans('airline_bill.status.operation.'.$data['status']),
+            ]);
             return true;
         }catch (Exception $e) {
             throw new OutputServerMessageException($e->getMessage());

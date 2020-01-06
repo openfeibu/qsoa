@@ -40,6 +40,16 @@ return [
             'rebill' => '重出账',
             'finished' => '已完成',
         ],
+        'operation' => [
+            'new' => '新建',
+            'passed' => '审核',
+            //'rejected' => '待修改',
+            'invalid' => '作废',
+            //'modified' => '已修改',
+            'bill' => '出账',
+            'rebill' => '重出账',
+            'finished' => '完成',
+        ],
     ],
     'pay_status' => [
         'unpaid' => '待付款',

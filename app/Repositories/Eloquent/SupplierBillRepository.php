@@ -3,11 +3,13 @@
 namespace App\Repositories\Eloquent;
 
 use App\Exceptions\OutputServerMessageException;
+use App\Models\Operation;
 use Auth;
 use App\Models\SupplierBill;
 use App\Models\SupplierBillRecord;
 use App\Repositories\Eloquent\SupplierBillRepositoryInterface;
 use App\Repositories\Eloquent\BaseRepository;
+use App\Repositories\Eloquent\OperationRepository;
 
 class SupplierBillRepository extends BaseRepository implements SupplierBillRepositoryInterface
 {
@@ -39,6 +41,11 @@ class SupplierBillRepository extends BaseRepository implements SupplierBillRepos
             {
                 $this->refund($data['id']);
             }
+            app(OperationRepository::class)->createOperation([
+                'operationable_id' => $data['id'],
+                'operationable_type' => config('model.supplier.supplier_bill.model'),
+                'content' => trans('supplier_bill.status.operation.'.$data['status']),
+            ]);
             return true;
         }catch (Exception $e) {
             throw new OutputServerMessageException($e->getMessage());

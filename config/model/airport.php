@@ -55,7 +55,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['name','code','country','country_id','province','province_id','city','city_id','used_balance','balance','leader','content','created_at','updated_at'],
+        'fillable'     => ['airport_id','airport_name','admin_id','admin_name','admin_model','out_trade_no','type','price','balance','trade_type','description','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/airport',
         'encrypt'      => ['id'],

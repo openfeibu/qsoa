@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Supplier;
 
+use App\Models\SupplierBill;
 use Route,Auth;
 use App\Http\Controllers\Supplier\Controller as BaseController;
 use App\Traits\AdminUser\AdminUserPages;
@@ -34,7 +35,21 @@ class ResourceController extends BaseController
     {
         $supplier_id = Auth::user()->supplier_id;
 
+        //供应商账单数
+        $supplier_bill_count = SupplierBill::count();
+        //待审核
+        $supplier_bill_new_count = SupplierBill::where('supplier_id',$supplier_id)->whereIn('status',['new'])->count();
+        //待出账
+        $supplier_bill_pass_count = SupplierBill::where('supplier_id',$supplier_id)->whereIn('status',['passed','rebill'])->count();
+        //已作废
+        $supplier_bill_invalid_count = SupplierBill::where('supplier_id',$supplier_id)->whereIn('status',['invalid'])->count();
+        //已出账
+        $supplier_bill_bill_count = SupplierBill::where('supplier_id',$supplier_id)->whereIn('status',['bill'])->count();
+        //已完成
+        $supplier_bill_finished_count = SupplierBill::where('supplier_id',$supplier_id)->whereIn('status',['finished'])->count();
+
         return $this->response->title(trans('app.admin.panel'))
+            ->data(compact('supplier_bill_count','supplier_bill_new_count','supplier_bill_pass_count','supplier_bill_invalid_count','supplier_bill_bill_count','supplier_bill_finished_count'))
             ->view('home')
             ->output();
     }

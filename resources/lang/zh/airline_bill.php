@@ -38,6 +38,11 @@ return [
         'actions' => [
             'finish' => '结算',
         ],
+        'operation' => [
+            'new' => '新建',
+            'invalid' => '作废',
+            'finished' => '结算',
+        ],
     ],
     'pay_status' => [
         'unpaid' => '待收款',

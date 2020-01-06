@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Supplier;
 use App\Http\Controllers\Supplier\ResourceController as BaseController;
 use App\Repositories\Eloquent\AirlineRepository;
 use App\Repositories\Eloquent\AirportRepository;
+use App\Repositories\Eloquent\OperationRepository;
 use App\Repositories\Eloquent\SupplierBillItemInfoRepository;
 use App\Repositories\Eloquent\SupplierBillItemRepository;
 use App\Repositories\Eloquent\SupplierBillRepository;
@@ -27,7 +28,8 @@ class SupplierBillItemResourceController extends BaseController
         SupplierBillTemplateFieldRepository $supplierBillTemplateFieldRepository,
         AirportRepository $airportRepository,
         AirlineRepository $airlineRepository,
-        SupplierRepository $supplierRepository
+        SupplierRepository $supplierRepository,
+        OperationRepository $operationRepository
     )
     {
         parent::__construct();
@@ -38,6 +40,7 @@ class SupplierBillItemResourceController extends BaseController
         $this->supplierRepository = $supplierRepository;
         $this->supplierBillItemInfoRepository = $supplierBillItemInfoRepository;
         $this->supplierBillTemplateFieldRepository = $supplierBillTemplateFieldRepository;
+        $this->operationRepository = $operationRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
