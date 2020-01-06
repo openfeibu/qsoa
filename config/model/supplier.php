@@ -27,7 +27,7 @@ return [
         'revision'     => ['name'],
         'perPage'      => '20',
         'search'        => [
-            'title'  => 'name',
+            'name'  => 'like',
         ],
     ],
     'can_cooperative_supplier_airport'     => [

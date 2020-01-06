@@ -95,7 +95,7 @@ Route::group([
     Route::get('invalid_supplier_bill', 'SupplierBillResourceController@invalidSupplierBills')->name('supplier_bill.invalid_supplier_bill');
     Route::get('bill_supplier_bill', 'SupplierBillResourceController@billSupplierBills')->name('supplier_bill.bill_supplier_bill');
 
-
+    Route::resource('operation', 'OperationResourceController');
 //    Route::resource('bill', 'BillResourceController');
 //    Route::resource('trade_recode', 'TradeRecodeResourceController');
 //    Route::resource('operation_log', 'OperationLogResourceController');

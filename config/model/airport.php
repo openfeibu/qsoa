@@ -28,7 +28,7 @@ return [
         'revision'     => ['name'],
         'perPage'      => '20',
         'search'        => [
-            'title'  => 'name',
+            'name'  => 'like',
         ],
     ],
     'can_cooperative_airline_airport'     => [
@@ -63,6 +63,7 @@ return [
         'perPage'      => '20',
         'search'        => [
             'title'  => 'name',
+            'airport_id' => '='
         ],
     ],
 ];

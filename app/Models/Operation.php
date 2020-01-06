@@ -15,4 +15,8 @@ class Operation extends BaseModel
 
     protected $config = 'model.operation.operation';
 
+    public function operationable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -19,6 +19,8 @@ class SupplierResourceController extends BaseController
         $this->repository = $supplierRepository;
         $this->airportRepository = $airportRepository;
         $this->worldCityRepository = $worldCityRepository;
+        $this->repository
+            ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
     public function index(Request $request)
     {

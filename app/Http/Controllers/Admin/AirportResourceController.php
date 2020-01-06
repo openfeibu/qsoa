@@ -20,6 +20,8 @@ class AirportResourceController extends BaseController
         $this->repository = $airportRepository;
         $this->worldCityRepository = $worldCityRepository;
         $this->airportBalanceRecordRepository = $airportBalanceRecordRepository;
+        $this->repository
+            ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
     public function index(Request $request)
     {
