@@ -186,7 +186,7 @@ class SupplierBillResourceController extends BaseController
             foreach ($attributes['supplier_bill_item_ids'] as $key => $supplier_bill_item_id)
             {
                 $this->supplierBillItemRepository->update([
-                    'supplier_bill_id' =>$supplier_bill_item_id
+                    'supplier_bill_id' => $supplier_bill->id
                 ],$supplier_bill_item_id);
             }
 
