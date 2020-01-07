@@ -241,7 +241,10 @@ class SupplierBillResourceController extends BaseController
     public function destroy(Request $request, SupplierBill $supplier_bill)
     {
         try {
-
+            $this->repository->operation([
+                'id' => $supplier_bill->id,
+                'status' => 'invalid'
+            ]);
             $supplier_bill->forceDelete();
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('supplier_bill.name')]))
                 ->http_code(201)

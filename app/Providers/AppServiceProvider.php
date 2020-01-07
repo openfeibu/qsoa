@@ -67,6 +67,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('image', function ($app) {
             return new ImageManager($app['config']->get('image'));
         });
+        $this->app->bind('message', function ($app) {
+            return new \App\Repositories\Eloquent\MessageRepository($app);
+        });
     }
 
     public function provides()

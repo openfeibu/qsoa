@@ -30,13 +30,6 @@ class OperationResourceController extends BaseController
 
         if ($this->response->typeIs('json')) {
             $operations = $this->repository;
-            /*if(!empty($search_name))
-            {
-                $operations = $operations->where(function ($query) use ($search_name){
-                    return $query->where('name','like','%'.$search_name.'%');
-                });
-            }
-            */
             $operations =$operations->orderBy('id','desc')
                 ->paginate($limit);
 
