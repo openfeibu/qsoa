@@ -28,7 +28,9 @@
 </div>
 
 
-
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-sm" href="{{ guard_url('bill') }}/@{{ d.id }}">{{ trans('app.details') }}</a>
+</script>
 <script>
     var main_url = "{{guard_url('bill')}}";
     var delete_all_url = "{{guard_url('bill/destroyAll')}}";
@@ -56,6 +58,7 @@
                 ,{title:'{{ trans('supplier_bill.label.total') }}', width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.paid_total') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:260, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

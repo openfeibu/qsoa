@@ -80,5 +80,22 @@ class BillResourceController extends BaseController
             ->output();
     }
 
+    public function show(Request $request,AirlineBill $bill)
+    {
+        if ($bill->exists) {
+            $view = 'bill.show';
+        } else {
+            $view = 'bill.new';
+        }
 
+        $airline_bill_items = $this->airlineBillItemRepository
+            ->where('airline_bill_id',$bill->id)
+            ->orderBy('date','asc')
+            ->get();
+
+        return $this->response->title(trans('app.view') . ' ' . trans('bill.name'))
+            ->data(compact('bill','airline_bill_items'))
+            ->view($view)
+            ->output();
+    }
 }
