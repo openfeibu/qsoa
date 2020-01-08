@@ -44,5 +44,7 @@ return [
     'directory_must_be_empty_to_delete' => '请先删除该文件夹下的所有文件。',
     'confirm_pass' => '确定通过？',
     'confirm_reject' => '确定驳回？',
-    'confirm_invalid' => '确定作废？'
+    'confirm_invalid' => '确定作废？',
+    'less_than_day_pay_total' =>  ':airport_name 账户余额可能不足以支撑未来 :day 天的消费',
+
 ];

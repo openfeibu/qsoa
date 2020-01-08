@@ -15,7 +15,7 @@ return [
 
 // Modale variables for page module.
     'message'     => [
-        'model'        => 'App\Models\Link',
+        'model'        => 'App\Models\Message',
         'table'        => 'messages',
         'primaryKey'   => 'id',
         'hidden'       => [],

@@ -17,5 +17,4 @@ class AirportBalanceRecord extends BaseModel
     protected $config = 'model.airport.airport_balance_record';
 
 
-
 }

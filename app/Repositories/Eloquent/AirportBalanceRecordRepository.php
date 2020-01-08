@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Exceptions\OutputServerMessageException;
 use App\Models\Airport;
+use App\Models\AirportBalanceRecord;
 use App\Repositories\Eloquent\AirportBalanceRecordRepositoryInterface;
 use App\Repositories\Eloquent\BaseRepository;
 use App\Models\User;
@@ -20,6 +21,26 @@ class AirportBalanceRecordRepository extends BaseRepository implements AirportBa
     public function model()
     {
         return config('model.airport.airport_balance_record.model');
+    }
+    public function average($airport_id)
+    {
+        $start_date = date('Y-m-d',strtotime('-7 day'));
+        $end_date = date('Y-m-d',strtotime('-1 day'));
+
+        $count = AirportBalanceRecord::selectRaw("count(distinct date) as count")
+            ->whereBetween('date',[$start_date,$end_date])
+            ->where('airport_id',$airport_id)
+            ->where('type','-1')
+            ->value('count');
+
+        $total =  AirportBalanceRecord::whereBetween('date',[$start_date,$end_date])
+            ->where('airport_id',$airport_id)
+            ->where('type','-1')
+            ->sum('price');
+
+        $average = $count ? $total / $count : 0;
+
+        return $average;
     }
     public function pay($airport_id,$total,$data)
     {
@@ -42,6 +63,7 @@ class AirportBalanceRecordRepository extends BaseRepository implements AirportBa
                 'balance' => $new_balance,
                 'price'	=> $total,
                 'type' => -1,
+                'date' => date('Y-m-d'),
                 'out_trade_no' => $data['out_trade_no'],
                 'trade_type' => $data['trade_type'],
                 'description' => $data['description'],
@@ -71,6 +93,7 @@ class AirportBalanceRecordRepository extends BaseRepository implements AirportBa
                 'balance' => $new_balance,
                 'price'	=> $total,
                 'type' => 1,
+                'date' => date('Y-m-d'),
                 'out_trade_no' => $data['out_trade_no'],
                 'trade_type' => $data['trade_type'],
                 'description' => $data['description'],
@@ -99,6 +122,7 @@ class AirportBalanceRecordRepository extends BaseRepository implements AirportBa
                 'balance' => $new_balance,
                 'price'	=> $total,
                 'type' => 1,
+                'date' => date('Y-m-d'),
                 'out_trade_no' => build_order_sn('tp'),
                 'trade_type' => 'TOP_UP',
                 'description' => '充值',

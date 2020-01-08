@@ -69,6 +69,18 @@ return [
             ],
 
         ],
+        'finance'  => [
+            'web' => [
+                'driver'   => 'session',
+                'provider' => 'finance_users',
+            ],
+
+            'api' => [
+                'driver'   => 'token',
+                'provider' => 'finance_users',
+            ],
+
+        ],
         /*
         'client' => [
             'web' => [
@@ -118,6 +130,10 @@ return [
         'airline_users' => [
             'driver' => 'eloquent',
             'model'  => App\Models\AirlineUser::class,
+        ],
+        'finance_users' => [
+            'driver' => 'eloquent',
+            'model'  => App\Models\FinanceUser::class,
         ],
         'clients' => [
             'driver' => 'eloquent',

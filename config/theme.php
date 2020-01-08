@@ -50,6 +50,10 @@ return array(
             'theme'  => 'airline',
             'view'   => 'airline',
         ],
+        'finance'    => [
+            'theme'  => 'finance',
+            'view'   => 'finance',
+        ],
     ],
 
 	'assetUrl' => env('APP_ASSET_URL', '/'),

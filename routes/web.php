@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('test', 'TestController@test');
 // Admin  routes  for user
 Route::group([
     'namespace' => 'Admin',
@@ -54,11 +54,16 @@ Route::group([
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
     #主要路由
     Route::resource('airline', 'AirlineResourceController');
+    Route::post('/airline/destroyAll', 'AirlineResourceController@destroyAll')->name('airline.destroy_all');
     Route::resource('supplier', 'SupplierResourceController');
+    Route::post('/supplier/destroyAll', 'SupplierResourceController@destroyAll')->name('supplier.destroy_all');
     Route::resource('airport', 'AirportResourceController');
+    Route::post('/airport/destroyAll', 'AirportResourceController@destroyAll')->name('airport.destroy_all');
     Route::post('/airport/top_up/{airport}', 'AirportResourceController@topUp');
     Route::resource('contract', 'ContractResourceController');
+    Route::post('/airline/destroyAll', 'AirlineResourceController@destroyAll')->name('airline.destroy_all');
     Route::resource('bill', 'BillResourceController');
+    Route::post('/airline/destroyAll', 'AirlineResourceController@destroyAll')->name('airline.destroy_all');
     Route::post('/contract/destroy_image', 'ContractResourceController@destroyImage');
     Route::resource('airline_contract', 'AirlineContractResourceController');
     Route::resource('supplier_contract', 'SupplierContractResourceController');
@@ -83,6 +88,9 @@ Route::group([
     Route::get('new_airline_bill', 'AirlineBillResourceController@newAirlineBills')->name('airline_bill.new_airline_bill');
     Route::get('finished_airline_bill', 'AirlineBillResourceController@finishedAirlineBills')->name('airline_bill.finished_airline_bill');
     Route::get('invalid_airline_bill', 'AirlineBillResourceController@invalidAirlineBills')->name('airline_bill.invalid_airline_bill');
+
+    Route::resource('finance_user', 'FinanceUserResourceController');
+    Route::post('/finance_user/destroyAll', 'FinanceUserResourceController@destroyAll')->name('finance_user.destroy_all');
 
     //供应商账单
     Route::get('supplier_bill', 'SupplierBillResourceController@index')->name('supplier_bill.index');
@@ -171,7 +179,34 @@ Route::group([
     Route::post('airline_bill/pay/{airline_bill}', 'AirlineBillResourceController@paySubmit');
 
     Route::resource('airline_user', 'AirlineUserResourceController');
-    Route::post('/airline_user/destroyAll', 'AirlineUserResourceController@destroyAll')->name('supplier_user.destroy_all');
+    Route::post('/airline_user/destroyAll', 'AirlineUserResourceController@destroyAll')->name('airline_user.destroy_all');
+
+    Route::resource('permission', 'PermissionResourceController');
+    Route::post('/permission/destroyAll', 'PermissionResourceController@destroyAll')->name('permission.destroy_all');
+    Route::resource('role', 'RoleResourceController');
+    Route::post('/role/destroyAll', 'RoleResourceController@destroyAll')->name('role.destroy_all');
+
+    Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
+});
+
+Route::group([
+    'namespace' => 'Finance',
+    'prefix' => 'finance',
+    'as' => 'finance.',
+], function () {
+    Auth::routes();
+    Route::get('logout', 'Auth\LoginController@logout');
+    Route::get('/', 'ResourceController@home')->name('home');
+    Route::get('/home', 'ResourceController@home');
+    Route::get('password', 'AirlineUserController@getPassword');
+    Route::post('password', 'AirlineUserController@postPassword');
+
+    Route::resource('airport', 'AirportResourceController');
+    Route::post('/airport/destroyAll', 'AirportResourceController@destroyAll')->name('airport.destroy_all');
+    Route::post('/airport/top_up/{airport}', 'AirportResourceController@topUp');
+
+    Route::resource('finance_user', 'FinanceUserResourceController');
+    Route::post('/finance_user/destroyAll', 'FinanceUserResourceController@destroyAll')->name('finance_user.destroy_all');
 
     Route::resource('permission', 'PermissionResourceController');
     Route::post('/permission/destroyAll', 'PermissionResourceController@destroyAll')->name('permission.destroy_all');

@@ -29,6 +29,7 @@ return [
         'perPage'      => '20',
         'search'        => [
             'name'  => 'like',
+            'id' => '=',
         ],
     ],
     'can_cooperative_airline_airport'     => [
@@ -55,7 +56,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['airport_id','airport_name','admin_id','admin_name','admin_model','out_trade_no','type','price','balance','trade_type','description','created_at','updated_at'],
+        'fillable'     => ['airport_id','airport_name','admin_id','admin_name','admin_model','out_trade_no','type','price','balance','trade_type','description','date','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/airport',
         'encrypt'      => ['id'],

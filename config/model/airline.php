@@ -29,6 +29,7 @@ return [
         'perPage'      => '20',
         'search'        => [
             'name'  => 'like',
+            'id' => '=',
         ],
     ],
     'can_cooperative_airline_airport'     => [
