@@ -44,7 +44,6 @@
             ,cols: [[
                 {checkbox: true, fixed: true}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'airline_name',title:'{!! trans('airline.name')!!}'}
                 ,{field:'email',title:'{!! trans('airline_user.label.email')!!}'}
                 ,{field:'name',title:'{!! trans('airline_user.label.name')!!}'}
                 ,{field:'role_names',title:'{!! trans('airline_user.label.roles')!!}'}

@@ -10,6 +10,7 @@
             {!! Theme::partial('message') !!}
             <div class="fb-main-table">
                 <form class="layui-form" action="{{guard_url('supplier_user')}}" method="post" lay-filter="fb-form">
+                    <!--
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans("supplier_user.name") }}</label>
                         <div class="layui-input-inline">
@@ -20,6 +21,7 @@
                             </select>
                         </div>
                     </div>
+                    -->
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans("supplier_user.label.email") }}</label>
                         <div class="layui-input-inline">

@@ -44,7 +44,6 @@
             ,cols: [[
                 {checkbox: true, fixed: true}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'supplier_name',title:'{!! trans('supplier.name')!!}'}
                 ,{field:'email',title:'{!! trans('supplier_user.label.email')!!}'}
                 ,{field:'name',title:'{!! trans('supplier_user.label.name')!!}'}
                 ,{field:'role_names',title:'{!! trans('supplier_user.label.roles')!!}'}

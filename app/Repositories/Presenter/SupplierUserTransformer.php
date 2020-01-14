@@ -20,7 +20,6 @@ class SupplierUserTransformer extends TransformerAbstract
             'photo'             => $user->photo,
             'permissions'       => $user->permissions,
             'status'            => $user->status,
-            'supplier_name'     => $user->supplier->name,
             'roles' => $user->roles,
             'role_names' => implode('，',$user->roles->pluck('name')->all()),
             'created_at'        => format_date($user->created_at),
