@@ -16,6 +16,7 @@
             //console.log(elem)
             layer.msg(elem.text());
         });
+        form.render();
 //自定义验证规则
         form.verify({
             otherReq: function(value,item){

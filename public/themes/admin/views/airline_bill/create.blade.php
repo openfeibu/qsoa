@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">{{ trans('airline_bill.label.date_of_supply') }}</label>
+                        <label class="layui-form-label">{{ trans('supplier_bill.label.date_of_supply') }}</label>
                         <div class="layui-input-inline">
                             <input type="text" name="date_of_supply" id="date_of_supply" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
                         </div>

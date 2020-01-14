@@ -5,10 +5,10 @@
 header("Content-type:text/html;charset=utf-8");
 // 配置数据库
 $database = array();
-$database['DB_HOST'] = '127.0.0.1:3306';
+$database['DB_HOST'] = '39.108.144.9:3306';
 $database['DB_NAME'] = 'qsoa';
-$database['DB_USER'] = 'homestead';
-$database['DB_PWD'] = 'secret';
+$database['DB_USER'] = 'feibukeji';
+$database['DB_PWD'] = 'ladfjeuwf71741s';
 $mysqli_conn = @mysqli_connect("{$database['DB_HOST']}", "{$database['DB_USER']}", "{$database['DB_PWD']}") or die("mysqli connect is error.");
 mysqli_select_db( $mysqli_conn,$database['DB_NAME']);
 $result = mysqli_query($mysqli_conn,'show tables');

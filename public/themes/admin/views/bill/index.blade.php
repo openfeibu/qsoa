@@ -9,14 +9,8 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
-                <div class="layui-inline">
-                    <select name="airport_id" class="layui-select search_key">
-                        <option value="">{{ trans('airport.name') }}</option>
-                        @foreach($airports as $key => $airport)
-                            <option value="{{ $airport['id'] }}">{{ $airport['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                {!! Theme::widget('BillSearch')->render() !!}
+
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
             </div>
 
@@ -29,6 +23,8 @@
 
 
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-sm layui-btn-normal" href="{{ guard_url('supplier_bill') }}/@{{ d.supplier_bill_id }}" target="_blank">{{ trans('supplier_bill.name') }}</a>
+    <a class="layui-btn layui-btn-sm layui-btn-normal" href="{{ guard_url('airline_bill') }}/@{{ d.id }}" target="_blank">{{ trans('airline_bill.name') }}</a>
     <a class="layui-btn layui-btn-sm" href="{{ guard_url('bill') }}/@{{ d.id }}">{{ trans('app.details') }}</a>
 </script>
 <script>
@@ -51,19 +47,20 @@
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
-                ,{field:'final_total',title:'{{ trans('airline_bill.label.final_total') }}', width:180}
+                ,{field:'total',title:'{{ trans('airline_bill.label.total') }}', width:180}
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}', width:180}
                 ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}', width:180}
                 ,{title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.pay_date }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.total') }}', width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.paid_total') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:120, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:360, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true
             ,limit: '{{ config('app.limit') }}'
             ,height: 'full-200'
+            ,cellMinWidth :'180'
             ,done:function () {
                 element.init();
             }

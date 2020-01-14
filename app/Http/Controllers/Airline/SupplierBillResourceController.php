@@ -53,7 +53,7 @@ class SupplierBillResourceController extends BaseController
     }
     public  function billSupplierBills(Request $request)
     {
-        return $this->supplierBills($request,'bill');
+        return $this->supplierBills($request,['bill','finished'],'bill');
     }
     public function supplierBills(Request $request,$status,$view='')
     {
@@ -133,26 +133,8 @@ class SupplierBillResourceController extends BaseController
 
         $supplier_bill_items = $this->supplierBillItemRepository->where('supplier_bill_id',$supplier_bill->id)->orderBy('flight_date','asc')->get();
 
-        $fields = [];
-        foreach ($supplier_bill_items as $key => $supplier_bill_item)
-        {
-            $supplier_bill_item->infos = $supplier_bill_item->infos->toArray();
-            if(!$fields)
-            {
-                foreach ($supplier_bill_item->infos as $key => $info)
-                {
-                    $fields[] = [
-                        'id' => $info['supplier_bill_template_field_id'],
-                        'field' => $info['field'],
-                        'field_comment' => $info['field_comment'],
-                    ];
-                }
-            }
-        }
-
-
         return $this->response->title(trans('app.view') . ' ' . trans('supplier_bill.name'))
-            ->data(compact('airport','airline','supplier_bill','supplier_bill_items','fields'))
+            ->data(compact('airport','airline','supplier_bill','supplier_bill_items'))
             ->view($view)
             ->output();
     }

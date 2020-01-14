@@ -4,10 +4,10 @@ namespace App\Services;
 use App\Exceptions\RequestSuccessException;
 use App\Models\AirlineBill;
 use App\Models\Airport;
-use App\Models\AirportBalanceRecord;
+use App\Models\SupplierBalanceRecord;
 use App\Models\SupplierBill;
 use App\Repositories\Eloquent\AirlineBillRepository;
-use App\Repositories\Eloquent\AirportBalanceRecordRepository;
+use App\Repositories\Eloquent\SupplierBalanceRecordRepository;
 use App\Repositories\Eloquent\MessageRepository;
 use App\Repositories\Eloquent\SupplierBillRepository;
 use Illuminate\Http\Request;
@@ -20,13 +20,13 @@ class BillMessageService
         SupplierBillRepository $supplierBillRepository,
         AirlineBillRepository $airlineBillRepository,
         MessageRepository $messageRepository,
-        AirportBalanceRecordRepository $airportBalanceRecordRepository
+        SupplierBalanceRecordRepository $supplierBalanceRecordRepository
     )
     {
         $this->supplierBillRepository = $supplierBillRepository;
         $this->airlineBillRepository = $airlineBillRepository;
         $this->messageRepository = $messageRepository;
-        $this->airportBalanceRecordRepository = $airportBalanceRecordRepository;
+        $this->supplierBalanceRecordRepository = $supplierBalanceRecordRepository;
     }
     /* 6 天 内未审核的，通知航空公司管理员*/
     public function deadlineSoonNewSupplierBill()
@@ -183,7 +183,7 @@ class BillMessageService
         $airports = Airport::orderBy('id','desc')->get(['id','name','balance']);
         foreach ($airports as $ey => $airport)
         {
-            $average = $this->airportBalanceRecordRepository->average($airport->id);
+            $average = $this->supplierBalanceRecordRepository->average($airport->id);
             $day = 0;
             if($airport['balance'] < $average){
                 $day = 1;

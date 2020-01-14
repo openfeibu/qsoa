@@ -26,9 +26,7 @@
     </div>
 </div>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-sm" href="{{ guard_url('supplier_contract/create?supplier_id=') }}@{{d.id}}">增加合作机场</a>
-    <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
-    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
+    <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="top_up">{{ trans('app.top_up') }}</a>
 </script>
 <script type="text/html" id="imageTEM">
     <img src="@{{d.image}}" alt="" height="28">
@@ -68,14 +66,17 @@
                 ,{field:'email',title:'{{ trans('supplier.label.email') }}', width:100,edit:'text'}
                 ,{field:'position',title:'{{ trans('supplier.label.position') }}', width:100,edit:'text'}
                 ,{field:'area',title:'{{ trans('app.area') }}', width:180}
+                ,{field:'used_balance',title:'{{ trans('airport.label.used_balance') }}', width:120}
+                ,{field:'balance',title:'{{ trans('airport.label.balance') }}', width:120}
                 ,{field:'can_cooperative_airports',title:'{{ trans('airline.label.can_cooperative_airport') }}', toolbar:'#canCooperativeAirportsTEM', width:200, event: "show_can_cooperative_airports"}
                 ,{field:'cooperative_airports',title:'{{ trans('airline.label.cooperative_airport') }}', toolbar:'#cooperativeAirportsTEM', width:200,event:"show_cooperative_airports"}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:260, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:100, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true
             ,limit: '{{ config('app.limit') }}'
             ,height: 'full-200'
+            ,cellMinWidth :'180'
             ,done:function () {
                 element.init();
             }
@@ -84,3 +85,48 @@
 </script>
 
 {!! Theme::partial('common_handle_js') !!}
+
+<script>
+    layui.use(['jquery','element','table'], function(){
+        var $ = layui.$;
+        var table = layui.table;
+        var form = layui.form;
+        var element = layui.element;
+
+        $.extend_tool = function (obj) {
+            var data = obj.data;
+            data['_token'] = "{!! csrf_token() !!}";
+            var nPage = $(".layui-laypage-curr em").eq(1).text();
+            if(obj.event === 'top_up'){
+                layer.prompt({
+                    formType: 0,
+                    value: '',
+                    title: '{{ trans('app.top_up') }}',
+                }, function(value, index, elem){
+                    layer.close(index);
+                    // 加载样式
+                    var load = layer.load();
+                    $.ajax({
+                        url : "{{ guard_url('supplier/top_up') }}/"+data.id,
+                        data : {'total':value,'_token':"{!! csrf_token() !!}"},
+                        type : 'POST',
+                        success : function (data) {
+                            layer.close(load);
+                            var nPage = $(".layui-laypage-curr em").eq(1).text();
+                            //执行重载
+                            table.reload('fb-table', {
+
+                            });
+                        },
+                        error : function (jqXHR, textStatus, errorThrown) {
+                            layer.close(load);
+                            $.ajax_error(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                });
+
+            }
+        }
+
+    });
+</script>

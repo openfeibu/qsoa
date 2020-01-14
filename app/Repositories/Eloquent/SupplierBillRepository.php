@@ -56,8 +56,8 @@ class SupplierBillRepository extends BaseRepository implements SupplierBillRepos
         $supplier_bill = SupplierBill::where('id',$id)->first();
         if($supplier_bill->pay_status == 'paid')
         {
-            app(AirportBalanceRecordRepository::class)->refund(
-                $supplier_bill->airport_id,
+            app(SupplierBalanceRecordRepository::class)->refund(
+                $supplier_bill->id,
                 $supplier_bill->paid_total,
                 [
                     'out_trade_no' => $supplier_bill->sn,

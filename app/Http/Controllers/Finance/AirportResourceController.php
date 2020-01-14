@@ -4,7 +4,7 @@ namespace App\Http\Controllers\FInance;
 
 use App\Http\Controllers\FInance\ResourceController as BaseController;
 use App\Models\Airport;
-use App\Repositories\Eloquent\AirportBalanceRecordRepository;
+use App\Repositories\Eloquent\SupplierBalanceRecordRepository;
 use App\Repositories\Eloquent\AirportRepository;
 use App\Repositories\Eloquent\WorldCityRepository;
 use Illuminate\Http\Request;
@@ -14,12 +14,12 @@ class AirportResourceController extends BaseController
     public function __construct(
         AirportRepository $airportRepository,
         WorldCityRepository $worldCityRepository,
-        AirportBalanceRecordRepository $airportBalanceRecordRepository)
+        SupplierBalanceRecordRepository $supplierBalanceRecordRepository)
     {
         parent::__construct();
         $this->repository = $airportRepository;
         $this->worldCityRepository = $worldCityRepository;
-        $this->airportBalanceRecordRepository = $airportBalanceRecordRepository;
+        $this->supplierBalanceRecordRepository = $supplierBalanceRecordRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -168,7 +168,7 @@ class AirportResourceController extends BaseController
             $attributes = $request->all();
 
             $total = $attributes['total'];
-            $this->airportBalanceRecordRepository->topUp($airport->id,$total);
+            $this->supplierBalanceRecordRepository->topUp($airport->id,$total);
 
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('airport.name')]))
                 ->code(0)

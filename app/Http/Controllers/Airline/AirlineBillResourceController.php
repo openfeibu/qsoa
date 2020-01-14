@@ -105,7 +105,6 @@ class AirlineBillResourceController extends BaseController
             $bills = $this->repository;
 
             $bills = $bills
-                ->orderBy('date','desc')
                 ->orderBy('id','desc')
                 ->paginate($limit);
             foreach ($bills as $key => $bill)
@@ -131,52 +130,71 @@ class AirlineBillResourceController extends BaseController
         $data =  $request->all();
         $supplier_bill_id = $data['supplier_bill_id'];
         $supplier_bill = $this->supplierBillRepository->find($supplier_bill_id);
-        $airline =  $this->airlineRepository->find(Auth::user()->airline_id);
+        $airline =  $this->airlineRepository->find($supplier_bill->airline_id);
 
         $supplier_bill_items = $this->supplierBillItemRepository->where('supplier_bill_id',$supplier_bill_id)->orderBy('flight_date','asc')->get();
 
-        $total = 0;
+        $contract = $airline->contracts->where('airport_id',$supplier_bill->airport_id)->first();
+
+        $price =  $contract ? airline_bill_price($supplier_bill->price,$contract->increase_price) : $supplier_bill->price;
         foreach ($supplier_bill_items as $key => $supplier_bill_item)
         {
+
+            $supplier_bill_item->airline_bill_price = $price;
+            $supplier_bill_item->airline_bill_total = bill_round($supplier_bill_item->usg * $price);
+            /*
             $supplier_bill_item->infos = $supplier_bill_item->infos->toArray();
             $supplier_bill_item->airline_bill_item = $this->repository->getAirlineBillFromSupplierBill($supplier_bill_item->infos);
             $total += $supplier_bill_item->total;
+            */
         }
-        $final_total = $total;
-        $contract = $airline->contracts->where('airport_id',$supplier_bill->airport_id)->first();
-        $final_total = $contract ? $final_total * (1+$contract->increase_price) : $final_total;
-        $final_total = floor($final_total*10000)/10000; //round($final_total,4)
+
+        $total = bill_round($supplier_bill->usg * $price);
 
         return $this->response->title(trans('app.new') . ' ' . trans('supplier_bill.name'))
             ->view('airline_bill.create')
-            ->data(compact('supplier_bill_items','supplier_bill_id','total','final_total'))
+            ->data(compact('supplier_bill','supplier_bill_items','supplier_bill_id','total','contract'))
             ->output();
     }
     public function store(Request $request)
     {
         try {
             $attributes = $request->all();
-            $attributes['airline_id'] = Auth::user()->airline_id;
-            $attributes['airline_name'] = $this->airlineRepository->where('id',$attributes['airline_id'])->value('name');
 
             $supplier_bill_id = $attributes['supplier_bill_id'];
             $supplier_bill = $this->supplierBillRepository->find($supplier_bill_id);
+
+            $airline =  $this->airlineRepository->find($supplier_bill->airline_id);
+            $contract = $airline->contracts->where('airport_id',$supplier_bill->airport_id)->first();
 
             if(!in_array($supplier_bill->status,['passed','rebill']))
             {
                 throw new OutputServerMessageException(trans('supplier_bill.message.forbid_airline_bill'));
             }
 
-            $attributes['airport_id'] = $supplier_bill->airport_id;
-            $attributes['airport_name'] = $supplier_bill->airport_name;
-            $attributes['supplier_id'] = $supplier_bill->supplier_id;
-            $attributes['supplier_name'] = $supplier_bill->supplier_name;
+            $price =  $contract ? airline_bill_price($supplier_bill->price,$contract->increase_price) : $supplier_bill->price;
 
-            $attributes['sn'] = build_order_sn('a');
-            $date_arr = explode('~',$attributes['date_of_supply']);
-            $attributes['supply_start_date'] = trim($date_arr[0]);
-            $attributes['supply_end_date'] = trim($date_arr[1]);
-            $airline_bill = $this->repository->create($attributes);
+            $total = bill_round($supplier_bill->usg * $price);
+
+            $airline_bill_data = [
+                'sn' => build_order_sn('a'),
+                'airline_id' => $supplier_bill->airline_id,
+                'airline_name' => $supplier_bill->airline_name,
+                'airport_id' => $supplier_bill->airport_id,
+                'airport_name' => $supplier_bill->airport_name,
+                'supplier_id' => $supplier_bill->supplier_id,
+                'supplier_name' => $supplier_bill->supplier_name,
+                'mt' => $supplier_bill->mt,
+                'usg' => $supplier_bill->usg,
+                'price' => $price,
+                'total' => $total,
+                'tax' => 0,
+                'incl_tax' => $total,
+            ];
+
+            $airline_bill_data = array_merge($airline_bill_data,$attributes);
+
+            $airline_bill = $this->repository->create($airline_bill_data);
 
             $this->repository->operation([
                 'id' => $airline_bill->id,
@@ -186,25 +204,30 @@ class AirlineBillResourceController extends BaseController
                 'id' => $supplier_bill_id,
                 'status' => 'bill'
             ]);
-            foreach ($attributes['supplier_bill_item_ids'] as $key => $supplier_bill_item_id)
+
+            $supplier_bill_items = $this->supplierBillItemRepository->where('supplier_bill_id',$supplier_bill_id)->orderBy('flight_date','asc')->get();
+            foreach ($supplier_bill_items as $key => $supplier_bill_item)
             {
+
+                $supplier_bill_item->airline_bill_price = $price;
+                $supplier_bill_item->airline_bill_total = bill_round($supplier_bill_item->usg * $price);
                 $this->airlineBillItemRepository->create([
-                    'airline_id' => $attributes['airport_id'],
-                    'airline_name' => $attributes['airport_name'],
-                    'airport_id' => $supplier_bill['airport_id'],
-                    'airport_name' => $supplier_bill['airport_name'],
-                    'supplier_id' => $supplier_bill['supplier_id'],
-                    'supplier_name' => $supplier_bill['supplier_name'],
-                    'supplier_bill_item_id' => $supplier_bill_item_id,
+                    'airline_id' => $supplier_bill->airline_id,
+                    'airline_name' => $supplier_bill->airline_name,
+                    'airport_id' => $supplier_bill->airport_id,
+                    'airport_name' => $supplier_bill->airport_name,
+                    'supplier_id' => $supplier_bill->supplier_id,
+                    'supplier_name' => $supplier_bill->supplier_name,
+                    'supplier_bill_id' => $supplier_bill->id,
+                    'supplier_bill_item_id' => $supplier_bill_item->id,
                     'airline_bill_id' => $airline_bill->id,
-                    'date' => $attributes['date'][$key],
-                    'usg' => $attributes['usg'][$key],
-                    'price' => $attributes['price'][$key],
-                    'sum' => $attributes['sum'][$key],
-                    'tax' => $attributes['tax'][$key],
-                    'incl_tax' => $attributes['incl_tax'][$key],
+                    'mt' => $supplier_bill_item->mt,
+                    'usg' => $supplier_bill_item->usg,
+                    'price' => $price,
+                    'total' => bill_round($supplier_bill_item->usg * $price),
                 ]);
             }
+
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('airline_bill.name')]))
                 ->http_code(201)
@@ -228,13 +251,16 @@ class AirlineBillResourceController extends BaseController
             $view = 'airline_bill.new';
         }
 
-        $airline_bill_items = $this->airlineBillItemRepository
-            ->where('airline_bill_id',$airline_bill->id)
-            ->orderBy('date','asc')
-            ->get();
+        $airline =  $this->airlineRepository->find($airline_bill->airline_id);
+
+        $contract = $airline->contracts->where('airport_id',$airline_bill->airport_id)->first();
+
+        $supplier_bill = $this->supplierBillRepository->find($airline_bill->supplier_bill_id);
+
+        $airline_bill_items = $this->repository->airlineBillItems($airline_bill->id);
 
         return $this->response->title(trans('app.view') . ' ' . trans('airline_bill.name'))
-            ->data(compact('airline_bill','airline_bill_items'))
+            ->data(compact('supplier_bill','airline_bill','airline_bill_items','contract'))
             ->view($view)
             ->output();
     }
@@ -243,23 +269,9 @@ class AirlineBillResourceController extends BaseController
         try {
             $attributes = $request->all();
 
-            $date_arr = explode('~',$attributes['date_of_supply']);
-            $attributes['supply_start_date'] = trim($date_arr[0]);
-            $attributes['supply_end_date'] = trim($date_arr[1]);
 
             $airline_bill->update($attributes);
 
-            foreach ($attributes['airline_bill_item_ids'] as $key => $airline_bill_item_id)
-            {
-                $this->airlineBillItemRepository->update([
-                    'date' => $attributes['date'][$key],
-                    'usg' => $attributes['usg'][$key],
-                    'price' => $attributes['price'][$key],
-                    'sum' => $attributes['sum'][$key],
-                    'tax' => $attributes['tax'][$key],
-                    'incl_tax' => $attributes['incl_tax'][$key],
-                ],$airline_bill_item_id);
-            }
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('airline_bill.name')]))
                 ->code(0)
                 ->status('success')
@@ -349,5 +361,9 @@ class AirlineBillResourceController extends BaseController
                 ->url(guard_url('airline_bill/pay/'.$airline_bill->id))
                 ->redirect();
         }
+    }
+    public function downloadWord(Request $request,AirlineBill $airline_bill)
+    {
+        return $this->repository->downloadWord($airline_bill);
     }
 }

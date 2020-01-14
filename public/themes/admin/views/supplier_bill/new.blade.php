@@ -9,6 +9,7 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
+                {!! Theme::widget('BillSearch')->render() !!}
                 <div class="layui-inline">
                     <select name="airport_id" class="layui-select search_key">
                         <option value="">{{ trans('airport.name') }}</option>
@@ -63,12 +64,15 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
+                ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}'}
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}'}
-                ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
+                ,{field:'mt',title:'{{ trans('supplier_bill.label.mt') }}'}
+                ,{field:'usg',title:'{{ trans('supplier_bill.label.usg') }}'}
+                ,{field:'price',title:'{{ trans('supplier_bill.label.price') }}'}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:260, align: 'right',toolbar:'#barDemo', fixed: 'right'}
@@ -77,6 +81,7 @@
             ,page: true
             ,limit: '{{ config('app.limit') }}'
             ,height: 'full-200'
+            ,cellMinWidth :'180'
             ,done:function () {
                 element.init();
             }

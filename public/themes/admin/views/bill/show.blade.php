@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">{{ trans('airline_bill.label.date_of_supply') }}</label>
+                        <label class="layui-form-label">{{ trans('supplier_bill.label.date_of_supply') }}</label>
                         <div class="layui-input-inline">
                             <p class="input-p">{{ $bill['supply_start_date'] }} ~ {{ $bill['supply_end_date'] }}</p>
                         </div>

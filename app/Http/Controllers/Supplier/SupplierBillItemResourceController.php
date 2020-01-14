@@ -10,7 +10,7 @@ use App\Repositories\Eloquent\SupplierBillItemRepository;
 use App\Repositories\Eloquent\SupplierBillRepository;
 use App\Repositories\Eloquent\SupplierBillTemplateFieldRepository;
 use App\Repositories\Eloquent\SupplierRepository;
-use Auth;
+use Auth,DB;
 use Illuminate\Http\Request;
 use App\Models\SupplierBillItem;
 
@@ -34,7 +34,7 @@ class SupplierBillItemResourceController extends BaseController
     {
         parent::__construct();
         $this->repository = $supplierBillItemRepository;
-        $this->supplierBillItemRepository = $supplierBillRepository;
+        $this->supplierBillRepository = $supplierBillRepository;
         $this->airportRepository = $airportRepository;
         $this->airlineRepository = $airlineRepository;
         $this->supplierRepository = $supplierRepository;
@@ -185,7 +185,43 @@ class SupplierBillItemResourceController extends BaseController
     {
         try {
             $attributes = $request->all();
+            $price = $attributes['price'] ?? null;
+            unset($attributes['price']);
             $supplier_bill_item->update($attributes);
+            /*更新油单价，全部更换*/
+            if($price)
+            {
+                $price = bill_round($price);
+                $supplier_bill_items = $this->repository->findWhere(['supplier_bill_id' => $supplier_bill_item->supplier_bill_id],['id','usg','price']);
+                foreach ($supplier_bill_items as $key => $item)
+                {
+                    $this->repository->update([
+                        'price' => $price,
+                        'total' => $price * $item->usg
+                    ],$item->id);
+                }
+            }
+            if(isset($attributes['price']) || isset($attributes['usg'])|| isset($attributes['mt']))
+            {
+                $supplier_bill = $this->supplierBillRepository->find($supplier_bill_item->supplier_bill_id);
+
+                $sum_data =SupplierBillItem::where('supplier_bill_id',$supplier_bill_item->supplier_bill_id)
+                    ->first(
+                        [
+                            DB::raw('SUM(mt) as mt'),
+                            DB::raw('SUM(usg) as usg'),
+                            DB::raw('SUM(total) as total'),
+                            'price'
+                        ]
+                    );
+                $supplier_bill->update([
+                    'mt' => $sum_data->mt,
+                    'usg' => $sum_data->usg,
+                    'total' => bill_round($sum_data->usg * $sum_data->price),
+                    'price' => $sum_data->price,
+                ]);
+            }
+            /*
             if(isset($attributes['field']))
             {
                 foreach ($attributes['field'] as $key => $value)
@@ -195,11 +231,13 @@ class SupplierBillItemResourceController extends BaseController
                     ],$key);
                 }
             }
+            */
             $url = guard_url('supplier_bill_item');
             if(isset($attributes['previous_url']) && $attributes['previous_url'])
             {
                 $url = $attributes['previous_url'];
             }
+
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier_bill_item.name')]))
                 ->code(0)
                 ->status('success')

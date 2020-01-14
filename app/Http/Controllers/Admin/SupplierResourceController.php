@@ -7,18 +7,24 @@ use App\Models\Supplier;
 use App\Repositories\Eloquent\AirportRepository;
 use App\Repositories\Eloquent\SupplierRepository;
 use App\Repositories\Eloquent\WorldCityRepository;
+use App\Repositories\Eloquent\SupplierBalanceRecordRepository;
 use Illuminate\Http\Request;
 
 class SupplierResourceController extends BaseController
 {
-    public function __construct(SupplierRepository $supplierRepository,
-                                AirportRepository $airportRepository,
-                                WorldCityRepository $worldCityRepository)
+    public function __construct
+    (
+        SupplierRepository $supplierRepository,
+        AirportRepository $airportRepository,
+        WorldCityRepository $worldCityRepository,
+        SupplierBalanceRecordRepository $supplierBalanceRecordRepository
+    )
     {
         parent::__construct();
         $this->repository = $supplierRepository;
         $this->airportRepository = $airportRepository;
         $this->worldCityRepository = $worldCityRepository;
+        $this->supplierBalanceRecordRepository = $supplierBalanceRecordRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -177,6 +183,28 @@ class SupplierResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->status("error")
                 ->http_code(400)
+                ->url(guard_url('supplier'))
+                ->redirect();
+        }
+    }
+
+    public function topUp(Request $request,Supplier $supplier)
+    {
+        try {
+            $attributes = $request->all();
+
+            $total = $attributes['total'];
+            $this->supplierBalanceRecordRepository->topUp($supplier->id,$total);
+
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier.name')]))
+                ->code(0)
+                ->status('success')
+                ->url(guard_url('supplier'))
+                ->redirect();
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
                 ->url(guard_url('supplier'))
                 ->redirect();
         }

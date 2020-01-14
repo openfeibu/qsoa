@@ -33,6 +33,7 @@ return [
     'create'         => '新建',
     'dashboard'      => '仪表盘',
     'delete'         => '删除',
+    'download'       => '下载',
     'draft'          => '草稿',
     'details'        => '详细',
     'edit'           => '编辑',

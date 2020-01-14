@@ -9,22 +9,7 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
-                <div class="layui-inline">
-                    <select name="airport_id" class="layui-select search_key">
-                        <option value="">{{ trans('airport.name') }}</option>
-                        @foreach($airports as $key => $airport)
-                            <option value="{{ $airport['id'] }}">{{ $airport['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="layui-inline">
-                    <select name="airport_id" class="layui-select search_key">
-                        <option value="">{{ trans('airline.name') }}</option>
-                        @foreach($airlines as $key => $airline)
-                            <option value="{{ $airline['id'] }}">{{ $airline['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                {!! Theme::widget('BillSearch')->render() !!}
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="invoice_date" id="invoice_date" placeholder="{{ trans('supplier_bill.label.invoice_date') }}" autocomplete="off">
                 </div>
@@ -32,7 +17,7 @@
                     <input class="layui-input search_key" name="pay_date" id="pay_date" placeholder="{{ trans('supplier_bill.label.pay_date') }}" autocomplete="off">
                 </div>
                 <div class="layui-inline">
-                    <select name="airport_id" class="layui-select search_key">
+                    <select name="status" class="layui-select search_key">
                         <option value="">{{ trans('app.status') }}</option>
                         @foreach(trans('supplier_bill.status.one-level') as $key => $status_desc)
                             <option value="{{ $key }}">{{ $status_desc }}</option>
@@ -43,6 +28,7 @@
                     <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('supplier_bill.label.sn') }}" autocomplete="off">
                 </div>
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
+
             </div>
 
             <table id="fb-table" class="layui-table"  lay-filter="fb-table">
@@ -92,10 +78,12 @@
                 ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',width:140}
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:140}
-                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}',width:160}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}',width:160}
-                ,{field:'airline_name',title:'{{ trans('airline.name') }}',width:160}
+                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
+                ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
+                ,{field:'mt',title:'{{ trans('supplier_bill.label.mt') }}',width:160}
+                ,{field:'usg',title:'{{ trans('supplier_bill.label.usg') }}',width:160}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160}
                 ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
                 ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}
@@ -107,6 +95,7 @@
             ,page: true
             ,limit: '{{ config('app.limit') }}'
             ,height: 'full-200'
+            ,cellMinWidth :'180'
             ,done:function () {
                 element.init();
             }

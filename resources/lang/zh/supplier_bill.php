@@ -6,10 +6,14 @@ return [
     'label'       => [
         'sn' => '编号',
         'invoice_date' => '账单日期',
+        'date_of_supply' => '供油日期',
+        'mt' => 'MT',
+        'usg' => 'USG',
+        'price' => '单价',
         'pay_date' => '应付款日期',
         'paid_date' => '实际付款日期',
         'paid_total' => '实际付款金额',
-        'total' => '应付款',
+        'total' => '应付款金额',
         'pay_status' => '付款状态'
     ],
     'message'     => [

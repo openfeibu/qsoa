@@ -22,7 +22,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('airline_bill.label.paid_total') }}</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="paid_total" lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input" value="{{ $airline_bill->final_total }}" >
+                            <input type="text" name="paid_total" lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input" value="{{ $airline_bill->total }}" >
                         </div>
                     </div>
 

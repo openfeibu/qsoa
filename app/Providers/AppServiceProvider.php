@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $this->loadViewsFrom(public_path().'/themes/vender/filer', 'filer');
+        $this->loadViewsFrom(public_path().'/themes/vender/widgets', 'widgets');
     }
 
     /**
@@ -69,6 +70,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind('message', function ($app) {
             return new \App\Repositories\Eloquent\MessageRepository($app);
+        });
+        $this->app->bind('excel_service', function ($app) {
+            return new \App\Services\ExcelService($app->request);
         });
     }
 

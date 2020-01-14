@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\ResourceController as BaseController;
 use App\Models\Airport;
-use App\Repositories\Eloquent\AirportBalanceRecordRepository;
 use App\Repositories\Eloquent\AirportRepository;
 use App\Repositories\Eloquent\WorldCityRepository;
 use Illuminate\Http\Request;
@@ -13,13 +12,11 @@ class AirportResourceController extends BaseController
 {
     public function __construct(
         AirportRepository $airportRepository,
-        WorldCityRepository $worldCityRepository,
-        AirportBalanceRecordRepository $airportBalanceRecordRepository)
+        WorldCityRepository $worldCityRepository)
     {
         parent::__construct();
         $this->repository = $airportRepository;
         $this->worldCityRepository = $worldCityRepository;
-        $this->airportBalanceRecordRepository = $airportBalanceRecordRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -162,25 +159,5 @@ class AirportResourceController extends BaseController
                 ->redirect();
         }
     }
-    public function topUp(Request $request,Airport $airport)
-    {
-        try {
-            $attributes = $request->all();
 
-            $total = $attributes['total'];
-            $this->airportBalanceRecordRepository->topUp($airport->id,$total);
-
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('airport.name')]))
-                ->code(0)
-                ->status('success')
-                ->url(guard_url('airport'))
-                ->redirect();
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->http_code(400)
-                ->status('error')
-                ->url(guard_url('airport'))
-                ->redirect();
-        }
-    }
 }

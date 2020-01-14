@@ -12,6 +12,7 @@ return [
         'position' => '职位',
         'country' => '国家',
         'city' => '城市',
+        'address' => '详细地址',
         'can_cooperative_airport' => '可供油机场',
         'cooperative_airport' => '合作机场',
     ],

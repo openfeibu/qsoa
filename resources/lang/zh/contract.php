@@ -10,7 +10,7 @@ return [
         'date' => '日期',
         'image' => '合同',
         'contract_partner' => '合作对象',
-        'increase_price' => '账单价格增加比例',
+        'increase_price' => '合作费率',
     ],
     'message'     => [
         'nopage' => 'Page not found.',

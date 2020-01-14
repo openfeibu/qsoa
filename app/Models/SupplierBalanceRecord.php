@@ -10,17 +10,11 @@ use App\Traits\Filer\Filer;
 use App\Traits\Hashids\Hashids;
 use App\Traits\Trans\Translatable;
 
-
-class Airport extends BaseModel
+class SupplierBalanceRecord extends BaseModel
 {
     use Filer, Hashids, Slugger, Translatable, LogsActivity, Area;
 
-    protected $config = 'model.airport.airport';
+    protected $config = 'model.supplier.supplier_balance_record';
 
-    protected $appends = ['area'];
 
-    public function contractSupplier()
-    {
-        return $this->hasOne(config('model.contract.contract.model'))->where('contractable_type',config('model.supplier.supplier.model'));
-    }
 }

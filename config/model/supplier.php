@@ -20,7 +20,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['name','leader','email','tel','position','country','country_id','province','province_id','city','city_id'],
+        'fillable'     => ['name','leader','email','tel','position','country','country_id','province','province_id','city','city_id','address','used_balance','balance','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/supplier',
         'encrypt'      => ['id'],
@@ -89,7 +89,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['sn','invoice_date','supplier_id','supplier_name','airport_id','airport_name','airline_id','airline_name','total','status','pay_date','paid_date','paid_total','pay_status'],
+        'fillable'     => ['sn','invoice_date','supplier_id','supplier_name','airport_id','airport_name','airline_id','airline_name','supply_start_date','supply_end_date','mt','usg','price','total','status','pay_date','paid_date','paid_total','pay_status'],
         'translate'    => [],
         'status_button' => [
             'new' => 'layui-btn-primary',
@@ -115,6 +115,9 @@ return [
             'invoice_date' => '=',
             'pay_date' => '=',
             'status' => '=',
+            'airline_id' => '=',
+            'airport_id' => '=',
+            'supplier_id' => '=',
             'id' => '=',
         ],
     ],
@@ -125,7 +128,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['flight_date','supplier_bill_id','supplier_id','supplier_name','airport_id','airport_name','airline_id','airline_name','total'],
+        'fillable'     => ['supplier_bill_id','supplier_id','supplier_name','airport_id','airport_name','airline_id','airline_name','flight_date','flight_number','board_number','order_number','num_of_orders','mt','usg','unit','price','total','created_at','updated_at'],
         'translate'    => [],
         'status_button' => [
             'new' => 'layui-btn-primary',
@@ -182,6 +185,24 @@ return [
         'search'        => [
             'sn'  => 'like',
             'date' => '='
+        ],
+    ],
+    'supplier_balance_record' => [
+        'model'        => 'App\Models\SupplierBalanceRecord',
+        'table'        => 'supplier_balance_records',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'fillable'     => ['supplier_id','supplier_name','admin_id','admin_name','admin_model','out_trade_no','type','price','balance','trade_type','description','date','created_at','updated_at'],
+        'translate'    => [],
+        'upload_folder' => '/airport',
+        'encrypt'      => ['id'],
+        'revision'     => ['name'],
+        'perPage'      => '20',
+        'search'        => [
+            'title'  => 'name',
+            'airport_id' => '='
         ],
     ],
 ];

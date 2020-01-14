@@ -26,7 +26,6 @@
     </div>
 </div>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="top_up">{{ trans('app.top_up') }}</a>
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
 </script>
@@ -51,8 +50,6 @@
                 ,{field:'code',title:'{{ trans('airport.label.code') }}',edit:'text'}
                 ,{field:'leader',title:'{{ trans('airport.label.leader') }}',edit:'text'}
                 ,{field:'area',title:'{{ trans('app.area') }}'}
-                ,{field:'used_balance',title:'{{ trans('airport.label.used_balance') }}'}
-                ,{field:'balance',title:'{{ trans('airport.label.balance') }}'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:200, align: 'right',toolbar:'#barDemo'}
             ]]
             ,id: 'fb-table'
@@ -65,47 +62,3 @@
 
 {!! Theme::partial('common_handle_js') !!}
 
-<script>
-    layui.use(['jquery','element','table'], function(){
-        var $ = layui.$;
-        var table = layui.table;
-        var form = layui.form;
-        var element = layui.element;
-
-        $.extend_tool = function (obj) {
-            var data = obj.data;
-            data['_token'] = "{!! csrf_token() !!}";
-            var nPage = $(".layui-laypage-curr em").eq(1).text();
-            if(obj.event === 'top_up'){
-                layer.prompt({
-                    formType: 0,
-                    value: '',
-                    title: '{{ trans('app.top_up') }}',
-                }, function(value, index, elem){
-                    layer.close(index);
-                    // 加载样式
-                    var load = layer.load();
-                    $.ajax({
-                        url : "{{ guard_url('airport/top_up') }}/"+data.id,
-                        data : {'total':value,'_token':"{!! csrf_token() !!}"},
-                        type : 'POST',
-                        success : function (data) {
-                            layer.close(load);
-                            var nPage = $(".layui-laypage-curr em").eq(1).text();
-                            //执行重载
-                            table.reload('fb-table', {
-
-                            });
-                        },
-                        error : function (jqXHR, textStatus, errorThrown) {
-                            layer.close(load);
-                            $.ajax_error(jqXHR, textStatus, errorThrown);
-                        }
-                    });
-                });
-
-            }
-        }
-
-    });
-</script>

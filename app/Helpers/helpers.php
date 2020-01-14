@@ -741,6 +741,7 @@ if (!function_exists('isVaildExcel')) {
         {
             $error.= $name.$file->getErrorMessage().';';
         }
+
 //        if(!in_array( strtolower($file->extension()),config('common.excel_type'))){
 //            $error.= $name."为".strtolower($file->extension())."格式，非Excel格式;";
 //        }
@@ -827,4 +828,36 @@ if(!function_exists('bii_operation_verify'))
             throw new \App\Exceptions\OutputServerMessageException(trans('messages.operation.illegal'));
         }
     }
+}
+if(!function_exists('airline_bill_price')) {
+    function airline_bill_price($price, $increase_price)
+    {
+        $price = $price * (1 + $increase_price);
+        return bill_round($price);//floor($total*10000)/10000;
+    }
+}
+if(!function_exists('airline_bill_total')) {
+    function airline_bill_total($total, $increase_price)
+    {
+        $total = $total * (1 + $increase_price);
+        return bill_round($total);//floor($total*10000)/10000;
+    }
+}
+if(!function_exists('bill_round')) {
+    function bill_round($price)
+    {
+        return round($price,3);
+    }
+}
+function buildResponse($content)
+{
+    // define mime type
+    $mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $content);
+
+    // return http response
+    return new \Illuminate\Http\Response($content, 200, array(
+        'Content-Type' => $mime,
+        'Cache-Control' => 'max-age='.(config('image.lifetime')*60).', public',
+        'Etag' => md5($content)
+    ));
 }

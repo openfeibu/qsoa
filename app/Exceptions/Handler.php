@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
                 return app(ResourceResponse::class)->message($responseJson['message'])
                     ->status($responseJson['status'])
                     ->code($responseJson['code'])
-                    ->url(url()->current())
+                    ->url(url()->previous())
                     ->redirect();
                 return response()->view('message.error',$responseJson);
             }

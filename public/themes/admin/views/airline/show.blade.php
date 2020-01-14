@@ -44,6 +44,12 @@
 
                     {!! Theme::widget('area',['country_id' => $airline->country_id,'province_id' => $airline->province_id,'city_id' => $airline->city_id ])->render() !!}
 
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{ trans('airline.label.address') }}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="address" lay-verify="required" autocomplete="off" placeholder="" class="layui-input"  value="{{ $airline->address }}">
+                        </div>
+                    </div>
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airline.label.can_cooperative_airport') }}</label>
                         <div class="layui-input-inline">
