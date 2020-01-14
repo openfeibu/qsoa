@@ -33,7 +33,7 @@ class AdminUserTransformer extends TransformerAbstract
             'permissions'       => $user->permissions,
             'status'            => $user->status,
             'roles' => $user->roles,
-            'role_names' => implode('，',$user->roles->pluck('name')->get()),
+            'role_names' => implode('，',$user->roles->pluck('name')->toArray()),
             'created_at'        => format_date($user->created_at),
             'updated_at'        => format_date($user->updated_at),
         ];
