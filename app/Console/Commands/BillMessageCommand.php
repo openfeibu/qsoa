@@ -38,6 +38,15 @@ class BillMessageCommand extends Command
      */
     public function handle()
     {
+        app(BillMessageService::class)->deadlineSoonNewSupplierBill();
         app(BillMessageService::class)->deadlineNewSupplierBill();
+        app(BillMessageService::class)->overdueNewSupplierBill();
+        app(BillMessageService::class)->deadlineSoonUnpaidSupplierBill();
+        app(BillMessageService::class)->deadlineUnpaidSupplierBill();
+        app(BillMessageService::class)->overdueUnpaidSupplierBill();
+        app(BillMessageService::class)->deadlineSoonUnpaidAirlineBill();
+        app(BillMessageService::class)->deadlineUnpaidAirlineBill();
+        app(BillMessageService::class)->overdueUnpaidAirlineBill();
+        app(BillMessageService::class)->lessThanAirportPayTotal();
     }
 }
