@@ -199,6 +199,10 @@ class BillMessageService
                     'admin_group' => config('model.user.admin.model.model'),
                     'content' => $content
                 ]);
+                $this->messageRepository->createMessage([
+                    'admin_group' => config('model.supplier_user.supplier_user.model.model'),
+                    'content' => $content
+                ]);
             }
         }
     }

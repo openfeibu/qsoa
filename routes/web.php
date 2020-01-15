@@ -107,11 +107,10 @@ Route::group([
     Route::get('bill_supplier_bill', 'SupplierBillResourceController@billSupplierBills')->name('supplier_bill.bill_supplier_bill');
 
     Route::resource('operation', 'OperationResourceController');
-//    Route::resource('bill', 'BillResourceController');
 //    Route::resource('trade_recode', 'TradeRecodeResourceController');
-//    Route::resource('operation_log', 'OperationLogResourceController');
 //    Route::resource('diary', 'DiaryResourceController');
-//    Route::resource('message', 'MessageResourceController');
+
+    Route::resource('message', 'MessageResourceController');
 
     Route::resource('admin_user', 'AdminUserResourceController');
     Route::post('/admin_user/destroyAll', 'AdminUserResourceController@destroyAll')->name('admin_user.destroy_all');
@@ -147,8 +146,12 @@ Route::group([
     Route::get('supplier_bill_import', 'SupplierBillResourceController@import')->name('supplier_bill.import');
     Route::post('/supplier_bill_submit_import', 'SupplierBillResourceController@submitImport')->name('supplier_bill.submit_import');
 
+    Route::resource('message', 'MessageResourceController');
+
     Route::resource('supplier_user', 'SupplierUserResourceController');
     Route::post('/supplier_user/destroyAll', 'SupplierUserResourceController@destroyAll')->name('supplier_user.destroy_all');
+
+
     Route::resource('permission', 'PermissionResourceController');
     Route::post('/permission/destroyAll', 'PermissionResourceController@destroyAll')->name('permission.destroy_all');
     Route::resource('role', 'RoleResourceController');
@@ -188,6 +191,8 @@ Route::group([
 
     Route::get('airline_bill/pay/{airline_bill}', 'AirlineBillResourceController@pay');
     Route::post('airline_bill/pay/{airline_bill}', 'AirlineBillResourceController@paySubmit');
+
+    Route::resource('message', 'MessageResourceController');
 
     Route::resource('airline_user', 'AirlineUserResourceController');
     Route::post('/airline_user/destroyAll', 'AirlineUserResourceController@destroyAll')->name('airline_user.destroy_all');
