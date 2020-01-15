@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        Log::info('schedule');
+        //Log::info('schedule');
         $schedule->command('bill_message:auto')->dailyAt('9:00');;
         // $schedule->command('inspire')
         //          ->hourly();
