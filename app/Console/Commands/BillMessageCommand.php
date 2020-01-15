@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\BillMessageService;
 use Illuminate\Console\Command;
 
-class BillMessage extends Command
+class BillMessageCommand extends Command
 {
     /**
      * The name and signature of the console command.
