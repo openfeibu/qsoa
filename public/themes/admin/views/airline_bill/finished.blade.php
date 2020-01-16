@@ -62,7 +62,7 @@
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}'}
                 ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:300, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:380, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

@@ -88,6 +88,8 @@ Route::group([
     Route::resource('airline_bill', 'AirlineBillResourceController');
     Route::post('/airline_bill/invalid', 'AirlineBillResourceController@invalid')->name('airline_bill.invalid');
     Route::get('/airline_bill/download_word/{airline_bill}', 'AirlineBillResourceController@downloadWord')->name('airline_bill.download_word');
+    Route::get('/airline_bill/download_excel/{airline_bill}', 'AirlineBillResourceController@downloadExcel')->name('airline_bill.download_excel');
+
     Route::get('new_airline_bill', 'AirlineBillResourceController@newAirlineBills')->name('airline_bill.new_airline_bill');
     Route::get('finished_airline_bill', 'AirlineBillResourceController@finishedAirlineBills')->name('airline_bill.finished_airline_bill');
     Route::get('invalid_airline_bill', 'AirlineBillResourceController@invalidAirlineBills')->name('airline_bill.invalid_airline_bill');
@@ -185,6 +187,8 @@ Route::group([
     Route::resource('airline_bill', 'AirlineBillResourceController');
     Route::post('/airline_bill/invalid', 'AirlineBillResourceController@invalid')->name('airline_bill.invalid');
     Route::get('/airline_bill/download_word/{airline_bill}', 'AirlineBillResourceController@downloadWord')->name('airline_bill.download_word');
+    Route::get('/airline_bill/download_excel/{airline_bill}', 'AirlineBillResourceController@downloadExcel')->name('airline_bill.download_excel');
+
     Route::get('new_airline_bill', 'AirlineBillResourceController@newAirlineBills')->name('airline_bill.new_airline_bill');
     Route::get('finished_airline_bill', 'AirlineBillResourceController@finishedAirlineBills')->name('airline_bill.finished_airline_bill');
     Route::get('invalid_airline_bill', 'AirlineBillResourceController@invalidAirlineBills')->name('airline_bill.invalid_airline_bill');

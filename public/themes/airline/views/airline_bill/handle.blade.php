@@ -8,7 +8,8 @@
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
     @{{#  } else if(d.status == 'finished'){ }}
     <!--<a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="invalid">{{ trans('app.invalid') }}</a>-->
-    <a class="layui-btn layui-btn-sm layui-btn-normal"  href="{{ guard_url('airline_bill/download_word') }}/@{{ d.id }}">{{ trans('app.download') }}</a>
+    <a class="layui-btn layui-btn-sm layui-btn-normal"  href="{{ guard_url('airline_bill/download_word') }}/@{{ d.id }}">{{ trans('app.download') }} W</a>
+    <a class="layui-btn layui-btn-sm layui-btn-normal"  href="{{ guard_url('airline_bill/download_excel') }}/@{{ d.id }}">{{ trans('app.download') }} E</a>
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
     @{{#  } }}
 </script>

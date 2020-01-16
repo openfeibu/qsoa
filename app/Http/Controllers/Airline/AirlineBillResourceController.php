@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Airline;
 
 use App\Exceptions\OutputServerMessageException;
+use App\Exports\AirlineBillExport;
 use App\Http\Controllers\Airline\ResourceController as BaseController;
 use App\Models\AirlineBillItem;
 use App\Repositories\Eloquent\AirlineBillItemRepository;
@@ -13,6 +14,7 @@ use App\Repositories\Eloquent\SupplierRepository;
 use App\Repositories\Eloquent\SupplierBillItemInfoRepository;
 use App\Repositories\Eloquent\SupplierBillItemRepository;
 use Auth;
+use Excel;
 use Illuminate\Http\Request;
 use App\Models\AirlineBill;
 
@@ -365,5 +367,10 @@ class AirlineBillResourceController extends BaseController
     public function downloadWord(Request $request,AirlineBill $airline_bill)
     {
         return $this->repository->downloadWord($airline_bill);
+    }
+    public function downloadExcel(Request $request,AirlineBill $airline_bill)
+    {
+        $name = $airline_bill->agreement_no.'('.date('YmdHis').').xlsx';
+        return Excel::download(new AirlineBillExport($airline_bill), $name);
     }
 }
