@@ -9,10 +9,7 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
-                <div class="layui-inline tabel-btn">
-                    <button class="layui-btn layui-btn-warm "><a href="{{ guard_url('supplier/create') }}">{{ trans('supplier.add') }}</a></button>
-                    <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">{{ trans('app.delete') }}</button>
-                </div>
+
                 <div class="layui-inline">
                    <input class="layui-input search_key" name="search_name" id="demoReload" placeholder="{{ trans('supplier.label.name') }}" autocomplete="off">
                 </div>
