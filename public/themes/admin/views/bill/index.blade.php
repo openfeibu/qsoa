@@ -25,7 +25,6 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-sm layui-btn-normal" href="{{ guard_url('supplier_bill') }}/@{{ d.supplier_bill_id }}" target="_blank">{{ trans('supplier_bill.name') }}</a>
     <a class="layui-btn layui-btn-sm layui-btn-normal" href="{{ guard_url('airline_bill') }}/@{{ d.id }}" target="_blank">{{ trans('airline_bill.name') }}</a>
-    <a class="layui-btn layui-btn-sm" href="{{ guard_url('bill') }}/@{{ d.id }}">{{ trans('app.details') }}</a>
 </script>
 <script>
     var main_url = "{{guard_url('bill')}}";
@@ -54,7 +53,7 @@
                 ,{title:'{{ trans('supplier_bill.label.total') }}', width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
                 ,{title:'{{ trans('supplier_bill.label.paid_total') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:360, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:320, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

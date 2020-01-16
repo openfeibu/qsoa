@@ -90,7 +90,6 @@ class BillResourceController extends BaseController
 
         $airline_bill_items = $this->airlineBillItemRepository
             ->where('airline_bill_id',$bill->id)
-            ->orderBy('date','asc')
             ->get();
 
         return $this->response->title(trans('app.view') . ' ' . trans('bill.name'))
