@@ -32,7 +32,7 @@
 @include('airline_bill/handle')
 
 <script>
-    var main_url = "{{guard_url('new_airline_bill')}}";
+    var main_url = "{{guard_url('airline_bill')}}";
     var index_url = "{{guard_url('invalid_airline_bill')}}";
     var delete_all_url = "{{guard_url('airline_bill/destroyAll')}}";
     layui.use(['jquery','element','table','laydate'], function(){
