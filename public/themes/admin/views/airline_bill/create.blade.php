@@ -2,7 +2,7 @@
     <div class="layui-card fb-minNav">
         <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
             <a href="{{ guard_url('home') }}">{{ trans('app.home') }}</a><span lay-separator="">/</span>
-            <a href="{{ guard_url('airline_bill') }}"><cite>{{ trans('airline_bill.title') }}</cite></a><span lay-separator="">/</span>
+            <a href="{{ guard_url('new_airline_bill') }}"><cite>{{ trans('airline_bill.title') }}</cite></a><span lay-separator="">/</span>
             <a><cite>{{ trans('app.add') }}</cite></a>
         </div>
     </div>
@@ -10,7 +10,7 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="fb-main-table">
-                <form class="layui-form" action="{{guard_url('airline_bill')}}" method="post" lay-filter="fb-form">
+                <form class="layui-form" action="{{guard_url('new_airline_bill')}}" method="post" lay-filter="fb-form">
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('airline_bill.label.agreement_no') }}</label>
                         <div class="layui-input-inline">
@@ -142,7 +142,7 @@
 
             var load = layer.load();
             $.ajax({
-                url : "{{ guard_url('airline_bill') }}",
+                url : "{{ guard_url('new_airline_bill') }}",
                 data : {'supplier_bill_id':'{{ $supplier_bill_id }}','supplier_bill_item_ids':supplier_bill_item_ids,'date':date,'usg':usg,'price':price,'sum':sum,'tax':tax,'incl_tax':incl_tax,'agreement_no':agreement_no,'issuing_date':issuing_date,'date_of_supply':date_of_supply,'total':total,'final_total':final_total,'pay_date':pay_date,'_token':"{!! csrf_token() !!}"},
                 type : 'POST',
                 success : function (data) {

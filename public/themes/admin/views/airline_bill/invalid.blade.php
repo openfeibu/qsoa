@@ -2,7 +2,7 @@
     <div class="layui-card fb-minNav">
         <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
             <a href="{{ guard_url('home') }}">{{ trans('app.home') }}</a><span lay-separator="">/</span>
-            <a href="{{ guard_url('airline_bill') }}"><cite>{{ trans('airline_bill.title') }}</cite></a>
+            <a href="{{ guard_url('new_airline_bill') }}"><cite>{{ trans('airline_bill.title') }}</cite></a>
         </div>
     </div>
     <div class="main_full">
@@ -32,7 +32,7 @@
 @include('airline_bill/handle')
 
 <script>
-    var main_url = "{{guard_url('airline_bill')}}";
+    var main_url = "{{guard_url('new_airline_bill')}}";
     var index_url = "{{guard_url('invalid_airline_bill')}}";
     var delete_all_url = "{{guard_url('airline_bill/destroyAll')}}";
     layui.use(['jquery','element','table','laydate'], function(){

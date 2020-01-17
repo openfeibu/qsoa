@@ -2,7 +2,7 @@
     <div class="layui-card fb-minNav">
         <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
             <a href="{{ guard_url('home') }}">{{ trans('app.home') }}</a><span lay-separator="">/</span>
-            <a href="{{ guard_url('supplier_bill') }}"><cite>{{ trans('supplier_bill.title') }}</cite></a><span lay-separator="">/</span>
+            <a href="{{ guard_url('new_supplier_bill') }}"><cite>{{ trans('supplier_bill.title') }}</cite></a><span lay-separator="">/</span>
             <a><cite>{{ trans('app.details') }}</cite></a>
         </div>
     </div>
