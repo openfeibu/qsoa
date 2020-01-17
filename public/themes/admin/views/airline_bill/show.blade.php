@@ -164,6 +164,8 @@
             ,totalRow: true //开启合计行
             ,done:function(res, curr, count) {
                 var total = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='total']").find("div").text("{{ $airline_bill['total'] }}")
+                var mt = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='mt']").find("div").text("{{ $airline_bill['mt'] }}")
+                var usg = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='usg']").find("div").text("{{ $airline_bill['usg'] }}")
             }
         });
         //执行一个laydate实例

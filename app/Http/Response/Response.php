@@ -15,6 +15,8 @@ abstract class Response
      */
     protected $data = null;
 
+    protected $totalRow = null;
+
     /**
      * @var Response message for the response.
      */
@@ -76,6 +78,7 @@ abstract class Response
             'status' => $this->getStatus(),
             'code' => $this->getCode(),
             'data' => $this->getData(),
+            'totalRow' => $this->getTotalRow(),
             'count' => $this->getCount(),
             'url'     => $this->getUrl(),
         ], $this->http_code);
@@ -281,6 +284,11 @@ abstract class Response
         return $this;
     }
 
+    public function totalRow($totalRow)
+    {
+        $this->totalRow = $totalRow;
+        return $this;
+    }
     /**
      * @param store the response data $data
      *
@@ -291,6 +299,10 @@ abstract class Response
         return is_array($this->data) ? $this->data : [];
     }
 
+    public function getTotalRow()
+    {
+        return is_array($this->totalRow) ? $this->totalRow : [];
+    }
     /**
      * @param store the response data $data
      *

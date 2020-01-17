@@ -41,18 +41,18 @@
             ,url: main_url
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
-                ,{field:'id',title:'ID', width:80, sort: true}
+                ,{field:'id',title:'ID',totalRowText: 'Total：', width:80, sort: true}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
-                ,{field:'total',title:'{{ trans('airline_bill.label.total') }}', width:180}
+                ,{field:'airline_bill_total',title:'{{ trans('airline_bill.label.total') }}',totalRow: true,toFixed:3, width:180}
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}', width:180}
-                ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}', width:180}
-                ,{title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.pay_date }}</div>'}
-                ,{title:'{{ trans('supplier_bill.label.total') }}', width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
-                ,{title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
-                ,{title:'{{ trans('supplier_bill.label.paid_total') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
+                ,{field:'airline_bill_paid_total',title:'{{ trans('airline_bill.label.paid_total') }}',totalRow: true,toFixed:3, width:180}
+                ,{field:'supplier_bill_pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.pay_date }}</div>'}
+                ,{field:'supplier_bill_total',title:'{{ trans('supplier_bill.label.total') }}',totalRow: true,toFixed:3, width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
+                ,{field:'supplier_bill_paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
+                ,{field:'supplier_bill_paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}', totalRow: true,toFixed:3,width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:320, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
@@ -60,6 +60,7 @@
             ,limit: '{{ config('app.limit') }}'
             ,height: 'full-200'
             ,cellMinWidth :'180'
+            ,totalRow: true //开启合计行
             ,done:function () {
                 element.init();
             }

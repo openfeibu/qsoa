@@ -61,15 +61,23 @@ class BillResourceController extends BaseController
                 ->orderBy('id','desc')
                 ->paginate($limit);
 
+            $airline_bill_total = $airline_bill_paid_total = $supplier_bill_total = $supplier_bill_paid_total = 0;
             foreach ($bills as $key => $bill)
             {
                 $bill->supplier_bill = $bill->supplier_bill;
+                $bill->airline_bill_total = $bill->total;
+                $bill->airline_bill_paid_total = $bill->paid_total;
+                $airline_bill_total += $bill->total;
+                $airline_bill_paid_total += $bill->paid_total;
+                $supplier_bill_total += $bill->supplier_bill->total;
+                $supplier_bill_paid_total += $bill->supplier_bill->paid_total;
             }
 
             return $this->response
                 ->success()
                 ->count($bills->total())
                 ->data($bills->toArray()['data'])
+                ->totalRow(compact('airline_bill_total','airline_bill_paid_total','supplier_bill_total','supplier_bill_paid_total'))
                 ->output();
         }
         $airports = $this->airportRepository->orderBy('id','desc')->get();

@@ -115,7 +115,9 @@
             cellMinWidth :'180'
             ,totalRow: true //开启合计行
             ,done:function(res, curr, count) {
-                var total = $(".layui-table-total").find("td[data-field='total']").find("div").text("{{ $supplier_bill->total }}")
+                var total = $('#supplier_bill_item').parent().find(".layui-table-total").find("td[data-field='total']").find("div").text("{{ $supplier_bill['total'] }}")
+                var mt = $('#supplier_bill_item').parent().find(".layui-table-total").find("td[data-field='mt']").find("div").text("{{ $supplier_bill['mt'] }}")
+                var usg = $('#supplier_bill_item').parent().find(".layui-table-total").find("td[data-field='usg']").find("div").text("{{ $supplier_bill['usg'] }}")
             }
         });
 
