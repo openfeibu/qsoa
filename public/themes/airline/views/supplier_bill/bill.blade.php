@@ -9,6 +9,7 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
+                {!! Theme::widget('BillSearch')->render() !!}
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="invoice_date" id="invoice_date" placeholder="{{ trans('supplier_bill.label.invoice_date') }}" autocomplete="off">
                 </div>

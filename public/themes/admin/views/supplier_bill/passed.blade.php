@@ -11,22 +11,6 @@
             <div class="tabel-message">
                 {!! Theme::widget('BillSearch')->render() !!}
                 <div class="layui-inline">
-                    <select name="airport_id" class="layui-select search_key">
-                        <option value="">{{ trans('airport.name') }}</option>
-                        @foreach($airports as $key => $airport)
-                            <option value="{{ $airport['id'] }}">{{ $airport['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="layui-inline">
-                    <select name="airport_id" class="layui-select search_key">
-                        <option value="">{{ trans('airline.name') }}</option>
-                        @foreach($airlines as $key => $airline)
-                            <option value="{{ $airline['id'] }}">{{ $airline['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="layui-inline">
                     <input class="layui-input search_key" name="invoice_date" id="invoice_date" placeholder="{{ trans('supplier_bill.label.invoice_date') }}" autocomplete="off">
                 </div>
                 <div class="layui-inline">
