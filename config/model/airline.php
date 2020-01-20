@@ -91,7 +91,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['airline_bill_id','supplier_bill_id','supplier_bill_item_id','airline_id','airline_name','airport_id','airport_name','supplier_id','supplier_name','date','mt','usg','price','total','created_at','updated_at'],
+        'fillable'     => ['airline_bill_id','supplier_bill_id','supplier_bill_item_id','airline_id','airline_name','airport_id','airport_name','supplier_id','supplier_name','flight_date','flight_number','board_number','order_number','num_of_orders','mt','usg','price','total','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/airline',
         'encrypt'      => ['id'],

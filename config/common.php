@@ -4,6 +4,9 @@ return [
 	'img_type' => [
 		'jpeg','jpg','gif','gpeg','png'
 	],
+    'file_type' => [
+        'xlsx','xls','csv','txt','doc','dos','pdf','docx','rar','zip'
+    ],
 	'img_size' => 1024 * 1024 * 10,
     'file_size' => 1024 * 1024 * 10,
     'default_avatar' => '/system/avatar.jpeg',
