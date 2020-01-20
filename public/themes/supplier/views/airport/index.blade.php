@@ -11,7 +11,6 @@
             <div class="tabel-message">
                 <div class="layui-inline tabel-btn">
                     <button class="layui-btn layui-btn-warm "><a href="{{ guard_url('airport/create') }}">{{ trans('app.add') }}</a></button>
-                    <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">{{ trans('app.delete') }}</button>
                 </div>
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="search_name" id="demoReload" placeholder="{{ trans('airport.label.name') }}/{{ trans('airport.label.code') }}" autocomplete="off">
