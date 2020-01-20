@@ -35,7 +35,35 @@
                         }
                     });
                 });
-            }else if(obj.event === 'invalid'){
+            } else if(obj.event === 'reject'){
+                layer.confirm('{{ trans('messages.confirm_reject') }}', function(index){
+                    layer.close(index);
+                    var load = layer.load();
+                    $.ajax({
+                        url : main_url+'/reject',
+                        data : {'id':data.id,'_token':"{!! csrf_token() !!}"},
+                        type : 'post',
+                        success : function (data) {
+                            layer.close(load);
+                            if(data.code == 0)
+                            {
+                                table.reload('fb-table', {
+                                    page: {
+                                        curr: nPage //重新从第 1 页开始
+                                    }
+                                });
+                            }else{
+                                layer.msg(data.message);
+                            }
+                        },
+                        error : function (jqXHR, textStatus, errorThrown) {
+                            layer.close(load);
+                            $.ajax_error(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                });
+            }
+            else if(obj.event === 'invalid'){
                 layer.confirm('{{ trans('messages.confirm_invalid') }}', function(index){
                     layer.close(index);
                     var load = layer.load();

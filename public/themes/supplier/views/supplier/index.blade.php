@@ -9,7 +9,10 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
-
+                <div class="layui-inline tabel-btn">
+                    <button class="layui-btn layui-btn-warm "><a href="{{ guard_url('supplier/create') }}">{{ trans('supplier.add') }}</a></button>
+                    <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">{{ trans('app.delete') }}</button>
+                </div>
                 <div class="layui-inline">
                    <input class="layui-input search_key" name="search_name" id="demoReload" placeholder="{{ trans('supplier.label.name') }}" autocomplete="off">
                 </div>
@@ -23,7 +26,10 @@
     </div>
 </div>
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-sm" href="{{ guard_url('supplier_contract/create?supplier_id=') }}@{{d.id}}">增加合作机场</a>
     <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="top_up">{{ trans('app.top_up') }}</a>
+    <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
+    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
 </script>
 <script type="text/html" id="imageTEM">
     <img src="@{{d.image}}" alt="" height="28">
@@ -67,7 +73,7 @@
                 ,{field:'balance',title:'{{ trans('airport.label.balance') }}', width:120}
                 ,{field:'can_cooperative_airports',title:'{{ trans('airline.label.can_cooperative_airport') }}', toolbar:'#canCooperativeAirportsTEM', width:200, event: "show_can_cooperative_airports"}
                 ,{field:'cooperative_airports',title:'{{ trans('airline.label.cooperative_airport') }}', toolbar:'#cooperativeAirportsTEM', width:200,event:"show_cooperative_airports"}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:100, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:300, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

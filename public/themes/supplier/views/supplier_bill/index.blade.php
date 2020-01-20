@@ -9,6 +9,11 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
+                <div class="layui-row mb10">
+                    <div class="layui-inline tabel-btn">
+                        <button class="layui-btn layui-btn-warm "><a href="{{ guard_url('supplier_bill/create') }}">{{ trans('supplier_bill.add') }}</a></button>
+                    </div>
+                </div>
                 {!! Theme::widget('BillSearch')->render() !!}
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="invoice_date" id="invoice_date" placeholder="{{ trans('supplier_bill.label.invoice_date') }}" autocomplete="off">
@@ -51,6 +56,15 @@
         <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
         @{{#  } }}
         <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
+    @{{#  } else if(d.status == 'rejected'){ }}
+        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
+        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
+    @{{#  } else if(d.status == 'modified'){ }}
+        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
+        @{{#  if(d.pay_status == 'unpaid' || d.pay_status == 'refund'){ }}
+        <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
+        @{{#  } }}
+        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
     @{{#  } else if(d.status == 'invalid'){ }}
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
@@ -82,11 +96,10 @@
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
-                ,{field:'mt',title:'{{ trans('supplier_bill.label.mt') }}',width:160}
-                ,{field:'usg',title:'{{ trans('supplier_bill.label.usg') }}',width:160}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160}
                 ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
                 ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}
+                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div>@{{#  if(d.file){ }}<a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }} @{{# } }}</div>'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}',width:100}
                 ,{field:'pay_status_button',title:'{{ trans('app.pay_status') }}',width:100}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:220, align: 'right',toolbar:'#barDemo', fixed: 'right'}

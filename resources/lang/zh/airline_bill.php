@@ -23,7 +23,7 @@ return [
         'nopage' => 'Page not found.',
     ],
     'title' => '航空公司账单管理',
-    'add' => '生成航空公司账单',
+    'add' => '导入航空公司账单',
     'status' => [
         'one-level' => [
             'new' => '待结算',

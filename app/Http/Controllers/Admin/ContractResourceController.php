@@ -31,6 +31,8 @@ class ContractResourceController extends BaseController
         $this->airportRepository = $airportRepository;
         $this->mediaRepository = $mediaRepository;
         $this->manager = $managerService;
+        $this->repository
+            ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
     public function index(Request $request)
     {

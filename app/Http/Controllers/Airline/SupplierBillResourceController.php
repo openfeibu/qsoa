@@ -41,7 +41,7 @@ class SupplierBillResourceController extends BaseController
     }
     public function newSupplierBills(Request $request)
     {
-        return $this->supplierBills($request,'new');
+        return $this->supplierBills($request,['new','rejected','modified'],'new');
     }
     public function passedSupplierBills(Request $request)
     {
@@ -145,7 +145,7 @@ class SupplierBillResourceController extends BaseController
             $data = $request->all();
             $id = $data['id'];
             $supplier_bill = $this->repository->find($data['id']);
-            if(!in_array($supplier_bill->status,['new','modified']) )
+            if(!in_array($supplier_bill->status,['new','rejected','modified']) )
             {
                 throw new OutputServerMessageException(trans('messages.operation.illegal'));
             }
@@ -203,7 +203,7 @@ class SupplierBillResourceController extends BaseController
             $data = $request->all();
             $id = $data['id'];
             $supplier_bill = $this->repository->find($data['id']);
-            if(!in_array($supplier_bill->status,['new','modified','rejected']) )
+            if(!in_array($supplier_bill->status,['new','modified','rejected','passed']) )
             {
                 throw new OutputServerMessageException(trans('messages.operation.illegal'));
             }

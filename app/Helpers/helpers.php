@@ -730,6 +730,33 @@ if (!function_exists('isVaildImage')) {
         }
     }
 }
+if (!function_exists('isVaildFile')) {
+    function isVaildFile($files)
+    {
+        $error = '';
+
+        foreach($files as $key => $file)
+        {
+            $name = $file->getClientOriginalName();
+            if(!$file->isValid())
+            {
+                $error.= $name.$file->getErrorMessage().';';
+            }
+            if(!in_array( strtolower($file->extension()),config('common.file_type'))){
+                $error.= $name."类型错误;";
+            }
+            if($file->getClientSize() > config('common.file_size')){
+                $file_size = config('common.file_size')/(1024*1024);
+                $error.= $name.'超过'.$file_size.'M';
+            }
+        }
+        if($error)
+        {
+            throw new \App\Exceptions\OutputServerMessageException($error);
+        }
+    }
+}
+
 if (!function_exists('isVaildExcel')) {
     function isVaildExcel($file)
     {

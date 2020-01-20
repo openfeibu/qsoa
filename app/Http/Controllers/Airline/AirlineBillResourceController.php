@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Airline;
 use App\Exceptions\OutputServerMessageException;
 use App\Exports\AirlineBillExport;
 use App\Http\Controllers\Airline\ResourceController as BaseController;
+use App\Imports\AirlineBillImport;
 use App\Models\AirlineBillItem;
 use App\Repositories\Eloquent\AirlineBillItemRepository;
 use App\Repositories\Eloquent\AirlineBillRepository;
@@ -329,6 +330,33 @@ class AirlineBillResourceController extends BaseController
                 ->redirect();
         }
     }
+
+    public function destroy(Request $request, AirlineBill $airline_bill)
+    {
+        try {
+            $this->supplierBillRepository->operation([
+                'id' => $airline_bill->supplier_bill_id,
+                'status' => 'rebill'
+            ]);
+
+            $airline_bill->forceDelete();
+            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('airline_bill.name')]))
+                ->http_code(201)
+                ->status('success')
+                ->url(guard_url('airline_bill'))
+                ->redirect();
+
+        } catch (Exception $e) {
+
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
+                ->url(guard_url('airline_bill'))
+                ->redirect();
+        }
+
+    }
+
     public function pay(Request $request,AirlineBill $airline_bill)
     {
 
@@ -364,6 +392,7 @@ class AirlineBillResourceController extends BaseController
                 ->redirect();
         }
     }
+
     public function downloadWord(Request $request,AirlineBill $airline_bill)
     {
         return $this->repository->downloadWord($airline_bill);
@@ -372,5 +401,144 @@ class AirlineBillResourceController extends BaseController
     {
         $name = $airline_bill->agreement_no.'('.date('YmdHis').').xlsx';
         return Excel::download(new AirlineBillExport($airline_bill), $name);
+    }
+
+    public function import(Request $request)
+    {
+        $supplier_bill_id = $request->get('supplier_bill_id');
+        return $this->response->title(trans('airline_bill.name'))
+            ->data(compact('supplier_bill_id'))
+            ->view('airline_bill.import')
+            ->output();
+    }
+    public function submitImport(Request $request)
+    {
+        $supplier_bill_id = $request->get('supplier_bill_id');
+        $supplier_bill = $this->supplierBillRepository->find($supplier_bill_id);
+        set_time_limit(0);
+        $file = $request->file;
+        isVaildExcel($file);
+        $res = (new AirlineBillImport)->toArray($file)[0];
+        $res = array_filter($res);
+        $all_sheet_count = count($res);
+
+        $supply_start_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[2][8]))->format('Y-m-d');
+        $supply_end_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[2][10]))->format('Y-m-d');
+        /*
+        $airline_name = rtrim(ltrim($res[2][2],' '),' ');
+        $airport_name = rtrim(ltrim($res[2][5],' '),' ');
+        $airport_name_arr = explode('/',$airport_name);
+        if(count($airport_name_arr) > 1)
+        {
+            $airport_name = rtrim(ltrim($airport_name_arr[0],' '),' ');
+        }
+
+        $airline = Airline::where('name',$airline_name)->first();
+        if(!$airline)
+        {
+            throw new OutputServerMessageException('找不到相关的航空公司，请核对航空公司名称');
+        }
+        $airport = Airport::where('name',$airport_name)->first();
+        if(!$airport)
+        {
+            throw new OutputServerMessageException('找不到相关的机场信息，请核对机场名称');
+        }
+        $contract_supplier = $airport->contractSupplier;
+        if(!$contract_supplier)
+        {
+            throw new OutputServerMessageException('请设置机场合作的供油公司');
+        }
+        $supplier = $contract_supplier->contractable;
+        if(!$supplier)
+        {
+            throw new OutputServerMessageException('供油公司不存在');
+        }
+
+        */
+        $keys = ['flight_date','flight_number','board_number','order_number','num_of_orders','mt','usg','unit','price','total'];
+        $total = $mt = $usg = $price = 0;
+        $items = [];
+        for ($i=6;$i<$all_sheet_count;$i++)
+        {
+            if($res[$i][0] && strtolower($res[$i][0]) != 'total')
+            {
+                $flight_date = $res[$i][0];
+                $flight_date_arr = explode('.',$flight_date);
+                if(count($flight_date_arr) >1)
+                {
+                    $flight_date = substr(date('Y'),0,2).$flight_date_arr[2].'-'.$flight_date_arr[1].'-'.$flight_date_arr[0];
+                }
+                else{
+                    $flight_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($flight_date)->format('Y-m-d');
+                }
+                $res[$i][0] = $flight_date;
+
+                $item = [];
+                for($j=0;$j<count($keys);$j++)
+                {
+                    $item[$keys[$j]] = $res[$i][$j];
+                }
+                $item['mt'] = (float)$item['mt'];
+                $mt_usg = (float)substr($item['usg'],strpos($item['usg'],'*')+1);
+                $item['usg'] = $item['mt'] * $mt_usg;
+
+                $item['price'] = bill_round($item['price']);
+                $item['total'] =  bill_round($item['usg'] * $item['price']);
+
+                $items[] = $item;
+                $total += $item['total'];
+                $mt += $item['mt'];
+                $usg += $item['usg'];
+                $price = $item['price'];
+            }
+
+        }
+
+        $airline_bill = $this->repository->create([
+            'sn' => build_order_sn('a'),
+            'supplier_bill_id' => $supplier_bill->id,
+            'supplier_id' => $supplier_bill->supplier_id,
+            'supplier_name' => $supplier_bill->supplier_name,
+            'airport_id' => $supplier_bill->id,
+            'airport_name' => $supplier_bill->airport_name,
+            'airline_id' => $supplier_bill->airline_id,
+            'airline_name' => $supplier_bill->airline_name,
+            'mt' => $mt,
+            'usg' => $usg,
+            'price' => $price,
+            'total' => bill_round($usg * $price),
+            'tax' => 0,
+            'incl_tax' => bill_round($usg * $price),
+        ]);
+        $this->repository->operation([
+            'id' => $airline_bill->id,
+            'status' => 'new'
+        ]);
+
+        foreach ($items as $key => $item)
+        {
+            $items[$key]['airline_bill_id'] = $airline_bill->id;
+            $items[$key]['supplier_bill_id'] = $supplier_bill->id;
+            $items[$key]['supplier_id'] = $supplier_bill->supplier_id;
+            $items[$key]['supplier_name'] = $supplier_bill->supplier_name;
+            $items[$key]['airport_id'] = $supplier_bill->airport_id;
+            $items[$key]['airport_name'] = $supplier_bill->airport_name;
+            $items[$key]['airline_id'] = $supplier_bill->airline_id;
+            $items[$key]['airline_name'] = $supplier_bill->airline_name;
+        }
+
+        AirlineBillItem::insert($items);
+
+        $this->supplierBillRepository->operation([
+            'id' => $supplier_bill->id,
+            'status' => 'bill'
+        ]);
+
+        return $this->response->message(trans('messages.success.created', ['Module' => trans('airline_bill.name')]))
+            ->status("success")
+            ->code(200)
+            ->url(guard_url('new_airline_bill'))
+            ->redirect();
+
     }
 }

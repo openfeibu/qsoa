@@ -39,7 +39,7 @@
 
                 if (p) {
                     layer.load();
-                    $.get("{{ guard_url('world_city/list') }}?parent_id=" + p, function (result) {
+                    $.get("{{ url('world_city/list') }}?parent_id=" + p, function (result) {
                         layer.closeAll("loading");
                         var c = result.data;
                         $("#s_province").html("");
@@ -76,7 +76,7 @@
                 @endif
                 if (p) {
                     layer.load();
-                    $.get("{{ guard_url('world_city/list') }}?parent_id=" + p, function (result) {
+                    $.get("{{ url('world_city/list') }}?parent_id=" + p, function (result) {
                         layer.closeAll("loading");
                         var c = result.data;
                         $("#s_city").html("");
@@ -117,7 +117,7 @@
                 var p = $("#s_country").val();
                 if (p) {
                     layer.load();
-                    $.get("{{ guard_url('world_city/list') }}?parent_id=" + p, function (result) {
+                    $.get("{{ url('world_city/list') }}?parent_id=" + p, function (result) {
                         layer.closeAll("loading");
                         var c = result.data;
                         $("#s_province").html("");
@@ -141,7 +141,7 @@
                 var p = $("#s_province").val();
                 if (p) {
                     layer.load();
-                    $.get("{{ guard_url('world_city/list') }}?parent_id=" + p, function (result) {
+                    $.get("{{ url('world_city/list') }}?parent_id=" + p, function (result) {
                         layer.closeAll("loading");
                         var c = result.data;
                         $("#s_city").html("");

@@ -54,10 +54,8 @@
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
-                ,{field:'mt',title:'{{ trans('supplier_bill.label.mt') }}'}
-                ,{field:'usg',title:'{{ trans('supplier_bill.label.usg') }}'}
-                ,{field:'price',title:'{{ trans('supplier_bill.label.price') }}'}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}'}
+                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }}</div>'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:160, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]

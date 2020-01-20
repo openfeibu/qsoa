@@ -62,6 +62,7 @@ class RouteServiceProvider extends ServiceProvider
                 'as' => 'imagecache'
             ])->where(['filename' => $filename_pattern]);
         }
+        $this->app['router']->get('/world_city/list', 'App\Http\Controllers\WorldCityResourceController@getList')->name('world_city.list');
     }
 
     /**

@@ -52,6 +52,7 @@ Route::group([
     });
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
+    Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
     #主要路由
     Route::resource('airline', 'AirlineResourceController');
     Route::post('/airline/destroyAll', 'AirlineResourceController@destroyAll')->name('airline.destroy_all');
@@ -153,6 +154,8 @@ Route::group([
     Route::resource('supplier_user', 'SupplierUserResourceController');
     Route::post('/supplier_user/destroyAll', 'SupplierUserResourceController@destroyAll')->name('supplier_user.destroy_all');
 
+    Route::resource('contract', 'ContractResourceController');
+    Route::resource('supplier_contract', 'SupplierContractResourceController');
 
     Route::resource('permission', 'PermissionResourceController');
     Route::post('/permission/destroyAll', 'PermissionResourceController@destroyAll')->name('permission.destroy_all');
@@ -160,6 +163,7 @@ Route::group([
     Route::post('/role/destroyAll', 'RoleResourceController@destroyAll')->name('role.destroy_all');
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
+    Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
 });
 
 Route::group([
@@ -173,6 +177,10 @@ Route::group([
     Route::get('/home', 'ResourceController@home');
     Route::get('password', 'AirlineUserController@getPassword');
     Route::post('password', 'AirlineUserController@postPassword');
+
+    Route::resource('airline', 'AirlineResourceController');
+    Route::resource('contract', 'ContractResourceController');
+    Route::resource('airline_contract', 'AirlineContractResourceController');
 
     Route::get('supplier_bill', 'SupplierBillResourceController@index')->name('supplier_bill.index');
     Route::get('supplier_bill/{supplier_bill}', 'SupplierBillResourceController@show')->name('supplier_bill.show');
@@ -188,6 +196,9 @@ Route::group([
     Route::post('/airline_bill/invalid', 'AirlineBillResourceController@invalid')->name('airline_bill.invalid');
     Route::get('/airline_bill/download_word/{airline_bill}', 'AirlineBillResourceController@downloadWord')->name('airline_bill.download_word');
     Route::get('/airline_bill/download_excel/{airline_bill}', 'AirlineBillResourceController@downloadExcel')->name('airline_bill.download_excel');
+
+    Route::get('airline_bill_import', 'AirlineBillResourceController@import')->name('airline_bill.import');
+    Route::post('/airline_bill_submit_import', 'AirlineBillResourceController@submitImport')->name('airline_bill.submit_import');
 
     Route::get('new_airline_bill', 'AirlineBillResourceController@newAirlineBills')->name('airline_bill.new_airline_bill');
     Route::get('finished_airline_bill', 'AirlineBillResourceController@finishedAirlineBills')->name('airline_bill.finished_airline_bill');
@@ -233,6 +244,7 @@ Route::group([
     Route::post('/role/destroyAll', 'RoleResourceController@destroyAll')->name('role.destroy_all');
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
+    Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
 });
 /*
 Route::group([

@@ -84,38 +84,16 @@ class SupplierBillResourceController extends BaseController
 
     public function show(Request $request,SupplierBill $supplier_bill)
     {
-        if ($supplier_bill->exists) {
+        if (in_array($supplier_bill->status,['new','rejected'])) {
             $view = 'supplier_bill.show';
         } else {
-            $view = 'supplier_bill.new';
+            $view = 'supplier_bill.detail';
         }
         $airport = $this->airportRepository->find($supplier_bill->airport_id);
         $airline = $this->airlineRepository->find($supplier_bill->airline_id);
 
-        $supplier_bill_items = $this->supplierBillItemRepository->where('supplier_bill_id',$supplier_bill->id)->orderBy('flight_date','asc')->get();
-
-        /*
-         * 自定义供应商字段，作废
-        $fields = [];
-        foreach ($supplier_bill_items as $key => $supplier_bill_item)
-        {
-            $supplier_bill_item->infos = $supplier_bill_item->infos->toArray();
-            if(!$fields)
-            {
-                foreach ($supplier_bill_item->infos as $key => $info)
-                {
-                    $fields[] = [
-                        'id' => $info['supplier_bill_template_field_id'],
-                        'field' => $info['field'],
-                        'field_comment' => $info['field_comment'],
-                    ];
-                }
-            }
-
-        }
-        */
         return $this->response->title(trans('app.view') . ' ' . trans('supplier_bill.name'))
-            ->data(compact('airport','airline','supplier_bill','supplier_bill_items'))
+            ->data(compact('airport','airline','supplier_bill'))
             ->view($view)
             ->output();
     }
@@ -131,42 +109,13 @@ class SupplierBillResourceController extends BaseController
     {
         $supplier_bill = $this->repository->newInstance([]);
 
-        $data =  $request->all();
-        $ids = $data['supplier_bill_item_ids'];
-
-        $fields = $this->supplierBillTemplateFieldRepository->fields(Auth::user()->supplier_id);
-
-        $supplier_bill_items = $this->supplierBillItemRepository->whereIn('id',$ids)->orderBy('flight_date','asc')->get();
-        $airport_ids = $airline_ids = [];
-
-        $total = 0;
-        foreach ($supplier_bill_items as $key => $supplier_bill_item)
-        {
-            $supplier_bill_item->infos = $supplier_bill_item->infos->toArray();
-            $airport_ids[] = $supplier_bill_item->airport_id;
-            $airline_ids[] = $supplier_bill_item->airline_id;
-            $total += $supplier_bill_item->total;
-        }
-
-        $airport_ids = array_unique($airport_ids);
-        $airline_ids = array_unique($airline_ids);
-
-        if(count($airport_ids) > 1 || count($airline_ids) > 1)
-        {
-            return $this->response->message(trans('supplier_bill.message.create_repeat_airline_or_airport'))
-                ->status('error')
-                ->url(url()->previous())
-                ->redirect();
-        }
-        $airport_id = $airport_ids[0];
-        $airline_id = $airline_ids[0];
-
-        $airport = $this->airportRepository->find($airport_id);
-        $airline = $this->airlineRepository->find($airline_id);
+        $suppliers = $this->supplierRepository->orderBy('id','desc')->get();
+        $airports = $this->airportRepository->orderBy('id','desc')->get();
+        $airlines = $this->airlineRepository->orderBy('id','desc')->get();
 
         return $this->response->title(trans('app.new') . ' ' . trans('supplier_bill.name'))
             ->view('supplier_bill.create')
-            ->data(compact('airport','airline','supplier_bill','supplier_bill_items','fields','total'))
+            ->data(compact('airports','airlines','suppliers','supplier_bill'))
             ->output();
 
     }
@@ -186,17 +135,15 @@ class SupplierBillResourceController extends BaseController
             $attributes['supplier_name'] = $this->supplierRepository->find($attributes['supplier_id'],['name'])->name;
             $attributes['airport_name'] = $this->airportRepository->find($attributes['airport_id'],['name'])->name;
             $attributes['airline_name'] = $this->airlineRepository->find($attributes['airline_id'],['name'])->name;
+            $date_arr = explode('~',$attributes['date_of_supply']);
+            $attributes['supply_start_date'] = trim($date_arr[0]);
+            $attributes['supply_end_date'] = trim($date_arr[1]);
+
             $supplier_bill = $this->repository->create($attributes);
             $this->repository->operation([
                 'id' => $supplier_bill->id,
                 'status' => 'new'
             ]);
-            foreach ($attributes['supplier_bill_item_ids'] as $key => $supplier_bill_item_id)
-            {
-                $this->supplierBillItemRepository->update([
-                    'supplier_bill_id' => $supplier_bill->id
-                ],$supplier_bill_item_id);
-            }
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('supplier_bill.name')]))
                 ->http_code(201)
@@ -224,6 +171,11 @@ class SupplierBillResourceController extends BaseController
     public function update(Request $request, SupplierBill $supplier_bill)
     {
         try {
+            if(!in_array($supplier_bill->status,['new','rejected','modified']) )
+            {
+                throw new OutputServerMessageException(trans('messages.operation.illegal'));
+            }
+
             $attributes = $request->all();
 
             $date_arr = explode('~',$attributes['date_of_supply']);
@@ -232,6 +184,13 @@ class SupplierBillResourceController extends BaseController
 
             $supplier_bill->update($attributes);
 
+            if($supplier_bill['status'] == 'rejected')
+            {
+                $this->repository->operation([
+                    'id' => $supplier_bill->id,
+                    'status' => 'modified',
+                ]);
+            }
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier_bill.name')]))
                 ->code(0)
                 ->status('success')

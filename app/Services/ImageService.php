@@ -110,5 +110,61 @@ class ImageService
 
     }
 
+    public function uploadFiles($files, $usage)
+    {
+        if(is_array($files['file']))
+        {
+            $all_files = $files['file'];
+        }
+        else{
+            $all_files[] = $files['file'];
+        }
+        isVaildFile($all_files);
+        return $this->uploadFilesHandle($all_files,$usage);
+    }
 
+    private function uploadFilesHandle($files, $usage='common')
+    {
+        //如果文件夹不存在，则创建文件夹
+        $directory = $usage;
+
+        $url = '/'.rtrim(ltrim($usage,'/'),'/');
+        $media_folder_id = MediaFolder::where('path',$url)->value('id');
+
+        if (!Storage::exists($directory)) {
+            Storage::makeDirectory($directory, 0755, true);
+        }
+
+        //保存图片文件到服务器
+        $i = 0;
+        foreach ($files as $file) {
+            $extension = $file->getClientOriginalExtension();
+            $file_name = date('YmdHis').rand(100000, 999999) . '.' . $extension;
+
+            Storage::put( $url.'/'.$file_name, file_get_contents($file->getRealPath()));
+
+            $images_url[$i]['file_url'] = $usage.'/'.$file_name;
+            $images_url[$i]['usage'] = $usage;
+            $images_url[$i]['created_at'] = date("Y-m-d H:i:s");
+
+            $files_url[$i] = $images_url[$i]['file_url'];
+            $files_url_full[$i] = url('/image/original'.$files_url[$i] );
+
+            if($media_folder_id)
+            {
+                Media::create([
+                    'media_folder_id' => $media_folder_id,
+                    'path' => $url,
+                    'name' => $file_name,
+                    'url' => $images_url[$i]['file_url']
+                ]);
+            }
+            $i++;
+        }
+        return [
+            'file_url' => $files_url,
+            'file_url_full' => $files_url_full,
+        ];
+
+    }
 }

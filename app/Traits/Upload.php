@@ -34,7 +34,7 @@ trait Upload
             if (in_array($ext, config('filer.image_extensions'))) {
                 $array['url'] = url('image/original' . '/' . ltrim($array['path'],'/'));
             } else {
-                $array['url'] = url('file/display' . '/' . ltrim($array['path'],'/'));
+                $array['url'] = url('image/download' . '/' . ltrim($array['path'],'/'));
             }
 
             $data = [
@@ -55,22 +55,19 @@ trait Upload
     {
         $path   = explode('/', $path);
         $file   = array_pop($path);
-        $field  = array_pop($path);
-        $folder = implode('/', $path);
 
         if (Request::hasFile($file)) {
-            $ufolder         = $this->uploadFolder($config, $folder);
-            $array           = Filer::upload(Request::file($file), $ufolder);
+            $ufolder         = $this->uploadFolder($config);
+            $array = app(ImageService::class)->uploadFiles(Input::all(),$ufolder);
 
-            $array['folder'] = $folder . '/' . $field;
-            $array['path']   = $ufolder . '/' . $array['file'];
+            $array['path'] = $array['file_url'] = $array['file_url'][0];
 
-            $ext = pathinfo($array['file'], PATHINFO_EXTENSION);
+            $ext = pathinfo($array['path'], PATHINFO_EXTENSION);
 
             if (in_array($ext, config('filer.image_extensions'))) {
-                $array['url'] = url('image/original' . $ufolder . '/' . $array['file']);
+                $array['url'] = url('image/original' . '/' . ltrim($array['path'],'/'));
             } else {
-                $array['url'] = url('file/display' . $ufolder . '/' . $array['file']);
+                $array['url'] = url('image/download' . '/' . ltrim($array['path'],'/'));
             }
 
             $data = [

@@ -56,12 +56,14 @@
                             <p class="input-p">{{ $supplier_bill['total'] }}</p>
                         </div>
                     </div>
+                    <!--
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('contract.label.increase_price') }}</label>
                         <div class="layui-input-inline">
                             <p class="input-p">{{ $contract['increase_price'] }}</p>
                         </div>
                     </div>
+                    -->
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('airline_bill.label.total') }}</label>
                         <div class="layui-input-inline">
@@ -105,16 +107,16 @@
                         <thead>
                         <tr>
                             <th lay-data="{field:'id', fixed: 'left', totalRowText: 'Total：',width:80}">ID</th>
-                            <th lay-data="{field:'flight_date'}">{{ trans('supplier_bill_item.label.flight_date') }}</th>
-                            <th lay-data="{field:'flight_number'}">{{ trans('supplier_bill_item.label.flight_number') }}</th>
-                            <th lay-data="{field:'board_number'}">{{ trans('supplier_bill_item.label.board_number') }}</th>
-                            <th lay-data="{field:'order_number'}">{{ trans('supplier_bill_item.label.order_number') }}</th>
-                            <th lay-data="{field:'num_of_orders'}">{{ trans('supplier_bill_item.label.num_of_orders') }}</th>
-                            <th lay-data="{field:'mt', totalRow: true,toFixed:3}">{{ trans('supplier_bill_item.label.mt') }}</th>
-                            <th lay-data="{field:'usg', totalRow: true,toFixed:3}">{{ trans('supplier_bill_item.label.usg') }}</th>
-                            <th lay-data="{field:'unit'}">{{ trans('supplier_bill_item.label.unit') }}</th>
-                            <th lay-data="{field:'price'}">{{ trans('supplier_bill_item.label.price') }}</th>
-                            <th lay-data="{field:'total', totalRow: true,toFixed:3}">{{ trans('supplier_bill_item.label.total') }}</th>
+                            <th lay-data="{field:'flight_date'}">{{ trans('airline_bill_item.label.flight_date') }}</th>
+                            <th lay-data="{field:'flight_number'}">{{ trans('airline_bill_item.label.flight_number') }}</th>
+                            <th lay-data="{field:'board_number'}">{{ trans('airline_bill_item.label.board_number') }}</th>
+                            <th lay-data="{field:'order_number'}">{{ trans('airline_bill_item.label.order_number') }}</th>
+                            <th lay-data="{field:'num_of_orders'}">{{ trans('airline_bill_item.label.num_of_orders') }}</th>
+                            <th lay-data="{field:'mt', totalRow: true,toFixed:3}">{{ trans('airline_bill_item.label.mt') }}</th>
+                            <th lay-data="{field:'usg', totalRow: true,toFixed:3}">{{ trans('airline_bill_item.label.usg') }}</th>
+                            <th lay-data="{field:'unit'}">{{ trans('airline_bill_item.label.unit') }}</th>
+                            <th lay-data="{field:'price'}">{{ trans('airline_bill_item.label.price') }}</th>
+                            <th lay-data="{field:'total', totalRow: true,toFixed:3}">{{ trans('airline_bill_item.label.total') }}</th>
                         </tr>
                         </thead>
                         <tbody>

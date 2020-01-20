@@ -140,6 +140,13 @@ class Forms
         $this->mime('image/*', false);
         return $this;
     }
+    public function uploaderFile($url = null)
+    {
+        $this->url($url, false);
+        $this->view('filer::file', false);
+        $this->mime('file/*', false);
+        return $this;
+    }
 
     /**
      * Render the output

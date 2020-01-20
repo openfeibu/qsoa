@@ -50,54 +50,19 @@
                             <input type="text" name="pay_date" id="pay_date" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
                         </div>
                     </div>
-
-                    <div class="layui-form-item">
-                        <table lay-filter="supplier_bill_item" id="supplier_bill_item">
-                            <thead>
-                            <tr>
-                                <th lay-data="{field:'id', fixed: 'left', totalRowText: 'Total：',width:80}">ID</th>
-                                <th lay-data="{field:'flight_date',edit:'text'}">{{ trans('supplier_bill_item.label.flight_date') }}</th>
-                                <th lay-data="{field:'flight_number',edit:'text'}">{{ trans('supplier_bill_item.label.flight_number') }}</th>
-                                <th lay-data="{field:'board_number',edit:'text'}">{{ trans('supplier_bill_item.label.board_number') }}</th>
-                                <th lay-data="{field:'order_number',edit:'text'}">{{ trans('supplier_bill_item.label.order_number') }}</th>
-                                <th lay-data="{field:'num_of_orders',edit:'text'}">{{ trans('supplier_bill_item.label.num_of_orders') }}</th>
-                                <th lay-data="{field:'mt', totalRow: true,toFixed:3,edit:'text'}">{{ trans('supplier_bill_item.label.mt') }}</th>
-                                <th lay-data="{field:'usg', totalRow: true,toFixed:3,edit:'text'}">{{ trans('supplier_bill_item.label.usg') }}</th>
-                                <th lay-data="{field:'unit',edit:'text'}">{{ trans('supplier_bill_item.label.unit') }}</th>
-                                <th lay-data="{field:'price',edit:'text'}">{{ trans('supplier_bill_item.label.price') }}</th>
-                                <th lay-data="{field:'total', totalRow: true,toFixed:3}">{{ trans('supplier_bill_item.label.total') }}</th>
-                                <th lay-data="{fixed:'right', align: 'right',toolbar:'#barDemo',width:'100'}">{{ trans('app.actions') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($supplier_bill_items as $key => $supplier_bill_item)
-                                <tr>
-                                    <td>{{ $supplier_bill_item['id'] }}</td>
-                                    <td>{{ $supplier_bill_item['flight_date'] }}</td>
-                                    <td>{{ $supplier_bill_item['flight_number'] }}</td>
-                                    <td>{{ $supplier_bill_item['board_number'] }}</td>
-                                    <td>{{ $supplier_bill_item['order_number'] }}</td>
-                                    <td>{{ $supplier_bill_item['num_of_orders'] }}</td>
-                                    <td>{{ $supplier_bill_item['mt'] }}</td>
-                                    <td>{{ $supplier_bill_item['usg'] }}</td>
-                                    <td>{{ $supplier_bill_item['unit'] }}</td>
-                                    <td>{{ $supplier_bill_item['price'] }}</td>
-                                    <td>{{ $supplier_bill_item['total'] }}</td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('supplier_bill.label.total') }}</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="total" lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input" value="{{ $supplier_bill->total }}" d>
+                            <input type="text" name="total" lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input" value="{{ $supplier_bill->total }}" >
                         </div>
                     </div>
-                    -->
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{  trans('supplier_bill.label.file') }}</label>
+                        {!! $supplier_bill->files('file')
+                        ->url($supplier_bill->getFileURL('file'))
+                        ->uploaderFile()!!}
+                    </div>
 
                     <div class="layui-form-item">
                         <div class="layui-input-block">
@@ -112,13 +77,7 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-sm" href="{{ guard_url('supplier_bill_item') }}/@{{ d.id }}?type=bill">{{ trans('app.edit') }}</a>
-</script>
-{!! Theme::asset()->container('ueditor')->scripts() !!}
-<script>
-    var ue = getUe();
-</script>
+
 
 <script>
 
@@ -128,13 +87,7 @@
         var table = layui.table;
         var form = layui.form;
         var element = layui.element;
-        table.init('supplier_bill_item', {
-            cellMinWidth :'180'
-            ,totalRow: true //开启合计行
-            ,done:function(res, curr, count) {
-                var total = $(".layui-table-total").find("td[data-field='total']").find("div").text("{{ $supplier_bill->total }}")
-            }
-        });
+
 
         laydate.render({
             elem: '#invoice_date'
@@ -152,31 +105,6 @@
             ,type: 'date'
             ,range:'~'
             ,value: "{{ $supplier_bill['supply_start_date'] }} ~ {{ $supplier_bill['supply_end_date'] }}"
-        });
-
-        table.on('edit(supplier_bill_item)', function(obj){
-            var data = obj.data;
-            var value = obj.value //得到修改后的值
-                    ,data = obj.data //得到所在行所有键值
-                    ,field = obj.field; //得到字段
-            var ajax_data = {};
-            ajax_data['_token'] = "{!! csrf_token() !!}";
-            ajax_data[field] = value;
-            // 加载样式
-            var load = layer.load();
-            $.ajax({
-                url : "{{ guard_url('supplier_bill_item') }}"+'/'+data.id,
-                data : ajax_data,
-                type : 'PUT',
-                success : function (data) {
-                    layer.close(load);
-                    window.location.reload();
-                },
-                error : function (jqXHR, textStatus, errorThrown) {
-                    layer.close(load);
-                    $.ajax_error(jqXHR, textStatus, errorThrown);
-                }
-            });
         });
     });
 </script>

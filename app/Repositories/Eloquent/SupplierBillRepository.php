@@ -37,7 +37,7 @@ class SupplierBillRepository extends BaseRepository implements SupplierBillRepos
                 'status' => $data['status'],
                 'content' => $data['content'] ?? ''
             ]);
-            if($data['status'] == 'invalid')
+            if(in_array($data['status'],['invalid','rejected']))
             {
                 $this->refund($data['id']);
             }

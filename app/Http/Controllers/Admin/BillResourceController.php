@@ -35,7 +35,7 @@ class BillResourceController extends BaseController
     )
     {
         parent::__construct();
-        $this->repository = $airlineBillRepository;
+        $this->airlineBillrepository = $airlineBillRepository;
         $this->supplierBillRepository = $supplierBillRepository;
         $this->airportRepository = $airportRepository;
         $this->airlineBillItemRepository = $airlineBillItemRepository;
@@ -43,7 +43,7 @@ class BillResourceController extends BaseController
         $this->supplierRepository = $supplierRepository;
         $this->supplierBillItemRepository = $supplierBillItemRepository;
         $this->supplierBillItemInfoRepository = $supplierBillItemInfoRepository;
-        $this->repository
+        $this->airlineBillrepository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
 
@@ -53,7 +53,7 @@ class BillResourceController extends BaseController
         $search = $request->input('search',[]);
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
-            $bills = $this->repository;
+            $bills = $this->airlineBillrepository;
 
             $bills = $bills
                 ->whereIn('status',['finished'])
@@ -86,6 +86,11 @@ class BillResourceController extends BaseController
             ->data(compact('airports'))
             ->view('bill.index')
             ->output();
+    }
+
+    public function supplierBill(Request $request)
+    {
+
     }
 
     public function show(Request $request,AirlineBill $bill)

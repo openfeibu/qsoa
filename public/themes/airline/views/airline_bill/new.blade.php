@@ -60,7 +60,7 @@
                 ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}'}
                 ,{field:'incl_tax',title:'{{ trans('airline_bill.label.incl_tax') }}'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:320, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:350, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

@@ -14,7 +14,8 @@ return [
         'paid_date' => '实际付款日期',
         'paid_total' => '实际付款金额',
         'total' => '应付款金额',
-        'pay_status' => '付款状态'
+        'pay_status' => '付款状态',
+        'file' => '账单文件',
     ],
     'message'     => [
         'nopage' => 'Page not found.',
@@ -22,14 +23,14 @@ return [
         'create_repeat_airline_or_airport' => '请确保机场统一及航空公司统一！',
     ],
     'title' => '供应商账单管理',
-    'add' => '生成供应商账单',
+    'add' => '添加供应商账单',
     'status' => [
         'one-level' => [
             'new' => '未审核',
             'passed' => '已审核',
-            //'rejected' => '待修改',
+            'rejected' => '待修改',
             'invalid' => '已作废',
-            //'modified' => '已修改',
+            'modified' => '已修改',
             'bill' => '已出账',
             'rebill' => '重出账',
             'finished' => '已完成',
@@ -37,9 +38,9 @@ return [
         'two-level' => [
             'new' => '待审核',
             'passed' => '待出账',
-            //'rejected' => '已驳回',
+            'rejected' => '已驳回',
             'invalid' => '已作废',
-            //'modified' => '待再审',
+            'modified' => '待再审',
             'bill' => '已出账',
             'rebill' => '重出账',
             'finished' => '已完成',
@@ -47,9 +48,9 @@ return [
         'operation' => [
             'new' => '新建',
             'passed' => '审核',
-            //'rejected' => '待修改',
+            'rejected' => '待修改',
             'invalid' => '作废',
-            //'modified' => '已修改',
+            'modified' => '已修改',
             'bill' => '出账',
             'rebill' => '重出账',
             'finished' => '完成',

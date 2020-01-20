@@ -85,6 +85,15 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
     }
     public function airlineBillItems($airline_bill_id)
     {
+        $airline_bill_items = AirlineBillItem::where('airline_bill_id',$airline_bill_id)
+            ->orderBy('flight_date','asc')
+            ->get();
+
+        return $airline_bill_items;
+    }
+    /*
+    public function airlineBillItems($airline_bill_id)
+    {
         $airline_bill_items = AirlineBillItem::join('supplier_bill_items','supplier_bill_items.id','=','airline_bill_items.supplier_bill_item_id')
             ->where('airline_bill_id',$airline_bill_id)
             ->orderBy('supplier_bill_items.flight_date','asc')
@@ -92,6 +101,7 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
 
         return $airline_bill_items;
     }
+    */
     public function downloadWord($airline_bill)
     {
         $airline =  app(AirlineRepository::class)->find($airline_bill->airline_id);
