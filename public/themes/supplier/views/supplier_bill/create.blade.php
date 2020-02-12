@@ -14,25 +14,31 @@
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('supplier.name') }}</label>
                         <div class="layui-input-inline">
-                            @foreach($suppliers as $key => $supplier)
-                                <input type="radio" name="supplier_id" title="{{ $supplier->name }}"  value="{{ $supplier->id }}" lay-filter="suppliers" lay-verify="otherReq" >
-                            @endforeach
+                            <select name="supplier_id" class="layui-select" lay-search>
+                                @foreach($suppliers as $key => $supplier)
+                                    <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airport.name') }}</label>
                         <div class="layui-input-inline">
-                            @foreach($airports as $key => $airport)
-                                <input type="radio" name="airport_id" title="{{ $airport->name }}"  value="{{ $airport->id }}" lay-filter="airports" lay-verify="otherReq" >
-                            @endforeach
+                            <select name="airport_id" class="layui-select" lay-search>
+                                @foreach($airports as $key => $airport)
+                                    <option value="{{ $airport->id }}">{{ $airport->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airline.name') }}</label>
                         <div class="layui-input-inline">
-                            @foreach($airlines as $key => $airline)
-                                <input type="radio" name="airline_id" title="{{ $airline->name }}"  value="{{ $airline->id }}" lay-filter="airlines" lay-verify="otherReq" >
-                            @endforeach
+                            <select name="airline_id" class="layui-select" lay-search>
+                                @foreach($airlines as $key => $airline)
+                                    <option value="{{ $airline->id }}">{{ $airline->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
