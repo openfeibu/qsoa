@@ -13,7 +13,7 @@
                 <form class="layui-form" action="{{guard_url('supplier_bill_item')}}" method="post" lay-filter="fb-form">
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airport.name') }}</label>
-                        <div class="layui-input-inline">
+                        <div class="layui-input-block">
                             @foreach($airports as $key => $airport)
                                 <input type="radio" name="airport_id" title="{{ $airport->name }}"  value="{{ $airport->id }}" lay-filter="airports" lay-verify="otherReq" >
                             @endforeach
@@ -21,7 +21,7 @@
                     </div>
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airline.name') }}</label>
-                        <div class="layui-input-inline">
+                        <div class="layui-input-block">
                             @foreach($airlines as $key => $airline)
                                 <input type="radio" name="airline_id" title="{{ $airline->name }}"  value="{{ $airline->id }}" lay-filter="airlines" lay-verify="otherReq" >
                             @endforeach
