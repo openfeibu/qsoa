@@ -47,6 +47,7 @@ class BillMessageCommand extends Command
         app(BillMessageService::class)->deadlineSoonUnpaidAirlineBill();
         app(BillMessageService::class)->deadlineUnpaidAirlineBill();
         app(BillMessageService::class)->overdueUnpaidAirlineBill();
-        app(BillMessageService::class)->lessThanAirportPayTotal();
+       // app(BillMessageService::class)->lessThanAirportPayTotal();
+        pp(BillMessageService::class)->lessThanSupplierPayTotal();
     }
 }

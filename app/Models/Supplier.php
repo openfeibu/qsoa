@@ -22,7 +22,7 @@ class Supplier extends BaseModel
     protected $config = 'model.supplier.supplier';
 
 
-    protected $appends = ['area','can_cooperative_airports'];
+    protected $appends = ['area','can_cooperative_airports','balance_day'];
 
     public function canCooperativeAirports()
     {
@@ -34,9 +34,14 @@ class Supplier extends BaseModel
         $airports = $this->canCooperativeAirports()->get();
         return $airports;
     }
-
+    public function getBalanceDayAttribute()
+    {
+        $balance_day = $this->day_consume ? floor($this->balance / $this->day_consume) : 0;
+        return $balance_day;
+    }
     public function contracts()
     {
         return $this->morphMany('App\Models\Contract', 'contractable');
     }
+
 }

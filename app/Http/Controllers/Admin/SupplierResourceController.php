@@ -33,7 +33,6 @@ class SupplierResourceController extends BaseController
         $limit = $request->input('limit',config('app.limit'));
         $search = $request->input('search',[]);
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
-
         if ($this->response->typeIs('json')) {
             $suppliers = $this->repository;
             if(!empty($search_name))

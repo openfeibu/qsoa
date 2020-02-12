@@ -4,12 +4,14 @@ namespace App\Services;
 use App\Exceptions\RequestSuccessException;
 use App\Models\AirlineBill;
 use App\Models\Airport;
+use App\Models\Supplier;
 use App\Models\SupplierBalanceRecord;
 use App\Models\SupplierBill;
 use App\Repositories\Eloquent\AirlineBillRepository;
 use App\Repositories\Eloquent\SupplierBalanceRecordRepository;
 use App\Repositories\Eloquent\MessageRepository;
 use App\Repositories\Eloquent\SupplierBillRepository;
+use App\Repositories\Eloquent\SupplierRepository;
 use Illuminate\Http\Request;
 use Log,DB;
 
@@ -20,13 +22,15 @@ class BillMessageService
         SupplierBillRepository $supplierBillRepository,
         AirlineBillRepository $airlineBillRepository,
         MessageRepository $messageRepository,
-        SupplierBalanceRecordRepository $supplierBalanceRecordRepository
+        SupplierBalanceRecordRepository $supplierBalanceRecordRepository,
+        SupplierRepository $supplierRepository
     )
     {
         $this->supplierBillRepository = $supplierBillRepository;
         $this->airlineBillRepository = $airlineBillRepository;
         $this->messageRepository = $messageRepository;
         $this->supplierBalanceRecordRepository = $supplierBalanceRecordRepository;
+        $this->supplierRepository = $supplierRepository;
     }
     /* 6 天 内未审核的，通知航空公司管理员*/
     public function deadlineSoonNewSupplierBill()
@@ -178,6 +182,7 @@ class BillMessageService
     }
 
     /* 机场余额不足7、3、1天 */
+
     public function lessThanAirportPayTotal()
     {
         $airports = Airport::orderBy('id','desc')->get(['id','name','balance']);
@@ -207,5 +212,34 @@ class BillMessageService
         }
     }
 
+    /* 供应商余额不足7、3、1天 */
+    public function lessThanSupplierPayTotal()
+    {
+        $suppliers = Supplier::orderBy('id','desc')->get(['id','name','balance','day_consume']);
+        foreach ($suppliers as $ey => $supplier)
+        {
+            $average = $supplier->day_consume;
+            $day = 0;
+            if($supplier['balance'] < $average){
+                $day = 1;
+            }else if($supplier['balance'] < $average * 3){
+                $day = 3;
+            }else if($supplier['balance'] < $average * 7){
+                $day = 7;
+            }
+            if($day)
+            {
+                $content = trans('messages.supplier_less_than_day_pay_total',['supplier_name' => $suppliers->name,'day' => $day ]);
+                $this->messageRepository->createMessage([
+                    'admin_group' => config('model.user.admin.model.model'),
+                    'content' => $content
+                ]);
+                $this->messageRepository->createMessage([
+                    'admin_group' => config('model.supplier_user.supplier_user.model.model'),
+                    'content' => $content
+                ]);
+            }
+        }
+    }
 
 }
