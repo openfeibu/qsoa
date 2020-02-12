@@ -46,5 +46,5 @@ return [
     'confirm_reject' => '确定驳回？',
     'confirm_invalid' => '确定作废？',
     'less_than_day_pay_total' =>  ':airport_name 账户余额可能不足以支撑未来 :day 天的消费',
-
+    'supplier_less_than_day_pay_total' => '供应商 supplier_name 账户余额可能不足以支撑未来 :day 天的消费'
 ];

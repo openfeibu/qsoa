@@ -20,7 +20,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['name','leader','email','tel','position','country','country_id','province','province_id','city','city_id','address','used_balance','balance','created_at','updated_at'],
+        'fillable'     => ['name','leader','email','tel','position','country','country_id','province','province_id','city','city_id','address','used_balance','balance','day_consume','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/supplier',
         'encrypt'      => ['id'],

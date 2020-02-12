@@ -14,6 +14,8 @@ return [
         'address' => '详细地址',
         'can_cooperative_airport' => '需供油机场',
         'cooperative_airport' => '合作机场',
+        'day_consume' => '日消费',
+        'balance_day' => '余额天数',
     ],
     'message'     => [
         'nopage' => 'Page not found.',
