@@ -41,7 +41,12 @@
                             <input type="text" name="position" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
                         </div>
                     </div>
-
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{ trans('supplier.label.day_consume') }}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="day_consume" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
+                        </div>
+                    </div>
                     {!! Theme::widget('area')->render() !!}
 
                     <div class="layui-form-item level-high">

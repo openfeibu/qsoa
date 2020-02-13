@@ -71,6 +71,8 @@
                 ,{field:'area',title:'{{ trans('app.area') }}', width:180}
                 ,{field:'used_balance',title:'{{ trans('airport.label.used_balance') }}', width:120}
                 ,{field:'balance',title:'{{ trans('airport.label.balance') }}', width:120}
+                ,{field:'day_consume',title:'{{ trans('supplier.label.day_consume') }}', width:120,edit:'text'}
+                ,{field:'balance_day',title:'{{ trans('supplier.label.balance_day') }}', width:120}
                 ,{field:'can_cooperative_airports',title:'{{ trans('airline.label.can_cooperative_airport') }}', toolbar:'#canCooperativeAirportsTEM', width:200, event: "show_can_cooperative_airports"}
                 ,{field:'cooperative_airports',title:'{{ trans('airline.label.cooperative_airport') }}', toolbar:'#cooperativeAirportsTEM', width:200,event:"show_cooperative_airports"}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:300, align: 'right',toolbar:'#barDemo', fixed: 'right'}
