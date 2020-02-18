@@ -48,7 +48,7 @@
                             <input type="text" name="day_consume" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="{{ $supplier->day_consume }}">
                         </div>
                     </div>
-                    
+
                     {!! Theme::widget('area',['country_id' => $supplier->country_id,'province_id' => $supplier->province_id,'city_id' => $supplier->city_id ])->render() !!}
 
                     <div class="layui-form-item level-high">

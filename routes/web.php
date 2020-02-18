@@ -65,7 +65,11 @@ Route::group([
 
     Route::resource('contract', 'ContractResourceController');
     Route::post('/airline/destroyAll', 'AirlineResourceController@destroyAll')->name('airline.destroy_all');
-    Route::resource('bill', 'BillResourceController');
+
+    Route::get('bill', 'BillResourceController@index')->name('bill.index');
+    Route::get('bill/airline_bill', 'BillResourceController@airlineBill')->name('bill.airline_bill');
+    Route::get('bill/supplier_bill', 'BillResourceController@supplierBill')->name('bill.supplier_bill');
+
     Route::post('/airline/destroyAll', 'AirlineResourceController@destroyAll')->name('airline.destroy_all');
     Route::post('/contract/destroy_image', 'ContractResourceController@destroyImage');
     Route::resource('airline_contract', 'AirlineContractResourceController');

@@ -45,6 +45,8 @@ class BillResourceController extends BaseController
         $this->supplierBillItemInfoRepository = $supplierBillItemInfoRepository;
         $this->airlineBillrepository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
+        $this->supplierBillRepository
+            ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
 
     public function index(Request $request)
@@ -87,10 +89,79 @@ class BillResourceController extends BaseController
             ->view('bill.index')
             ->output();
     }
+    public function airlineBill(Request $request)
+    {
+        $limit = $request->input('limit',config('app.limit'));
+        $search = $request->input('search',[]);
+        $search_name = isset($search['search_name']) ? $search['search_name'] : '';
+        if ($this->response->typeIs('json')) {
+            $bills = $this->airlineBillrepository;
 
+            $bills = $bills
+                ->whereNotIn('status',['invalid'])
+                ->orderBy('paid_date','desc')
+                ->orderBy('id','desc')
+                ->paginate($limit);
+
+            $airline_bill_total = $airline_bill_paid_total = 0;
+            foreach ($bills as $key => $bill)
+            {
+                $bill->airline_bill_total = $bill->total;
+                $bill->airline_bill_paid_total = $bill->paid_total;
+                $airline_bill_total += $bill->total;
+                $airline_bill_paid_total += $bill->paid_total;
+            }
+
+            return $this->response
+                ->success()
+                ->count($bills->total())
+                ->data($bills->toArray()['data'])
+                ->totalRow(compact('airline_bill_total','airline_bill_paid_total'))
+                ->output();
+        }
+        $airports = $this->airportRepository->orderBy('id','desc')->get();
+
+        return $this->response->title(trans('bill.title'))
+            ->data(compact('airports'))
+            ->view('bill.airline_bill')
+            ->output();
+    }
     public function supplierBill(Request $request)
     {
+        $limit = $request->input('limit',config('app.limit'));
+        $search = $request->input('search',[]);
+        $search_name = isset($search['search_name']) ? $search['search_name'] : '';
+        if ($this->response->typeIs('json')) {
+            $bills = $this->supplierBillRepository;
 
+            $bills = $bills
+                ->whereNotIn('status',['invalid'])
+                ->orderBy('paid_date','desc')
+                ->orderBy('id','desc')
+                ->paginate($limit);
+
+           $supplier_bill_total = $supplier_bill_paid_total = 0;
+            foreach ($bills as $key => $bill)
+            {
+                $bill->supplier_bill_total = $bill->total;
+                $bill->supplier_bill_paid_total = $bill->paid_total;
+                $supplier_bill_total += $bill->total;
+                $supplier_bill_paid_total += $bill->paid_total;
+            }
+
+            return $this->response
+                ->success()
+                ->count($bills->total())
+                ->data($bills->toArray()['data'])
+                ->totalRow(compact('supplier_bill_total','supplier_bill_paid_total'))
+                ->output();
+        }
+        $airports = $this->airportRepository->orderBy('id','desc')->get();
+
+        return $this->response->title(trans('bill.title'))
+            ->data(compact('airports'))
+            ->view('bill.supplier_bill')
+            ->output();
     }
 
     public function show(Request $request,AirlineBill $bill)

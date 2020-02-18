@@ -63,7 +63,7 @@
             ,cols: [[
                 {checkbox: true, fixed: true}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'name',title:'{{ trans('supplier.label.name') }}', width:150,edit:'text'}
+                ,{field:'name',title:'{{ trans('supplier.name') }}', width:150,edit:'text'}
                 ,{field:'leader',title:'{{ trans('supplier.label.leader') }}', width:100,edit:'text'}
                 ,{field:'tel',title:'{{ trans('supplier.label.tel') }}', width:100,edit:'text'}
                 ,{field:'email',title:'{{ trans('supplier.label.email') }}', width:100,edit:'text'}
