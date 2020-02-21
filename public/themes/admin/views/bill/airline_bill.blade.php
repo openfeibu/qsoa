@@ -38,7 +38,7 @@
 
         table.render({
             elem: '#fb-table'
-            ,url: main_url
+            ,url: "{{guard_url('bill/airline_bill')}}"
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID',totalRowText: 'Total：', width:80, sort: true}
