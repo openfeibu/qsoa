@@ -57,6 +57,8 @@
                 ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}'}
                 ,{field:'price',title:'{{ trans('airline_bill.label.price') }}'}
                 ,{field:'total',title:'{{ trans('airline_bill.label.total') }}'}
+                ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}'}
+                ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
                 ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}'}
                 ,{field:'incl_tax',title:'{{ trans('airline_bill.label.incl_tax') }}'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100}

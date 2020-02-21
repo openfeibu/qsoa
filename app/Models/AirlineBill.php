@@ -15,6 +15,8 @@ class AirlineBill extends BaseModel
 
     protected $config = 'model.airline.airline_bill';
 
+    protected $appends = ['remaining_day'];
+
     public function getStatusOneLevelDesc($status)
     {
         return trans('airline_bill.status.one-level.'.$status);
@@ -32,6 +34,14 @@ class AirlineBill extends BaseModel
     {
         $html = '<button class="layui-btn %s layui-btn-xs">%s</button>';
         return sprintf($html,config($this->config.'.status_button.'.$status),$this->getStatusTwoLevelDesc($status));
+    }
+    public function getRemainingDayAttribute()
+    {
+        if(!$this->attributes['pay_date'])
+        {
+            return "";
+        }
+        return diffBetweenTwoDays(date('Y-m-d',strtotime($this->attributes['pay_date'])),date('Y-m-d'));
     }
     public function supplier_bill()
     {

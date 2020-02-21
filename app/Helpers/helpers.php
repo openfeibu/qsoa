@@ -888,3 +888,17 @@ function buildResponse($content)
         'Etag' => md5($content)
     ));
 }
+function diffBetweenTwoDays ($day1, $day2)
+{
+    $second1 = strtotime($day1);
+    $second2 = strtotime($day2);
+    $str = '';
+    if ($second1 < $second2) {
+        $tmp = $second2;
+        $second2 = $second1;
+        $second1 = $tmp;
+        $str = '-';
+    }
+    $day = ($second1 - $second2) / 86400;
+    return $str.$day;
+}
