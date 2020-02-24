@@ -239,6 +239,9 @@ Route::group([
     Route::resource('airport', 'AirportResourceController');
     Route::post('/airport/destroyAll', 'AirportResourceController@destroyAll')->name('airport.destroy_all');
 
+    Route::resource('supplier', 'SupplierResourceController');
+    Route::post('/supplier/top_up/{supplier}', 'SupplierResourceController@topUp');
+
     Route::resource('finance_user', 'FinanceUserResourceController');
     Route::post('/finance_user/destroyAll', 'FinanceUserResourceController@destroyAll')->name('finance_user.destroy_all');
 

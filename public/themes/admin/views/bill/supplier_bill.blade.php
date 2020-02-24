@@ -45,10 +45,10 @@
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
-                ,{field:'supplier_bill_pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.pay_date }}</div>'}
-                ,{field:'supplier_bill_total',title:'{{ trans('supplier_bill.label.total') }}',totalRow: true,toFixed:3, width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
-                ,{field:'supplier_bill_paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
-                ,{field:'supplier_bill_paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}', totalRow: true,toFixed:3,width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
+                ,{field:'supplier_bill_pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.pay_date }}</div>'}
+                ,{field:'supplier_bill_total',title:'{{ trans('supplier_bill.label.total') }}',totalRow: true,toFixed:3, width:180,templet:'<div>@{{ d.total }}</div>'}
+                ,{field:'supplier_bill_paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.paid_date || "" }}</div>'}
+                ,{field:'supplier_bill_paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}', totalRow: true,toFixed:3,width:180,templet:'<div>@{{ d.paid_total || "" }}</div>'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:160, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'

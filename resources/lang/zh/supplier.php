@@ -4,7 +4,7 @@ return [
     'name'        => '供应商',
     'names'       => '供应商',
     'label'       => [
-        'name' => '名称',
+        'name' => '供应商名称',
         'leader' => '联系人',
         'tel' => '电话',
         'email' => '邮箱',

@@ -4,7 +4,7 @@ return [
     'name'        => '机场',
     'names'       => '机场',
     'label'       => [
-        'name' => '名称',
+        'name' => '机场名称',
         'code' => '代码',
         'country' => '国家',
         'city' => '城市',

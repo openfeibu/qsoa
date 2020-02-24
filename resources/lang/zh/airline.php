@@ -4,7 +4,7 @@ return [
     'name'        => '航空公司',
     'names'       => '航空公司',
     'label'       => [
-        'name' => '名称',
+        'name' => '航空公司名称',
         'code' => '代码',
         'leader' => '负责人',
         'tel' => '电话',
