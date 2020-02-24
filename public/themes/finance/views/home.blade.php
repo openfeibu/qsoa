@@ -14,6 +14,18 @@
                                         <p><cite>{{ $airport_count }}</cite></p>
                                     </a>
                                 </li>
+                                <li class="layui-col-xs3">
+                                    <a lay-href="" class="fb-backlog-body">
+                                        <h3>航空公司总数</h3>
+                                        <p><cite>{{ $airline_count }}</cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-xs3">
+                                    <a lay-href="" class="fb-backlog-body">
+                                        <h3>供应商总数</h3>
+                                        <p><cite>{{ $supplier_count }}</cite></p>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

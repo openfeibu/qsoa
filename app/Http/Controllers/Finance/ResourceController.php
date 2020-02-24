@@ -6,6 +6,7 @@ use App\Models\Finance;
 use App\Models\FinanceBill;
 use App\Models\Airport;
 use App\Models\Supplier;
+use App\Models\Airline;
 use App\Models\SupplierBill;
 use Route;
 use App\Http\Controllers\Finance\Controller as BaseController;
@@ -38,10 +39,12 @@ class ResourceController extends BaseController
     public function home()
     {
 
-        $airport_count =Airport::count();
+        $airport_count = Airport::count();
+        $airline_count = Airline::count();
+        $supplier_count = Supplier::count();
 
         return $this->response->title(trans('app.admin.panel'))
-            ->data(compact('airport_count'))
+            ->data(compact('airport_count','airline_count','supplier_count'))
             ->view('home')
             ->output();
     }
