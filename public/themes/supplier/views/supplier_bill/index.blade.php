@@ -96,6 +96,7 @@
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
+                ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160}
                 ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
                 ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}

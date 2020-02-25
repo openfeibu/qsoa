@@ -37,9 +37,9 @@ class AirlineBill extends BaseModel
     }
     public function getRemainingDayAttribute()
     {
-        if(!$this->attributes['pay_date'])
+        if(!$this->attributes['pay_date'] || $this->attributes['paid_date'])
         {
-            return "";
+            return "/";
         }
         return diffBetweenTwoDays(date('Y-m-d',strtotime($this->attributes['pay_date'])),date('Y-m-d'));
     }

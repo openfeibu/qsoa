@@ -15,6 +15,8 @@ class SupplierBill extends BaseModel
 
     protected $config = 'model.supplier.supplier_bill';
 
+    protected $appends = ['remaining_day'];
+
     public function airport()
     {
         return $this->belongsTo('App\Models\Airport');
@@ -47,5 +49,12 @@ class SupplierBill extends BaseModel
     {
         return $this->hasMany(config('model.supplier.supplier_bill_item_info.model'));
     }
-
+    public function getRemainingDayAttribute()
+    {
+        if(!$this->attributes['pay_date'] || $this->attributes['paid_date'])
+        {
+            return "/";
+        }
+        return diffBetweenTwoDays(date('Y-m-d',strtotime($this->attributes['pay_date'])),date('Y-m-d'));
+    }
 }
