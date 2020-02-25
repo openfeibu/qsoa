@@ -48,7 +48,7 @@ return [
         'operation' => [
             'new' => '新建',
             'passed' => '审核',
-            'rejected' => '待修改',
+            'rejected' => '驳回',
             'invalid' => '作废',
             'modified' => '已修改',
             'bill' => '出账',
