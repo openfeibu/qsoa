@@ -26,24 +26,24 @@ return [
     'add' => '导入航空公司账单',
     'status' => [
         'one-level' => [
-            'new' => '待结算',
+            'new' => '待收款',
             'invalid' => '已作废',
             'modified' => '已修改',
-            'finished' => '已结算',
+            'finished' => '已收款',
         ],
         'two-level' => [
-            'new' => '待结算',
+            'new' => '待收款',
             'invalid' => '已作废',
             'modified' => '已修改',
-            'finished' => '已结算',
+            'finished' => '已收款',
         ],
         'actions' => [
-            'finish' => '结算',
+            'finish' => '收款',
         ],
         'operation' => [
             'new' => '新建',
             'invalid' => '作废',
-            'finished' => '结算',
+            'finished' => '收款',
         ],
     ],
     'pay_status' => [
