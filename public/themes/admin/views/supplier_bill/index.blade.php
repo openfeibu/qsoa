@@ -19,6 +19,16 @@
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('supplier_bill.label.sn') }}" autocomplete="off">
                 </div>
+                <!--
+                <div class="layui-inline">
+                    <select name="status" class="layui-select search_key">
+                        <option value="">{{ trans('app.status') }}</option>
+                        @foreach(trans('supplier_bill.status.one-level') as $key => $status_desc)
+                            <option value="{{ $key }}">{{ $status_desc }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                -->
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
             </div>
 

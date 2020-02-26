@@ -19,6 +19,7 @@
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('supplier_bill.label.sn') }}" autocomplete="off">
                 </div>
+
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
             </div>
 
