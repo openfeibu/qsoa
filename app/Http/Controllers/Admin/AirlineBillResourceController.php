@@ -103,11 +103,9 @@ class AirlineBillResourceController extends BaseController
         $search = $request->input('search',[]);
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
-            $bills = $this->repository
-                ->where(['airline_id' => Auth::user()->airline_id]);
+            $bills = $this->repository;
 
             $bills = $bills
-                ->orderBy('date','desc')
                 ->orderBy('id','desc')
                 ->paginate($limit);
             foreach ($bills as $key => $bill)

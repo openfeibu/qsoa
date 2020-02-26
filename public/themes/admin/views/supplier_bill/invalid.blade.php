@@ -50,16 +50,17 @@
                 ,{field:'id',title:'ID', width:80, sort: true}
                 ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}'}
-                ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}'}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
-                ,{field:'mt',title:'{{ trans('supplier_bill.label.mt') }}'}
-                ,{field:'usg',title:'{{ trans('supplier_bill.label.usg') }}'}
-                ,{field:'price',title:'{{ trans('supplier_bill.label.price') }}'}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}'}
-                ,{field:'status_button',title:'{{ trans('app.status') }}'}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:160, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
+                ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
+                ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}
+                ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
+                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }}</div>'}
+                ,{field:'status_button',title:'{{ trans('app.status') }}', width:100,fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:280, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

@@ -2,7 +2,7 @@
     <div class="layui-card fb-minNav">
         <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
             <a href="{{ guard_url('home') }}">{{ trans('app.home') }}</a><span lay-separator="">/</span>
-            <a href="{{ guard_url('new_supplier_bill') }}"><cite>{{ trans('supplier_bill.title') }}</cite></a>
+            <a href="{{ guard_url('airline_bill') }}"><cite>{{ trans('airline_bill.title') }}</cite></a>
         </div>
     </div>
     <div class="main_full">
@@ -11,13 +11,13 @@
             <div class="tabel-message">
                 {!! Theme::widget('BillSearch')->render() !!}
                 <div class="layui-inline">
-                    <input class="layui-input search_key" name="invoice_date" id="invoice_date" placeholder="{{ trans('supplier_bill.label.invoice_date') }}" autocomplete="off">
+                    <input class="layui-input search_key" name="issuing_date" id="issuing_date" placeholder="{{ trans('airline_bill.label.issuing_date') }}" autocomplete="off">
                 </div>
                 <div class="layui-inline">
-                    <input class="layui-input search_key" name="pay_date" id="pay_date" placeholder="{{ trans('supplier_bill.label.pay_date') }}" autocomplete="off">
+                    <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('airline_bill.label.sn') }}" autocomplete="off">
                 </div>
                 <div class="layui-inline">
-                    <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('supplier_bill.label.sn') }}" autocomplete="off">
+                    <input class="layui-input search_key" name="agreement_no" id="demoReload" placeholder="{{ trans('airline_bill.label.agreement_no') }}" autocomplete="off">
                 </div>
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
             </div>
@@ -29,11 +29,11 @@
     </div>
 </div>
 
-@include('supplier_bill/handle')
+@include('airline_bill/handle')
 
 <script>
-    var main_url = "{{guard_url('supplier_bill')}}";
-    var delete_all_url = "{{guard_url('supplier_bill/destroyAll')}}";
+    var main_url = "{{guard_url('airline_bill')}}";
+    var delete_all_url = "{{guard_url('airline_bill/destroyAll')}}";
     layui.use(['jquery','element','table','laydate'], function(){
         var $ = layui.$;
         var table = layui.table;
@@ -47,19 +47,23 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
-                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}'}
+                ,{field:'sn',title:'{{ trans('airline_bill.label.sn') }}', width:180}
+                ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
+                ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}', width:180}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
-                ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}'}
-                ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
+                ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}'}
+                ,{field:'price',title:'{{ trans('airline_bill.label.price') }}'}
+                ,{field:'total',title:'{{ trans('airline_bill.label.total') }}'}
+                ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}'}
+                ,{field:'incl_tax',title:'{{ trans('airline_bill.label.incl_tax') }}'}
+                ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}'}
                 ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
-                ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}
-                ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
-                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }}</div>'}
+                ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}'}
+                ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}'}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100,fixed: 'right'}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:280, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:380, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true
@@ -71,11 +75,7 @@
             }
         });
         laydate.render({
-            elem: '#invoice_date'
-            ,type: 'date'
-        });
-        laydate.render({
-            elem: '#pay_date'
+            elem: '#issuing_date'
             ,type: 'date'
         });
     });
@@ -83,4 +83,4 @@
 
 {!! Theme::partial('common_handle_js') !!}
 
-{!! Theme::partial('supplier_bill_handle_js') !!}
+{!! Theme::partial('airline_bill_handle_js') !!}
