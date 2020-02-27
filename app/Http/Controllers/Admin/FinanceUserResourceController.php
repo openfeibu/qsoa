@@ -58,7 +58,7 @@ class FinanceUserResourceController extends BaseController
 
             if(!empty($search_name))
             {
-                $data = $data->where(function ($query,$search_name){
+                $data = $data->where(function ($query) use ($search_name){
                     $query->where('email','like','%'.$search_name.'%')->orWhere('phone','like','%'.$search_name.'%')->orWhere('name','like','%'.$search_name.'%');
                 });
             }

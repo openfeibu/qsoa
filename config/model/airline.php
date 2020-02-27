@@ -82,6 +82,7 @@ return [
             'airline_id' => '=',
             'airport_id' => '=',
             'supplier_id' => '=',
+            'issuing_date' => '=',
         ],
     ],
     'airline_bill_item'     => [

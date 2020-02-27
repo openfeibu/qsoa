@@ -55,7 +55,7 @@ class FinanceUserResourceController extends BaseController
                 ->setPresenter(\App\Repositories\Presenter\FinanceUserPresenter::class);
             if(!empty($search_name))
             {
-                $data = $data->where(function ($query,$search_name){
+                $data = $data->where(function ($query) use ($search_name){
                     $query->where('email','like','%'.$search_name.'%');
                 });
             }

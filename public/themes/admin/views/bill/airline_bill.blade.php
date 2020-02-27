@@ -11,6 +11,16 @@
             <div class="tabel-message">
                 {!! Theme::widget('BillSearch')->render() !!}
 
+                <div class="layui-inline">
+                    <input class="layui-input search_key" name="issuing_date" id="issuing_date" placeholder="{{ trans('airline_bill.label.issuing_date') }}" autocomplete="off">
+                </div>
+                <div class="layui-inline">
+                    <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('airline_bill.label.sn') }}" autocomplete="off">
+                </div>
+                <div class="layui-inline">
+                    <input class="layui-input search_key" name="agreement_no" id="demoReload" placeholder="{{ trans('airline_bill.label.agreement_no') }}" autocomplete="off">
+                </div>
+
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
             </div>
 
@@ -42,6 +52,9 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID',totalRowText: 'Total：', width:80, sort: true}
+                ,{field:'sn',title:'{{ trans('airline_bill.label.sn') }}', width:180}
+                ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
+                ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}', width:180}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}

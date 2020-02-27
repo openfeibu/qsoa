@@ -15,6 +15,7 @@ use App\Repositories\Eloquent\SupplierBillItemRepository;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\AirlineBill;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Resource controller class for user.
@@ -53,15 +54,41 @@ class BillResourceController extends BaseController
     {
         $limit = $request->input('limit',config('app.limit'));
         $search = $request->input('search',[]);
-        $search_name = isset($search['search_name']) ? $search['search_name'] : '';
+
         if ($this->response->typeIs('json')) {
-            $bills = $this->airlineBillrepository;
+            $bills = AirlineBill::join('supplier_bills','supplier_bills.id','=','airline_bills.supplier_bill_id');
 
             $bills = $bills
-                ->whereIn('status',['finished'])
-                ->orderBy('paid_date','desc')
-                ->orderBy('id','desc')
-                ->paginate($limit);
+                ->when(isset($search['airport_id']) && $search['airport_id'] ,function ($query) use ($search){
+                return $query->where('airline_bills.airport_id',$search['airport_id']);
+            })
+                ->when(isset($search['airline_id']) && $search['airline_id'],function ($query) use ($search){
+                return $query->where('airline_bills.airline_id','=',$search['airline_id']);
+            })
+                ->when(isset($search['supplier_id']) && $search['supplier_id'],function ($query) use ($search){
+                return $query->where('airline_bills.supplier_id','=',$search['supplier_id']);
+            })
+                ->when(isset($search['airline_bills.issuing_date']) && $search['airline_bills.issuing_date'],function ($query) use ($search){
+                return $query->where('airline_bills.issuing_date','=',$search['airline_bills.issuing_date']);
+            })
+                ->when(isset($search['airline_bills.sn']) && $search['airline_bills.sn'],function ($query) use ($search){
+                return $query->where('airline_bills.sn','like','%'.$search['airline_bills.sn'].'%');
+            })
+                ->when(isset($search['airline_bills.agreement_no']) && $search['airline_bills.agreement_no'],function ($query) use ($search){
+                return $query->where('airline_bills.agreement_no','like','%'.$search['airline_bills.agreement_no'].'%');
+            })
+                ->when(isset($search['supplier_bills.sn']) && $search['supplier_bills.sn'],function ($query) use ($search){
+                return $query->where('supplier_bills.sn','like','%'.$search['supplier_bills.sn'].'%');
+            })
+                ->when(isset($search['supplier_bills.invoice_date']) && $search['supplier_bills.invoice_date'],function ($query) use ($search){
+                return $query->where('supplier_bills.invoice_date','=',$search['supplier_bills.invoice_date']);
+            });
+
+            $bills = $bills
+                ->whereIn('airline_bills.status',['finished'])
+                ->orderBy('airline_bills.paid_date','desc')
+                ->orderBy('airline_bills.id','desc')
+                ->paginate($limit,['airline_bills.*']);
 
             $airline_bill_total = $airline_bill_paid_total = $supplier_bill_total = $supplier_bill_paid_total = 0;
             foreach ($bills as $key => $bill)
@@ -74,6 +101,10 @@ class BillResourceController extends BaseController
                 $supplier_bill_total += $bill->supplier_bill->total;
                 $supplier_bill_paid_total += $bill->supplier_bill->paid_total;
             }
+            $airline_bill_total = (string)$airline_bill_total;
+            $airline_bill_paid_total = (string)$airline_bill_paid_total;
+            $supplier_bill_total = (string)$supplier_bill_total;
+            $supplier_bill_paid_total = (string)$supplier_bill_paid_total;
 
             return $this->response
                 ->success()
@@ -108,10 +139,11 @@ class BillResourceController extends BaseController
             {
                 $bill->airline_bill_total = $bill->total;
                 $bill->airline_bill_paid_total = $bill->paid_total;
-                $airline_bill_total += $bill->total;
-                $airline_bill_paid_total += $bill->paid_total;
+                $airline_bill_total = $bill->total ? $airline_bill_total + $bill->total : $airline_bill_total ;
+                $airline_bill_paid_total = $bill->paid_total ? $airline_bill_paid_total + $bill->paid_total : $airline_bill_paid_total ;
             }
-
+            $airline_bill_total = (string)$airline_bill_total;
+            $airline_bill_paid_total = (string)$airline_bill_paid_total;
             return $this->response
                 ->success()
                 ->count($bills->total())
@@ -148,7 +180,8 @@ class BillResourceController extends BaseController
                 $supplier_bill_total += $bill->total;
                 $supplier_bill_paid_total += $bill->paid_total;
             }
-
+            $supplier_bill_total = (string)$supplier_bill_total;
+            $supplier_bill_paid_total = (string)$supplier_bill_paid_total;
             return $this->response
                 ->success()
                 ->count($bills->total())
