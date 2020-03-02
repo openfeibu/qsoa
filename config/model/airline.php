@@ -72,7 +72,7 @@ return [
             'paid' => 'layui-btn-normal',
             'refund' => 'layui-btn-danger',
         ],
-        'upload_folder' => '/airline',
+        'upload_folder' => '/airline_bill',
         'encrypt'      => ['id'],
         'revision'     => ['sn'],
         'perPage'      => '20',

@@ -236,7 +236,7 @@ class AirlineBillResourceController extends BaseController
             return $this->response->message(trans('messages.success.created', ['Module' => trans('airline_bill.name')]))
                 ->http_code(201)
                 ->status('success')
-                ->url(guard_url('new_airline_bill'))
+                ->url(guard_url('airline_bill'))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
@@ -279,7 +279,7 @@ class AirlineBillResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('airline_bill.name')]))
                 ->code(0)
                 ->status('success')
-                ->url(guard_url('new_airline_bill'))
+                ->url(guard_url('airline_bill'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -383,7 +383,7 @@ class AirlineBillResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('airline_bill.name')]))
                 ->code(0)
                 ->status('success')
-                ->url(guard_url('finished_airline_bill'))
+                ->url(guard_url('airline_bill'))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
@@ -538,7 +538,7 @@ class AirlineBillResourceController extends BaseController
         return $this->response->message(trans('messages.success.created', ['Module' => trans('airline_bill.name')]))
             ->status("success")
             ->code(200)
-            ->url(guard_url('new_airline_bill'))
+            ->url(guard_url('airline_bill'))
             ->redirect();
 
     }
