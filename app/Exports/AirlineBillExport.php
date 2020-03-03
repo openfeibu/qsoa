@@ -39,7 +39,7 @@ class AirlineBillExport implements FromCollection,WithEvents,ShouldAutoSize
 
         $airport =  app(AirportRepository::class)->find($airline_bill->airport_id);
 
-        $contract = $airline->contracts->where('airport_id',$airline_bill->airport_id)->first();
+        //$contract = $airline->contracts->where('airport_id',$airline_bill->airport_id)->first();
 
         $supplier_bill = app(SupplierBillRepository::class)->find($airline_bill->supplier_bill_id);
 

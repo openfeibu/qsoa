@@ -500,7 +500,7 @@ class AirlineBillResourceController extends BaseController
             'supplier_bill_id' => $supplier_bill->id,
             'supplier_id' => $supplier_bill->supplier_id,
             'supplier_name' => $supplier_bill->supplier_name,
-            'airport_id' => $supplier_bill->id,
+            'airport_id' => $supplier_bill->airport_id,
             'airport_name' => $supplier_bill->airport_name,
             'airline_id' => $supplier_bill->airline_id,
             'airline_name' => $supplier_bill->airline_name,
