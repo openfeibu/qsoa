@@ -65,8 +65,8 @@ foreach($tables as $k => $v)
   $html .= '</tbody></table></p>';
 }
 /* 生成word */
-// header ( "Content-type:application/vnd.ms-word" );
-// header ( "Content-Disposition:attachment;filename={$database['DB_NAME']}数据字典.doc" );
+ header ( "Content-type:application/vnd.ms-word" );
+ header ( "Content-Disposition:attachment;filename={$database['DB_NAME']}数据字典.doc" );
 /* 生成excel*/
 //header ( "Content-type:application/vnd.ms-excel" );
 //header ( "Content-Disposition:attachment;filename={$database['DB_NAME']}数据字典.xls" );
