@@ -22,6 +22,7 @@ class MediaRepository extends BaseRepository implements MediaRepositoryInterface
 
         if(!$media)
         {
+            return ;
             throw new DataNotFoundException();
         }
 
