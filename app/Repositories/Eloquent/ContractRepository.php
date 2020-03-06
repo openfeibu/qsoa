@@ -20,12 +20,14 @@ class ContractRepository extends BaseRepository implements ContractRepositoryInt
     }
     public function createContract($attributes)
     {
-        $images = $attributes['images'];
+
         $date_arr = explode('~',$attributes['date']);
         $attributes['start_time'] = trim($date_arr[0]);
         $attributes['end_time'] = trim($date_arr[1]);
 
         $contract = $this->create($attributes);
+        $images = $attributes['images'] ?? [];
+
         foreach ($images as $key => $image)
         {
             $contract_image = ContractImage::create([
