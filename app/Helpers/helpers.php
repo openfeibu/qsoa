@@ -273,6 +273,12 @@ if (!function_exists('guard_url')) {
     }
 
 }
+if (!function_exists('guard_prefix')) {
+    function guard_prefix()
+    {
+        return empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
+    }
+}
 
 if (!function_exists('set_route_guard')) {
     /**

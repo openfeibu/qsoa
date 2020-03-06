@@ -59,4 +59,11 @@ return [
     'suspended'             => '用户已被暂停 :minutes 分钟。',
     'unbanned'              => '用户已被解禁。',
     'unsuspended'           => '已取消暂停。',
+
+    'roles' => [
+        'admin' => '超级管理员',
+        'supplier' => '供应商管理员',
+        'airline' => '航空公司管理员',
+        'finance' => '财务管理员',
+    ],
 ];
