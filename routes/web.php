@@ -11,6 +11,10 @@
 |
 */
 Route::get('test', 'TestController@test');
+
+Route::get('/', function () {
+    return redirect('/admin');
+});
 // Admin  routes  for user
 Route::group([
     'namespace' => 'Admin',

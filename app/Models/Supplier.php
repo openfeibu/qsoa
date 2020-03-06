@@ -36,7 +36,7 @@ class Supplier extends BaseModel
     }
     public function getBalanceDayAttribute()
     {
-        $balance_day = $this->day_consume ? floor($this->balance / $this->day_consume) : 0;
+        $balance_day = $this->day_consume && $this->day_consume >0 ? floor($this->balance / $this->day_consume) : 0;
         return $balance_day;
     }
     public function contracts()
