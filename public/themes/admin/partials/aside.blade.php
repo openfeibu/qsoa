@@ -1,6 +1,6 @@
 <div class="layui-side layui-side-menu">
     <div class="layui-side-scroll">
-        <div class="logo">乾盛 OA</div>
+        <div class="logo">UIPPC办公OA</div>
         <ul class="layui-nav layui-nav-tree" lay-filter="test">
             {{--{!!Menu::menu('admin', 'menu.menu.admin')!!}--}}
             @inject('permissionPresenter','App\Repositories\Presenter\PermissionPresenter')

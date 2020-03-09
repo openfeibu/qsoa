@@ -4,7 +4,7 @@
 		{!! Theme::partial('message') !!}
 		<div class="login-con-title">
 			<img src="/images/logo.jpeg"/>
-			<p>乾盛OA</p>
+			<p>慧銳國際有限公司办公OA系统</p>
 		</div>
 		{!!Form::vertical_open()->id('login')->method('POST')->class('layui-form')->action(guard_url('login')) !!}
 		<div class="layui-block">
