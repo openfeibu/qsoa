@@ -20,6 +20,17 @@
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airport.name') }}</label>
                         <div class="layui-input-block">
+                            <!--
+                            <select name="airport_id"  lay-search lay-verify="required">
+                                @foreach($airports as $key => $airport)
+                                    @if(in_array($airport->id,$exist_airport_ids))
+                                        <option value="{{ $airport->id }}" disabled>{{ $airport->name }}  ({{ trans('app.have_cooperation') }})</option>
+                                    @else
+                                        <option value="{{ $airport->id }}">{{ $airport->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            -->
                             @foreach($airports as $key => $airport)
                                 @if(in_array($airport->id,$exist_airport_ids))
                                     <input type="radio" name="airport_id" title="{{ $airport->name }} ({{ trans('app.have_cooperation') }})"  value="{{ $airport->id }}" lay-filter="airports" lay-verify="required" disabled >
