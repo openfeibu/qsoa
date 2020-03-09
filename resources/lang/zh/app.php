@@ -11,7 +11,7 @@ return [
     |
      */
 
-    'site_name'           => 'UIPPC',
+    'site_name'           => '慧銳國際有限公司办公OA系统',
     'name.html'      => '<b>Lava</b>lite',
     'name.short'     => '<b>L</b>l',
     'admin.panel'    => '管理面板',
