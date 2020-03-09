@@ -39,6 +39,7 @@ class ContractResourceController extends BaseController
         $limit = $request->input('limit',config('app.limit'));
         if ($this->response->typeIs('json')) {
             $contracts = $this->repository
+                ->orderBy('airport_id','desc')
                 ->orderBy('id','desc')
                 ->paginate($limit);
             foreach ($contracts as $key => $contract)

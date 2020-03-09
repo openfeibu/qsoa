@@ -40,6 +40,7 @@ class ContractResourceController extends BaseController
         if ($this->response->typeIs('json')) {
             $contracts = $this->repository
                 ->where('contractable_type',config('model.airline.airline.model'))
+                ->orderBy('airport_id','desc')
                 ->orderBy('id','desc')
                 ->paginate($limit);
             foreach ($contracts as $key => $contract)
