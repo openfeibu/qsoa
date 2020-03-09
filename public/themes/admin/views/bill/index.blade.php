@@ -61,14 +61,14 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID',totalRowText: 'Total：', width:80, sort: true}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180}
+                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
+                ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
                 ,{field:'sn',title:'{{ trans('airline_bill.name') }} {{ trans('airline_bill.label.sn') }}', width:180}
                 ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}',width:180}
                 ,{field:'sn',title:'{{ trans('supplier_bill.name') }} {{ trans('supplier_bill.label.sn') }}',templet:'<div>@{{ d.supplier_bill.sn }}</div>', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}', templet:'<div>@{{ d.supplier_bill.invoice_date }}</div>'}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180}
-                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
-                ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
                 ,{field:'airline_bill_total',title:'{{ trans('airline_bill.label.total') }}',totalRow: true,toFixed:3, width:180}
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}', width:180}

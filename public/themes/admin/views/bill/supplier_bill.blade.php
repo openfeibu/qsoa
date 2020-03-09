@@ -52,9 +52,9 @@
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID',totalRowText: 'Total：', width:80, sort: true}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180}
-                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}'}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
+                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}'}
                 ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
                 ,{field:'supplier_bill_pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.pay_date }}</div>'}

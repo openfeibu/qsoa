@@ -89,11 +89,11 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
-                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',width:140}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
+                ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
+                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',width:140}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160}
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
                 ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}

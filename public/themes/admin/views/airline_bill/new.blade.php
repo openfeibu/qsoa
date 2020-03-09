@@ -47,12 +47,13 @@
             ,url: index_url
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
+                ,{field:'id',title:'ID', width:80, sort: true}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
+                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
+                ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'sn',title:'{{ trans('airline_bill.label.sn') }}'}
                 ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}'}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}'}
-                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
-                ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}'}
                 ,{field:'price',title:'{{ trans('airline_bill.label.price') }}'}
                 ,{field:'total',title:'{{ trans('airline_bill.label.total') }}'}
