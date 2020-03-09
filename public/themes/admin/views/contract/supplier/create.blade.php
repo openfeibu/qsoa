@@ -32,11 +32,13 @@
                             </select>
                             -->
                             @foreach($airports as $key => $airport)
+                                <div class="layui-col-sm4">
                                 @if(in_array($airport->id,$exist_airport_ids))
                                     <input type="radio" name="airport_id" title="{{ $airport->name }} ({{ trans('app.have_cooperation') }})"  value="{{ $airport->id }}" lay-filter="airports" lay-verify="required" disabled >
                                 @else
                                     <input type="radio" name="airport_id" title="{{ $airport->name }}"  value="{{ $airport->id }}" lay-filter="airports" lay-verify="required" >
                                 @endif
+                                </div>
                             @endforeach
                         </div>
                     </div>
