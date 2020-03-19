@@ -31,11 +31,13 @@
             }
             ,done: function(res, index, upload){
                 console.log(res)
-                $("#path_{!!$field!!}").val(res.data.path);
-                $('#file_{!!$field!!}').show().attr('href', res.data.url);
-                layer.closeAll('loading'); //关闭loading
                 layer.msg(res.message);
-
+                layer.closeAll('loading'); //关闭loading
+                if(res.code == 0)
+                {
+                    $("#path_{!!$field!!}").val(res.data.path);
+                    $('#file_{!!$field!!}').show().attr('href', res.data.url);
+                }
             }
             ,error: function(index, upload){
                 layer.closeAll('loading'); //关闭loading

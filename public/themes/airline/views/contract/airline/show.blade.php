@@ -44,9 +44,8 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{  trans('contract.label.image') }}</label>
                         {!! $contract->files('images')
-                        ->url($contract->getUploadUrl('images'))
-                        ->deleteUrl(guard_url('contract/destroy_image'))
-                        ->uploaders()!!}
+                        ->url($contract->getFileURL('images'))
+                        ->uploaderFile()!!}
                     </div>
 
                     <div class="layui-form-item">
