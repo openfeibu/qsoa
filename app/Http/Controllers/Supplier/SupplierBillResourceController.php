@@ -131,7 +131,7 @@ class SupplierBillResourceController extends BaseController
             $attributes = $request->all();
 
             $attributes['sn'] = build_order_sn('sp');
-            $attributes['supplier_id'] = Auth::user()->supplier_id;
+            //$attributes['supplier_id'] = Auth::user()->supplier_id;
             $attributes['supplier_name'] = $this->supplierRepository->find($attributes['supplier_id'],['name'])->name;
             $attributes['airport_name'] = $this->airportRepository->find($attributes['airport_id'],['name'])->name;
             $attributes['airline_name'] = $this->airlineRepository->find($attributes['airline_id'],['name'])->name;

@@ -54,7 +54,7 @@ class SupplierUserResourceController extends BaseController
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
             $data = $this->repository
-                ->where(['supplier_id' => Auth::user()->supplier_id])
+                //->where(['supplier_id' => Auth::user()->supplier_id])
                 ->setPresenter(\App\Repositories\Presenter\SupplierUserPresenter::class);
             if(!empty($search_name))
             {
@@ -120,7 +120,7 @@ class SupplierUserResourceController extends BaseController
             $attributes              = $request->all();
             $roles          = $request->get('roles');
             $attributes['api_token'] = str_random(60);
-            $attributes['supplier_id'] = Auth::user()->supplier_id;
+            //$attributes['supplier_id'] = Auth::user()->supplier_id;
             $supplier_user = $this->repository->create($attributes);
             $supplier_user->roles()->sync($roles);
             return $this->response->message(trans('messages.success.created', ['Module' => trans('supplier_user.name')]))

@@ -53,7 +53,7 @@ class SupplierBillItemResourceController extends BaseController
         $supplier_bill_id = $request->get('supplier_bill_id',0);
         if ($this->response->typeIs('json')) {
             $bills = $this->repository
-                ->where(['supplier_id' => Auth::user()->supplier_id])
+                //->where(['supplier_id' => Auth::user()->supplier_id])
                 ->where('supplier_bill_id',$supplier_bill_id);
 
             $bills = $bills
@@ -138,7 +138,7 @@ class SupplierBillItemResourceController extends BaseController
         try {
             $attributes = $request->all();
 
-            $attributes['supplier_id'] = Auth::user()->supplier_id;
+            //$attributes['supplier_id'] = Auth::user()->supplier_id;
             $attributes['supplier_name'] = $this->supplierRepository->find($attributes['supplier_id'],['name'])->name;
             $attributes['airport_name'] = $this->airportRepository->find($attributes['airport_id'],['name'])->name;
             $attributes['airline_name'] = $this->airlineRepository->find($attributes['airline_id'],['name'])->name;

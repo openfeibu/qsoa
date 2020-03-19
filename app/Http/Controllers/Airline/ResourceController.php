@@ -36,8 +36,6 @@ class ResourceController extends BaseController
      */
     public function home()
     {
-        $airline_id = Auth::user()->airline_id;
-
         //供应商账单数
         $supplier_bill_count = SupplierBill::count();
         //待审核

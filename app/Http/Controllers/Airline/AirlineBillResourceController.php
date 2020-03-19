@@ -73,8 +73,8 @@ class AirlineBillResourceController extends BaseController
         $search = $request->input('search',[]);
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
-            $bills = $this->repository
-                ->where('airline_id',Auth::user()->airline_id);
+            $bills = $this->repository;
+                //->where('airline_id',Auth::user()->airline_id);
 
             $bills = is_array($status) ? $bills->whereIn('status',$status) : $bills->where('status',$status);
 

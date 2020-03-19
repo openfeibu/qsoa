@@ -54,7 +54,7 @@ class AirlineUserResourceController extends BaseController
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
             $data = $this->repository
-                ->where(['airline_id' => Auth::user()->airline_id])
+                //->where(['airline_id' => Auth::user()->airline_id])
                 ->setPresenter(\App\Repositories\Presenter\AirlineUserPresenter::class);
             if(!empty($search_name))
             {
@@ -120,7 +120,7 @@ class AirlineUserResourceController extends BaseController
             $attributes              = $request->all();
             $roles          = $request->get('roles');
             $attributes['api_token'] = str_random(60);
-            $attributes['airline_id'] = Auth::user()->airline_id;
+           // $attributes['airline_id'] = Auth::user()->airline_id;
             $airline_user = $this->repository->create($attributes);
             $airline_user->roles()->sync($roles);
             return $this->response->message(trans('messages.success.created', ['Module' => trans('airline_user.name')]))
