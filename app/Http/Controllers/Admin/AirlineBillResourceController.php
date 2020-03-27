@@ -226,7 +226,7 @@ class AirlineBillResourceController extends BaseController
     }
     public function downloadExcel(Request $request,AirlineBill $airline_bill)
     {
-        $name = $airline_bill->agreement_no.'('.date('YmdHis').').xlsx';
+        $name = $airline_bill->sn.'('.date('YmdHis').').xlsx';
         return Excel::download(new AirlineBillExport($airline_bill), $name);
     }
 }

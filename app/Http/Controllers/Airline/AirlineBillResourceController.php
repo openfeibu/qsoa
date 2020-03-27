@@ -400,7 +400,7 @@ class AirlineBillResourceController extends BaseController
     }
     public function downloadExcel(Request $request,AirlineBill $airline_bill)
     {
-        $name = $airline_bill->agreement_no.'('.date('YmdHis').').xlsx';
+        $name = $airline_bill->sn.'('.date('YmdHis').').xlsx';
         return Excel::download(new AirlineBillExport($airline_bill), $name);
     }
 
@@ -479,11 +479,13 @@ class AirlineBillResourceController extends BaseController
                 {
                     $item[$keys[$j]] = $res[$i][$j];
                 }
+
                 $item['mt'] = (float)$item['mt'];
                 $mt_usg = (float)substr($item['usg'],strpos($item['usg'],'*')+1);
                 $item['usg'] = $item['mt'] * $mt_usg;
 
-                $item['price'] = bill_round($item['price']);
+                $item['price'] = $item['price'];
+
                 $item['total'] =  bill_round($item['usg'] * $item['price']);
 
                 $items[] = $item;
