@@ -140,7 +140,7 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
         $title = date('Y',strtotime($supplier_bill->supply_start_date)).'年'.date('n',strtotime($supplier_bill->supply_start_date)).'月'.$month_desc.' '.$airport->code.' 机场加油汇总表';
         $document->setValue('title', $title);
 
-        $name = $airline_bill->agreement_no.'('.date('YmdHis').').docx';
+        $name = $airline_bill->sn.'('.date('YmdHis').').docx';
         $path = storage_path('uploads/word/'.$name);
         $document->saveAs($path);
 
