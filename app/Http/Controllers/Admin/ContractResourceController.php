@@ -96,25 +96,32 @@ class ContractResourceController extends BaseController
         }
 
         try {
-            $images = $attributes['image'];
             $date_arr = explode('~',$attributes['date']);
             $attributes['start_time'] = trim($date_arr[0]);
             $attributes['end_time'] = trim($date_arr[1]);
 
             $contract = $this->repository->create($attributes);
 
-            foreach ($images as $image)
+            if(isset($attributes['images']))
             {
-                $contract_image = ContractImage::create([
-                    'url' => $image,
-                    'contract_id' => $contract->id
-                ]);
-                Media::where('url',$image)->update([
-                    'mediaable_id' => $contract->id,
-                    'mediaable_type' => 'App\Models\Contract'
-                ]);
+                if(is_array($attributes['images']))
+                {
+                    $images = $attributes['images'];
+                }else{
+                    $images[] = $attributes['images'];
+                }
+                foreach ($images as $image)
+                {
+                    $contract_image = ContractImage::create([
+                        'url' => $image,
+                        'contract_id' => $contract->id
+                    ]);
+                    Media::where('url',$image)->update([
+                        'mediaable_id' => $contract->id,
+                        'mediaable_type' => 'App\Models\Contract'
+                    ]);
+                }
             }
-
             return $this->response->message(trans('messages.success.created', ['Module' => trans('contract.name')]))
                 ->code(0)
                 ->status('success')

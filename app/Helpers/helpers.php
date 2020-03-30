@@ -879,7 +879,7 @@ if(!function_exists('airline_bill_total')) {
 if(!function_exists('bill_round')) {
     function bill_round($price)
     {
-        return round($price,3);
+        return round($price,4);
     }
 }
 function buildResponse($content)

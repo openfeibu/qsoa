@@ -23,7 +23,8 @@ class Contract extends BaseModel
     }
     public function getImagesAttribute()
     {
-        return $this->attributes ? ContractImage::where('contract_id',$this->attributes['id'])->orderBy('order','asc')->orderBy('id','asc')->pluck('url')->toArray() : [];
+        //return $this->attributes ? ContractImage::where('contract_id',$this->attributes['id'])->orderBy('order','asc')->orderBy('id','asc')->pluck('url')->toArray() : [];
+        return $this->attributes ? ContractImage::where('contract_id',$this->attributes['id'])->orderBy('order','asc')->orderBy('id','asc')->value('url') : '';
     }
 
     public function airport()

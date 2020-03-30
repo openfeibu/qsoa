@@ -226,6 +226,7 @@ Route::group([
     Route::post('/role/destroyAll', 'RoleResourceController@destroyAll')->name('role.destroy_all');
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
+    Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
 });
 
 Route::group([

@@ -26,19 +26,24 @@ class ContractRepository extends BaseRepository implements ContractRepositoryInt
         $attributes['end_time'] = trim($date_arr[1]);
 
         $contract = $this->create($attributes);
-        $images = $attributes['images'] ?? [];
 
-        foreach ($images as $key => $image)
-        {
-            $contract_image = ContractImage::create([
-                'url' => $image,
-                'contract_id' => $contract->id,
-                'order' => $key+1
-            ]);
-            Media::where('url',$image)->update([
-                'mediaable_id' => $contract->id,
-                'mediaable_type' => 'App\Models\Contract'
-            ]);
+        if(isset($attributes['images'])) {
+            if (is_array($attributes['images'])) {
+                $images = $attributes['images'];
+            } else {
+                $images[] = $attributes['images'];
+            }
+            foreach ($images as $key => $image) {
+                $contract_image = ContractImage::create([
+                    'url' => $image,
+                    'contract_id' => $contract->id,
+                    'order' => $key + 1
+                ]);
+                Media::where('url', $image)->update([
+                    'mediaable_id' => $contract->id,
+                    'mediaable_type' => 'App\Models\Contract'
+                ]);
+            }
         }
         return $contract;
     }
@@ -54,7 +59,12 @@ class ContractRepository extends BaseRepository implements ContractRepositoryInt
         $contract->update($attributes);
         if(isset($attributes['images']))
         {
-            $images = $attributes['images'];
+            if(is_array($attributes['images']))
+            {
+                $images = $attributes['images'];
+            }else{
+                $images[] = $attributes['images'];
+            }
             foreach ($images as $key => $image)
             {
                 $contract_image = ContractImage::where('url',$image)->where('contract_id',$contract->id)->first();
