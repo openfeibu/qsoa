@@ -28,6 +28,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-sm" href="{{ guard_url('supplier_contract/create?supplier_id=') }}@{{d.id}}">增加合作机场</a>
     <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="top_up">{{ trans('app.top_up') }}</a>
+    <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="fee_deduction">{{ trans('app.fee_deduction') }}</a>
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
 </script>
@@ -75,7 +76,7 @@
                 ,{field:'position',title:'{{ trans('supplier.label.position') }}', width:100,edit:'text'}
                 ,{field:'area',title:'{{ trans('app.area') }}', width:180}
                 ,{field:'can_cooperative_airports',title:'{{ trans('airline.label.can_cooperative_airport') }}', toolbar:'#canCooperativeAirportsTEM', width:200, event: "show_can_cooperative_airports"}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:300, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:360, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true
@@ -117,6 +118,40 @@
                         type : 'POST',
                         success : function (data) {
                             layer.close(load);
+                            var nPage = $(".layui-laypage-curr em").eq(1).text();
+                            //执行重载
+                            table.reload('fb-table', {
+
+                            });
+                        },
+                        error : function (jqXHR, textStatus, errorThrown) {
+                            layer.close(load);
+                            $.ajax_error(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                });
+
+            }else if(obj.event === 'fee_deduction'){
+                layer.prompt({
+                    formType: 0,
+                    value: '',
+                    title: '{{ trans('app.fee_deduction') }}',
+                }, function(value, index, elem){
+                    layer.close(index);
+                    // 加载样式
+                    var load = layer.load();
+                    $.ajax({
+                        url : "{{ guard_url('supplier/fee_deduction') }}/"+data.id,
+                        data : {'total':value,'_token':"{!! csrf_token() !!}"},
+                        type : 'POST',
+                        success : function (data) {
+                            layer.close(load);
+                            if(data.code != 0)
+                            {
+                                layer.msg(data.message);
+                                return false;
+                            }
+
                             var nPage = $(".layui-laypage-curr em").eq(1).text();
                             //执行重载
                             table.reload('fb-table', {

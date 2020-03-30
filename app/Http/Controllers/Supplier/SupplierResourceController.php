@@ -210,4 +210,25 @@ class SupplierResourceController extends BaseController
                 ->redirect();
         }
     }
+    public function feeDeduction(Request $request,Supplier $supplier)
+    {
+        try {
+            $attributes = $request->all();
+
+            $total = $attributes['total'];
+            $this->supplierBalanceRecordRepository->feeDeduction($supplier->id,$total);
+
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier.name')]))
+                ->code(0)
+                ->status('success')
+                ->url(guard_url('supplier'))
+                ->redirect();
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
+                ->url(guard_url('supplier'))
+                ->redirect();
+        }
+    }
 }

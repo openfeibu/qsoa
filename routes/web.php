@@ -63,6 +63,7 @@ Route::group([
     Route::resource('supplier', 'SupplierResourceController');
     Route::post('/supplier/destroyAll', 'SupplierResourceController@destroyAll')->name('supplier.destroy_all');
     Route::post('/supplier/top_up/{supplier}', 'SupplierResourceController@topUp');
+    Route::post('/supplier/fee_deduction/{supplier}', 'SupplierResourceController@feeDeduction');
 
     Route::resource('airport', 'AirportResourceController');
     Route::post('/airport/destroyAll', 'AirportResourceController@destroyAll')->name('airport.destroy_all');
@@ -147,6 +148,7 @@ Route::group([
 
     Route::resource('supplier', 'SupplierResourceController');
     Route::post('/supplier/top_up/{supplier}', 'SupplierResourceController@topUp');
+    Route::post('/supplier/fee_deduction/{supplier}', 'SupplierResourceController@feeDeduction');
 
     Route::resource('supplier_bill_item', 'SupplierBillItemResourceController');
 
