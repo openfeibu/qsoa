@@ -16,6 +16,7 @@ return [
         'total' => '应付款金额',
         'pay_status' => '付款状态',
         'file' => '账单文件',
+        'remark' => '备注',
     ],
     'message'     => [
         'nopage' => 'Page not found.',

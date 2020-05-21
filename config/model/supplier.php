@@ -89,7 +89,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['sn','invoice_date','supplier_id','supplier_name','airport_id','airport_name','airline_id','airline_name','supply_start_date','supply_end_date','mt','usg','price','total','status','pay_date','paid_date','paid_total','pay_status','file'],
+        'fillable'     => ['sn','invoice_date','supplier_id','supplier_name','airport_id','airport_name','airline_id','airline_name','supply_start_date','supply_end_date','mt','usg','price','total','status','pay_date','paid_date','paid_total','pay_status','file','remark'],
         'translate'    => [],
         'status_button' => [
             'new' => 'layui-btn-primary',

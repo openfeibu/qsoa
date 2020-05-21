@@ -151,6 +151,7 @@ class SupplierBalanceRecordRepository extends BaseRepository implements Supplier
             throw new OutputServerMessageException('供应商余额不足');
         }
         $update_balance = Supplier::where('id',$supplier_id)->update(['balance' => $new_balance]);
+        Supplier::where('id',$supplier_id)->update(['used_balance' => $supplier->used_balance + $total]);
 
         if($update_balance){
             $balanceData = array(

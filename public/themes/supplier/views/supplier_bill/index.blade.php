@@ -105,6 +105,7 @@
                 ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}
                 ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
                 ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div>@{{#  if(d.file){ }}<a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }} @{{# } }}</div>'}
+                ,{field:'remark',title:'{{ trans('supplier_bill.label.remark') }}',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}',width:100 ,fixed: 'right'}
                 ,{field:'pay_status_button',title:'{{ trans('app.pay_status') }}',width:100, fixed: 'right'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:220, align: 'right',toolbar:'#barDemo', fixed: 'right'}

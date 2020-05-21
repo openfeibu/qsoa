@@ -18,6 +18,7 @@ return [
         'paid_total' => '实际收款金额',
         'tax' => 'Tax',
         'incl_tax' => 'Incl.Tax',
+        'remark' => '备注',
     ],
     'message'     => [
         'nopage' => 'Page not found.',
