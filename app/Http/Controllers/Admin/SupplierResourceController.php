@@ -148,7 +148,7 @@ class SupplierResourceController extends BaseController
     public function destroy(Request $request,Supplier $supplier)
     {
         try {
-            $this->repository->forceDelete([$supplier->id]);
+            $this->repository->deleteSupplier([$supplier->id]);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('supplier.title')]))
                 ->status("success")
@@ -170,6 +170,10 @@ class SupplierResourceController extends BaseController
         try {
             $data = $request->all();
             $ids = $data['ids'];
+            foreach ($ids as $id)
+            {
+                $this->repository->deleteSupplier([$id]);
+            }
             $this->repository->forceDelete($ids);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('supplier.title')]))

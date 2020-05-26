@@ -144,7 +144,7 @@ class AirlineResourceController extends BaseController
     public function destroy(Request $request,airline $airline)
     {
         try {
-            $this->repository->forceDelete([$airline->id]);
+            $this->repository->deleteAirline($airline->id);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('airline.name')]))
                 ->status("success")
@@ -166,6 +166,10 @@ class AirlineResourceController extends BaseController
         try {
             $data = $request->all();
             $ids = $data['ids'];
+            foreach ($ids as $id)
+            {
+                $this->repository->deleteAirline([$id]);
+            }
             $this->repository->forceDelete($ids);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('airline.name')]))
