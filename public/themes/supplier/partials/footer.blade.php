@@ -11,6 +11,9 @@
                 ,layer = layui.layer
                 ,layedit = layui.layedit
                 ,laydate = layui.laydate;
+        $(document).ready(function() {
+            form.render();
+        })
         //监听导航点击
         element.on('nav(demo)', function(elem){
             //console.log(elem)
