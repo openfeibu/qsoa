@@ -73,6 +73,11 @@
         <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
         @{{#  } }}
         <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
+    @{{#  } else if(d.status == 'finished'){ }}
+    @{{#  if(d.pay_status == 'unpaid'){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
+    @{{#  } }}
+    <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
     @{{#  } else{ }}
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
     @{{#  } }}
