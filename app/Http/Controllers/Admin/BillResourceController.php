@@ -93,8 +93,6 @@ class BillResourceController extends BaseController
             $airline_bill_total = $airline_bill_paid_total = $supplier_bill_total = $supplier_bill_paid_total = 0;
             foreach ($bills as $key => $bill)
             {
-                $bill->supplier_bill->paid_total = $bill->supplier_bill->paid_total ? $bill->supplier_bill->paid_total : '';
-                $bill->supplier_bill->paid_date = $bill->supplier_bill->paid_date ? $bill->supplier_bill->paid_date : '';
                 $bill->supplier_bill = $bill->supplier_bill;
                 $bill->airline_bill_total = $bill->total;
                 $bill->airline_bill_paid_total = $bill->paid_total;
@@ -102,6 +100,9 @@ class BillResourceController extends BaseController
                 $airline_bill_paid_total += $bill->paid_total;
                 $supplier_bill_total += $bill->supplier_bill->total;
                 $supplier_bill_paid_total += $bill->supplier_bill->paid_total;
+                $bill->supplier_bill->paid_total = $bill->supplier_bill->paid_total ? $bill->supplier_bill->paid_total : '';
+                $bill->supplier_bill->paid_date = $bill->supplier_bill->paid_date ? $bill->supplier_bill->paid_date : '';
+                $bill->supplier_bill = $bill->supplier_bill;
             }
             $airline_bill_total = (string)$airline_bill_total;
             $airline_bill_paid_total = (string)$airline_bill_paid_total;
