@@ -7,7 +7,7 @@ return [
         'sn' => '编号',
         'agreement_no' => '合同编号',
         'issuing_date' => '开证日期',
-        'mt' => 'MT',
+        'mt' => 'MT or L',
         'usg' => 'USG',
         'price' => '单价',
         'total' => '应收款金额',
