@@ -7,7 +7,7 @@ return [
         'sn' => '编号',
         'invoice_date' => '账单日期',
         'date_of_supply' => '供油日期',
-        'mt' => 'MT',
+        'mt' => 'MT or L',
         'usg' => 'USG',
         'price' => '单价',
         'pay_date' => '应付款日期',
