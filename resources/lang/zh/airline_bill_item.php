@@ -9,7 +9,7 @@ return [
         'board_number' => 'Board Number',
         'order_number' => 'Order Number',
         'num_of_orders' => ' Num. of orders',
-        'mt' => 'MT',
+        'mt' => 'MT or L',
         'usg' => 'USG',
         'unit' => 'unit',
         'price' => '单价',
