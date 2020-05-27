@@ -481,8 +481,9 @@ class AirlineBillResourceController extends BaseController
                 }
 
                 $item['mt'] = (float)$item['mt'];
-                $mt_usg = (float)substr($item['usg'],strpos($item['usg'],'*')+1);
-                $item['usg'] = $item['mt'] * $mt_usg;
+                //$mt_usg = (float)substr($item['usg'],strpos($item['usg'],'*')+1);
+                //$item['usg'] = $item['mt'] * $mt_usg;
+                $item['usg'] = $item['usg'];
 
                 $item['price'] = $item['price'];
 
