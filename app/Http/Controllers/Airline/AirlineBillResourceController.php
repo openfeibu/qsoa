@@ -423,8 +423,8 @@ class AirlineBillResourceController extends BaseController
         $res = array_filter($res);
         $all_sheet_count = count($res);
 
-        $supply_start_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[2][8]))->format('Y-m-d');
-        $supply_end_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[2][10]))->format('Y-m-d');
+        //$supply_start_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[2][8]))->format('Y-m-d');
+        //$supply_end_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[2][10]))->format('Y-m-d');
         /*
         $airline_name = rtrim(ltrim($res[2][2],' '),' ');
         $airport_name = rtrim(ltrim($res[2][5],' '),' ');
