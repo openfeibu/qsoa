@@ -200,7 +200,7 @@ class SupplierBillResourceController extends BaseController
             $data = $request->all();
             $id = $data['id'];
             $supplier_bill = $this->repository->find($data['id']);
-            if(!in_array($supplier_bill->status,['new','modified','rejected','passed']) )
+            if(!in_array($supplier_bill->status,['new','modified','rejected','passed','rebill']) )
             {
                 throw new OutputServerMessageException(trans('messages.operation.illegal'));
             }
