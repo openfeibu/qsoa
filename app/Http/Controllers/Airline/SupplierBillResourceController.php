@@ -135,7 +135,30 @@ class SupplierBillResourceController extends BaseController
             ->view($view)
             ->output();
     }
+    public function update(Request $request, SupplierBill $supplier_bill)
+    {
+        try {
+            $attributes = $request->all();
 
+            if(isset($attributes['remark']))
+            {
+                $data['remark'] = $attributes['remark'];
+                $supplier_bill->update($data);
+            }
+
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier_bill.name')]))
+                ->code(0)
+                ->status('success')
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
+                ->url(guard_url('supplier_bill/' . $supplier_bill->id))
+                ->redirect();
+        }
+    }
     public function pass(Request $request)
     {
         try {

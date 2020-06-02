@@ -193,6 +193,7 @@ Route::group([
     Route::resource('airline_contract', 'AirlineContractResourceController');
 
     Route::get('supplier_bill', 'SupplierBillResourceController@index')->name('supplier_bill.index');
+    Route::put('supplier_bill/{supplier_bill}', 'SupplierBillResourceController@update')->name('supplier_bill.update');
     Route::get('supplier_bill/{supplier_bill}', 'SupplierBillResourceController@show')->name('supplier_bill.show');
     Route::post('/supplier_bill/pass', 'SupplierBillResourceController@pass')->name('supplier_bill.pass');
     Route::post('/supplier_bill/reject', 'SupplierBillResourceController@reject')->name('supplier_bill.reject');
