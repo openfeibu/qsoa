@@ -29,12 +29,6 @@ class AirportResourceController extends BaseController
 
         if ($this->response->typeIs('json')) {
             $airports = $this->repository;
-            if(!empty($search_name))
-            {
-                $airports = $airports->where(function ($query) use ($search_name){
-                    return $query->where('name','like','%'.$search_name.'%')->orWhere('code','like','%'.$search_name.'%');
-                });
-            }
             $airports = $airports->orderBy('id','desc')
                 ->paginate($limit);
 

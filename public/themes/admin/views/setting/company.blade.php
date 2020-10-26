@@ -2,8 +2,7 @@
     <div class="layui-card fb-minNav">
         <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
             <a href="{{ guard_url('home') }}">{{ trans('app.home') }}</a><span lay-separator="">/</span>
-            <a><cite>公司信息管理</cite></a><span lay-separator="">/</span>
-            <a><cite>联系我们</cite></a>
+            <a><cite>公司信息管理</cite></a>
         </div>
     </div>
     <div class="main_full">
@@ -17,48 +16,12 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">地址</label>
+                        <label class="layui-form-label">账单word底部地址</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="address" lay-verify="address" autocomplete="off" placeholder="请输入地址" class="layui-input" value="{{$company['address']}}">
+                            <input type="text" name="word_address" autocomplete="off" placeholder="请输入账单word底部地址" class="layui-input" value="{{$company['word_address']}}">
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">电话</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="tel" lay-verify="tel" autocomplete="off" placeholder="请输入电话" class="layui-input" value="{{$company['tel']}}">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">邮箱</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="请输入邮箱" class="layui-input" value="{{$company['email']}}">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">QQ</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="qq" lay-verify="qq" autocomplete="off" placeholder="请输入QQ" class="layui-input" value="{{$company['qq']}}">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">经纬度</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="longitude" lay-verify="longitude" autocomplete="off" placeholder="请输入经度" class="layui-input" value="{{$company['longitude']}}">
-                        </div>
-                        <div class="layui-input-inline">
-                            <input type="text" name="latitude" lay-verify="latitude" autocomplete="off" placeholder="请输入纬度" class="layui-input" value="{{$company['latitude']}}">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">获取点位</label>
-                        <div class="layui-input-inline">
-                            <input id="keyword" type="textbox"  class="layui-input"  value="">
-                            <input type="button" value="搜索" class="layui-button-mapsearch"  onclick="searchKeyword()">
-                            <div class="layui-form-mid layui-word-aux">点击地图快速获取经纬度</div>
-                        </div>
 
-                        <div id="map"></div>
-                    </div>
 
                     <div class="layui-form-item">
                         <div class="layui-input-block">

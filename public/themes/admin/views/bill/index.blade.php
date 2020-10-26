@@ -70,13 +70,13 @@
                 ,{field:'sn',title:'{{ trans('supplier_bill.name') }} {{ trans('supplier_bill.label.sn') }}',templet:'<div>@{{ d.supplier_bill.sn }}</div>', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}', templet:'<div>@{{ d.supplier_bill.invoice_date }}</div>'}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
-                ,{field:'airline_bill_total',title:'{{ trans('airline_bill.label.total') }}',totalRow: true,toFixed:3, width:180}
+                ,{field:'airline_bill_total',title:'{{ trans('airline_bill.label.total') }}',totalRow: true,toFixed:3, width:180, templet:function(d){ return $.formatMoney(d.airline_bill_total)}}
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}', width:180}
-                ,{field:'airline_bill_paid_total',title:'{{ trans('airline_bill.label.paid_total') }}',totalRow: true,toFixed:3, width:180}
+                ,{field:'airline_bill_paid_total',title:'{{ trans('airline_bill.label.paid_total') }}',totalRow: true,toFixed:3, width:180, templet:function(d){ return $.formatMoney(d.airline_bill_paid_total)}}
                 ,{field:'supplier_bill_pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.pay_date }}</div>'}
-                ,{field:'supplier_bill_total',title:'{{ trans('supplier_bill.label.total') }}',totalRow: true,toFixed:3, width:180,templet:'<div>@{{ d.supplier_bill.total }}</div>'}
+                ,{field:'supplier_bill_total',title:'{{ trans('supplier_bill.label.total') }}',totalRow: true,toFixed:3, width:180,templet:function(d){ return $.formatMoney( d.supplier_bill.total)}}
                 ,{field:'supplier_bill_paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}', width:180,templet:'<div>@{{ d.supplier_bill.paid_date }}</div>'}
-                ,{field:'supplier_bill_paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}', totalRow: true,toFixed:3,width:180,templet:'<div>@{{ d.supplier_bill.paid_total }}</div>'}
+                ,{field:'supplier_bill_paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}', totalRow: true,toFixed:3,width:180, templet:function(d){ return $.formatMoney(d.supplier_bill.paid_total)}}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:240, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'

@@ -223,4 +223,33 @@ class SupplierBillResourceController extends BaseController
                 ->redirect();
         }
     }
+    /**
+     * @param Request $request
+     * @param SupplierBill $supplier_bill
+     * @return mixed
+     */
+    public function destroy(Request $request, SupplierBill $supplier_bill)
+    {
+        try {
+            $this->repository->operation([
+                'id' => $supplier_bill->id,
+                'status' => 'invalid'
+            ]);
+            $supplier_bill->forceDelete();
+            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('supplier_bill.name')]))
+                ->http_code(201)
+                ->status('success')
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+
+        } catch (Exception $e) {
+
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+        }
+
+    }
 }

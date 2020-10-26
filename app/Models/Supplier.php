@@ -22,7 +22,7 @@ class Supplier extends BaseModel
     protected $config = 'model.supplier.supplier';
 
 
-    protected $appends = ['area','can_cooperative_airports','balance_day'];
+    protected $appends = ['area','can_cooperative_airports','balance_day','available_until'];
 
     public function canCooperativeAirports()
     {
@@ -42,6 +42,11 @@ class Supplier extends BaseModel
     public function contracts()
     {
         return $this->morphMany('App\Models\Contract', 'contractable');
+    }
+    public function getAvailableUntilAttribute()
+    {
+        $available_until = date('Y-m-d',strtotime('+'.$this->balance_day.'day'));
+        return $available_until;
     }
 
 }

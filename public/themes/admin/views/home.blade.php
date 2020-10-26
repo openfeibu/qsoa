@@ -9,27 +9,35 @@
                         <div carousel-item="">
                             <ul class="layui-row fb-clearfix dataBox layui-col-space5">
                                 <li class="layui-col-xs3 ">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" href="{{ guard_url('airport') }}" class="fb-backlog-body">
                                         <h3>机场总数</h3>
                                         <p><cite>{{ $airport_count }}</cite></p>
                                     </a>
                                 </li>
                                 <li class="layui-col-xs3">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" href="{{ guard_url('airline') }}" class="fb-backlog-body">
                                         <h3>航空公司总数</h3>
                                         <p><cite>{{ $airline_count }}</cite></p>
                                     </a>
                                 </li>
                                 <li class="layui-col-xs3">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" href="{{ guard_url('supplier') }}" class="fb-backlog-body">
                                         <h3>供应商总数</h3>
                                         <p><cite>{{ $supplier_count }}</cite></p>
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="fb-carousel fb-backlog " lay-anim="" lay-indicator="inside" lay-arrow="none" >
+                        <div carousel-item="">
                             <ul class="layui-row fb-clearfix dataBox layui-col-space5">
                                 <li class="layui-col-xs3 ">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a href="{{ guard_url('supplier_bill') }}" class="fb-backlog-body">
                                         <h3>供应商账单总数</h3>
                                         <p><cite>{{ $supplier_bill_count }}</cite></p>
                                     </a>
@@ -64,11 +72,24 @@
                                         <p><cite>{{ $supplier_bill_finished_count }}</cite></p>
                                     </a>
                                 </li>
+                                <li class="layui-col-xs3">
+                                    <a lay-href="" class="fb-backlog-body">
+                                        <h3>{{ trans('app.overdue') }}</h3>
+                                        <p><cite>{{ $supplier_bill_overdue_count }}</cite></p>
+                                    </a>
+                                </li>
                             </ul>
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="fb-carousel fb-backlog " lay-anim="" lay-indicator="inside" lay-arrow="none" >
+                        <div carousel-item="">
                             <ul class="layui-row fb-clearfix dataBox layui-col-space5">
                                 <li class="layui-col-xs3 ">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" href="{{ guard_url('airline_bill') }}" class="fb-backlog-body">
                                         <h3>航空公司账单总数</h3>
                                         <p><cite>{{ $airline_bill_count }}</cite></p>
                                     </a>
@@ -91,9 +112,16 @@
                                         <p><cite>{{ $airline_bill_finished_count }}</cite></p>
                                     </a>
                                 </li>
+                                <li class="layui-col-xs3">
+                                    <a lay-href="" class="fb-backlog-body">
+                                        <h3>{{ trans('app.overdue') }}</h3>
+                                        <p><cite>{{ $airline_bill_overdue_count }}</cite></p>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('supplier.name') }}</label>
                         <div class="layui-input-inline">
-                            <select name="supplier_id" class="layui-select" lay-search>
+                            <select name="supplier_id" class="layui-select" lay-search id="s_supplier" lay-filter="s_supplier" lay-verify="required">
                                 @foreach($suppliers as $key => $supplier)
                                     <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                 @endforeach
@@ -24,7 +24,7 @@
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airport.name') }}</label>
                         <div class="layui-input-inline">
-                            <select name="airport_id" class="layui-select" lay-search>
+                            <select name="airport_id" class="layui-select" lay-search id="s_airport" lay-filter="s_airport"  lay-verify="required">
                                 @foreach($airports as $key => $airport)
                                     <option value="{{ $airport->id }}">{{ $airport->name }}</option>
                                 @endforeach
@@ -34,7 +34,7 @@
                     <div class="layui-form-item level-high">
                         <label class="layui-form-label">{{ trans('airline.name') }}</label>
                         <div class="layui-input-inline">
-                            <select name="airline_id" class="layui-select" lay-search>
+                            <select name="airline_id" class="layui-select" lay-search id="s_airline" lay-filter="s_airline"  lay-verify="required">
                                 @foreach($airlines as $key => $airline)
                                     <option value="{{ $airline->id }}">{{ $airline->name }}</option>
                                 @endforeach
@@ -111,6 +111,7 @@
             elem: '#date_of_supply'
             ,type: 'date'
             ,range:'~'
+            ,value:"{!! $date_of_supply !!}"
         });
     });
 </script>

@@ -59,9 +59,9 @@
                 ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}', width:180}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}', width:180}
-                ,{field:'airline_bill_total',title:'{{ trans('airline_bill.label.total') }}',totalRow: true,toFixed:3, width:180}
+                ,{field:'airline_bill_total',title:'{{ trans('airline_bill.label.total') }}',totalRow: true,toFixed:3, width:180, templet:function(d){ return $.formatMoney(d.airline_bill_total)}}
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}', width:180}
-                ,{field:'airline_bill_paid_total',title:'{{ trans('airline_bill.label.paid_total') }}',totalRow: true,toFixed:3, width:180}
+                ,{field:'airline_bill_paid_total',title:'{{ trans('airline_bill.label.paid_total') }}',totalRow: true,toFixed:3, width:180, templet:function(d){ return $.formatMoney(d.airline_bill_paid_total)}}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:320, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'

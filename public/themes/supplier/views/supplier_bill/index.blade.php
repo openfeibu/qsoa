@@ -42,46 +42,7 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barDemo">
-    @{{#  if(d.status == 'new'){ }}
-        @{{#  if(d.pay_status == 'unpaid'){ }}
-        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
-        <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
-        @{{#  } else{ }}
-        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
-        @{{#  } }}
-        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
-    @{{#  } else if(d.status == 'passed'){ }}
-        @{{#  if(d.pay_status == 'unpaid'){ }}
-        <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
-        @{{#  } }}
-        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
-    @{{#  } else if(d.status == 'rejected'){ }}
-        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
-        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
-    @{{#  } else if(d.status == 'modified'){ }}
-        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
-        @{{#  if(d.pay_status == 'unpaid' || d.pay_status == 'refund'){ }}
-        <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
-        @{{#  } }}
-        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
-    @{{#  } else if(d.status == 'invalid'){ }}
-    <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
-    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
-    @{{#  } else if(d.status == 'bill'){ }}
-        @{{#  if(d.pay_status == 'unpaid'){ }}
-        <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
-        @{{#  } }}
-        <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
-    @{{#  } else if(d.status == 'finished'){ }}
-    @{{#  if(d.pay_status == 'unpaid'){ }}
-    <a class="layui-btn layui-btn-warm layui-btn-sm" href="{{ guard_url('supplier_bill/pay') }}/@{{ d.id }}">{{ trans('app.pay') }}</a>
-    @{{#  } }}
-    <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
-    @{{#  } else{ }}
-    <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.details') }}</a>
-    @{{#  } }}
-</script>
+@include('supplier_bill/handle')
 
 <script>
     var main_url = "{{guard_url('supplier_bill')}}";
@@ -99,16 +60,16 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
+                ,{field:'remaining_day_span',title:'{{ trans('app.remaining_day') }}',sort:true, width:120}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
-                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',width:140}
-                ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160}
-                ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160}
-                ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
-                ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160}
-                ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160}
+                ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',width:140,sort:true}
+                ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160, templet:function(d){ return $.formatMoney(d.total)},sort:true}
+                ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160,sort:true}
+                ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160, templet:function(d){ return $.formatMoney(d.paid_total)},sort:true}
+                ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160,sort:true}
                 ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div>@{{#  if(d.file){ }}<a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }} @{{# } }}</div>'}
                 ,{field:'remark',title:'{{ trans('supplier_bill.label.remark') }}',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}',width:100 ,fixed: 'right'}

@@ -82,7 +82,7 @@
                                 <tr>
                                     <th lay-data="{field:'date',width:220}">DATE 日期</th>
                                     <th lay-data="{field:'airport_name'}">Airport 机场</th>
-                                    <th lay-data="{field:'usg'}">加油量（USG）</th>
+                                    <th lay-data="{field:'usg'}">加油量（L）</th>
                                     <th lay-data="{field:'price'}">Price单价（USD/USG）</th>
                                     <th lay-data="{field:'total'}">Sum总金额（美元）</th>
                                     <th lay-data="{field:'tax',width:100}">Tax</th>
@@ -93,7 +93,7 @@
                                 <tr>
                                     <td>{{ $supplier_bill['supply_start_date'] }} ~ {{ $supplier_bill['supply_end_date'] }}</td>
                                     <td>{{ $airline_bill['airport_name'] }}</td>
-                                    <td>{{ $airline_bill['usg'] }}</td>
+                                    <td>{{ $airline_bill['litre'] }}</td>
                                     <td>{{ $airline_bill['price'] }}</td>
                                     <td>{{ $airline_bill['total'] }}</td>
                                     <td>{{ $airline_bill['tax'] }}</td>
@@ -108,10 +108,10 @@
                         <tr>
                             <th lay-data="{field:'id', fixed: 'left', totalRowText: 'Total：',width:80}">ID</th>
                             <th lay-data="{field:'flight_date'}">{{ trans('airline_bill_item.label.flight_date') }}</th>
-                            <th lay-data="{field:'flight_number'}">{{ trans('airline_bill_item.label.flight_number') }}</th>
-                            <th lay-data="{field:'board_number'}">{{ trans('airline_bill_item.label.board_number') }}</th>
-                            <th lay-data="{field:'order_number'}">{{ trans('airline_bill_item.label.order_number') }}</th>
-                            <th lay-data="{field:'num_of_orders'}">{{ trans('airline_bill_item.label.num_of_orders') }}</th>
+                            @foreach($fields as $key => $field)
+                                <th lay-data="{field:'{{ $field }}'}">{{ $field }}</th>
+                            @endforeach
+                            <th lay-data="{field:'litre', totalRow: true,toFixed:3}">{{ trans('airline_bill_item.label.litre') }}</th>
                             <th lay-data="{field:'mt', totalRow: true,toFixed:3}">{{ trans('airline_bill_item.label.mt') }}</th>
                             <th lay-data="{field:'usg', totalRow: true,toFixed:3}">{{ trans('airline_bill_item.label.usg') }}</th>
                             <th lay-data="{field:'unit'}">{{ trans('airline_bill_item.label.unit') }}</th>
@@ -124,10 +124,10 @@
                             <tr>
                                 <td>{{ $airline_bill_item['id'] }}</td>
                                 <td>{{ $airline_bill_item['flight_date'] }}</td>
-                                <td>{{ $airline_bill_item['flight_number'] }}</td>
-                                <td>{{ $airline_bill_item['board_number'] }}</td>
-                                <td>{{ $airline_bill_item['order_number'] }}</td>
-                                <td>{{ $airline_bill_item['num_of_orders'] }}</td>
+                                @foreach($airline_bill_item['fields'] as $k => $field)
+                                    <td>{{ $field['field_value'] }}</td>
+                                @endforeach
+                                <td>{{ $airline_bill_item['litre'] }}</td>
                                 <td>{{ $airline_bill_item['mt'] }}</td>
                                 <td>{{ $airline_bill_item['usg'] }}</td>
                                 <td>{{ $airline_bill_item['unit'] }}</td>
@@ -138,7 +138,7 @@
                         </tbody>
                     </table>
                     </div>
-                    @if($airline_bill->status == 'new')
+                    @if(in_array($airline_bill->status,['new','rejected','modified']) )
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" type="button" lay-submit="" lay-filter="airline_bill_item_create">{{ trans('app.submit_now') }}</button>

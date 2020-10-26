@@ -6,6 +6,9 @@ use App\Exports\AirlineBillExport;
 use App\Http\Controllers\Airline\ResourceController as BaseController;
 use App\Imports\AirlineBillImport;
 use App\Models\AirlineBillItem;
+use App\Models\AirlineBillItemInfo;
+use App\Models\AirlineBillTemplateField;
+use App\Repositories\Eloquent\AirlineBillItemInfoRepository;
 use App\Repositories\Eloquent\AirlineBillItemRepository;
 use App\Repositories\Eloquent\AirlineBillRepository;
 use App\Repositories\Eloquent\AirlineRepository;
@@ -29,7 +32,7 @@ class AirlineBillResourceController extends BaseController
     public function __construct(
         SupplierBillRepository $supplierBillRepository,
         SupplierBillItemRepository $supplierBillItemRepository,
-        SupplierBillItemInfoRepository $supplierBillItemInfoRepository,
+        AirlineBillItemInfoRepository $airlineBillItemInfoRepository,
         AirlineBillRepository $airlineBillRepository,
         AirlineBillItemRepository $airlineBillItemRepository,
         AirportRepository $airportRepository,
@@ -45,7 +48,7 @@ class AirlineBillResourceController extends BaseController
         $this->airlineRepository = $airlineRepository;
         $this->supplierRepository = $supplierRepository;
         $this->supplierBillItemRepository = $supplierBillItemRepository;
-        $this->supplierBillItemInfoRepository = $supplierBillItemInfoRepository;
+        $this->airlineBillItemInfoRepository = $airlineBillItemInfoRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -263,18 +266,32 @@ class AirlineBillResourceController extends BaseController
 
         $airline_bill_items = $this->repository->airlineBillItems($airline_bill->id);
 
+        $fields = $this->airlineBillItemInfoRepository->fields($airline_bill->id);
+
         return $this->response->title(trans('app.view') . ' ' . trans('airline_bill.name'))
-            ->data(compact('supplier_bill','airline_bill','airline_bill_items','contract'))
+            ->data(compact('supplier_bill','airline_bill','airline_bill_items','contract','fields'))
             ->view($view)
             ->output();
     }
     public function update(Request $request, AirlineBill $airline_bill)
     {
         try {
+            if(!in_array($airline_bill->status,['new','rejected','modified']) )
+            {
+                throw new OutputServerMessageException(trans('messages.operation.illegal'));
+            }
+
             $attributes = $request->all();
 
-
             $airline_bill->update($attributes);
+
+            if($airline_bill['status'] == 'rejected')
+            {
+                $this->repository->operation([
+                    'id' => $airline_bill->id,
+                    'status' => 'modified',
+                ]);
+            }
 
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('airline_bill.name')]))
                 ->code(0)
@@ -290,7 +307,34 @@ class AirlineBillResourceController extends BaseController
                 ->redirect();
         }
     }
+    public function checkSubmit(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $id = $data['id'];
+            $airline_bill = $this->repository->find($data['id']);
 
+            bii_operation_verify($airline_bill->status,['new','rejected','modified']);
+
+            $this->repository->operation([
+                'id' => $id,
+                'status' => 'checking'
+            ]);
+
+            return $this->response->message(trans('messages.operation.success'))
+                ->status("success")
+                ->http_code(201)
+                ->url(guard_url('airline_bill'))
+                ->redirect();
+
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->status("error")
+                ->http_code(400)
+                ->url(guard_url('airline_bill'))
+                ->redirect();
+        }
+    }
 
     public function invalid(Request $request)
     {
@@ -299,7 +343,7 @@ class AirlineBillResourceController extends BaseController
             $id = $data['id'];
             $airline_bill = $this->repository->find($data['id']);
 
-            bii_operation_verify($airline_bill->status,['new']);
+            bii_operation_verify($airline_bill->status,['new','checking','modified','rejected','passed','rebill']);
 
             $this->repository->operation([
                 'id' => $id,
@@ -456,47 +500,104 @@ class AirlineBillResourceController extends BaseController
         }
 
         */
-        $keys = ['flight_date','flight_number','board_number','order_number','num_of_orders','mt','usg','unit','price','total'];
-        $total = $mt = $usg = $price = 0;
+        //$keys = ['flight_date','flight_number','board_number','order_number','num_of_orders','mt','usg','unit','price','total'];
+
+        $template_fields = AirlineBillTemplateField::orderBy('order','asc')->orderBy('id','asc')->get();
+
+        $excel_fields = [];
+        foreach ($res['4'] as $key => $excel_field)
+        {
+            $excel_fields[] = $excel_field ? $excel_field : $res['3'][$key];
+        }
+        $template_fields_key_arr = [];
+        $system_template_fields_key_arr = [];
+        foreach ($template_fields as $key => $field)
+        {
+            if($field['system'] == 0)
+            {
+                $template_fields_key_arr[$key] = [
+                    'field' => $field['field'],
+                    'field_comment' => $field['field_comment'],
+                    //'field_type' => $field['field_type'],
+                    'field_mark' => $field['field_mark'],
+
+                ];
+                if(in_array($field['field'],$excel_fields))
+                {
+                    $template_fields_key_arr[$key]['seq'] = array_search($field['field'],$excel_fields);
+                }else{
+                    $template_fields_key_arr[$key]['seq'] = '';
+                }
+            }else{
+//                $system_template_fields_key_arr[$field['field']] = [
+//                    'field' => $field['field'],
+//                    'field_comment' => $field['field_comment'],
+//                    'field_type' => $field['field_type'],
+//                    'field_mark' => $field['field_mark'],
+//
+//                ];
+                if(in_array($field['field'],$excel_fields))
+                {
+                    $system_template_fields_key_arr[$field['field']] = array_search($field['field'],$excel_fields);
+                }else{
+                    $system_template_fields_key_arr[$field['field']] = '';
+                }
+            }
+
+        }
+
+        //var_dump($system_template_fields_key_arr);exit;
+
+        $total = $litre = $mt = $usg = $price = 0;
         $items = [];
-        for ($i=6;$i<$all_sheet_count;$i++)
+        $infos = [];
+        for ($i=5;$i<$all_sheet_count;$i++)
         {
             if($res[$i][0] && strtolower($res[$i][0]) != 'total')
             {
-                $flight_date = $res[$i][0];
-                $flight_date_arr = explode('.',$flight_date);
-                if(count($flight_date_arr) >1)
+                $info = [];
+                foreach ($template_fields_key_arr as $key => $field)
                 {
-                    $flight_date = substr(date('Y'),0,2).$flight_date_arr[2].'-'.$flight_date_arr[1].'-'.$flight_date_arr[0];
+                    $info[$key] = $field;
+                    if($field['seq'])
+                    {
+                        $info[$key]['field_value'] = $res[$i][$field['seq']];
+                    }
+                    unset($info[$key]['seq']);
                 }
-                else{
-                    $flight_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($flight_date)->format('Y-m-d');
-                }
-                $res[$i][0] = $flight_date;
+                $infos[] = $info;
 
                 $item = [];
-                for($j=0;$j<count($keys);$j++)
+                foreach ($system_template_fields_key_arr as $key => $seq)
                 {
-                    $item[$keys[$j]] = $res[$i][$j];
+                    $item[$key] =  $res[$i][$seq];
                 }
 
-                $item['mt'] = (float)$item['mt'];
-                //$mt_usg = (float)substr($item['usg'],strpos($item['usg'],'*')+1);
-                //$item['usg'] = $item['mt'] * $mt_usg;
-                $item['usg'] = (float)$item['usg'];
+                $flight_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($res[$i][0]))->format('Y-m-d');
 
-                $item['price'] = $item['price'];
 
-                $item['total'] =  bill_round($item['usg'] * $item['price']);
+                $items[] = $item = [
+                    'flight_date' => $flight_date,
+                    'litre' => $item['L'],
+                    'mt' => $item['MT'],
+                    'usg' => $item['USG'],
+                    'unit' => $item['Unit'],
+                    'price' => $item['Price'],
+                    'total' => $item['Amount,USD'],
+                ];
 
-                $items[] = $item;
+                //$items[] = $item;
+                $litre += $item['litre'];
                 $total += $item['total'];
                 $mt += $item['mt'];
                 $usg += $item['usg'];
                 $price = $item['price'];
+
             }
 
         }
+       // var_dump($infos);exit;
+        //var_dump($items);exit;
 
         $airline_bill = $this->repository->create([
             'sn' => build_order_sn('a'),
@@ -507,6 +608,7 @@ class AirlineBillResourceController extends BaseController
             'airport_name' => $supplier_bill->airport_name,
             'airline_id' => $supplier_bill->airline_id,
             'airline_name' => $supplier_bill->airline_name,
+            'litre' => $litre,
             'mt' => $mt,
             'usg' => $usg,
             'price' => $price,
@@ -521,22 +623,37 @@ class AirlineBillResourceController extends BaseController
 
         foreach ($items as $key => $item)
         {
-            $items[$key]['airline_bill_id'] = $airline_bill->id;
-            $items[$key]['supplier_bill_id'] = $supplier_bill->id;
-            $items[$key]['supplier_id'] = $supplier_bill->supplier_id;
-            $items[$key]['supplier_name'] = $supplier_bill->supplier_name;
-            $items[$key]['airport_id'] = $supplier_bill->airport_id;
-            $items[$key]['airport_name'] = $supplier_bill->airport_name;
-            $items[$key]['airline_id'] = $supplier_bill->airline_id;
-            $items[$key]['airline_name'] = $supplier_bill->airline_name;
-        }
+            $item_data = $item;
+            $item_data['airline_bill_id'] = $airline_bill->id;
+            $item_data['supplier_bill_id'] = $supplier_bill->id;
+            $item_data['supplier_id'] = $supplier_bill->supplier_id;
+            $item_data['supplier_name'] = $supplier_bill->supplier_name;
+            $item_data['airport_id'] = $supplier_bill->airport_id;
+            $item_data['airport_name'] = $supplier_bill->airport_name;
+            $item_data['airline_id'] = $supplier_bill->airline_id;
+            $item_data['airline_name'] = $supplier_bill->airline_name;
 
-        AirlineBillItem::insert($items);
+            $airline_bill_item = AirlineBillItem::create($item_data);
+
+            $info_data = [];
+            foreach ($infos[$key] as $k => $info) {
+                $info_data[] = [
+                    'airline_bill_id' => $airline_bill->id,
+                    'airline_bill_item_id' => $airline_bill_item->id,
+                    'field' => $info['field'],
+                    'field_comment' => $info['field_comment'],
+                    'field_mark' => $info['field_mark'],
+                    'field_value' => $info['field_value']
+                ];
+            }
+            AirlineBillItemInfo::insert($info_data);
+        }
 
         $this->supplierBillRepository->operation([
             'id' => $supplier_bill->id,
             'status' => 'bill'
         ]);
+
 
         return $this->response->message(trans('messages.success.created', ['Module' => trans('airline_bill.name')]))
             ->status("success")
@@ -545,4 +662,6 @@ class AirlineBillResourceController extends BaseController
             ->redirect();
 
     }
+
+
 }

@@ -47,23 +47,24 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
+                ,{field:'remaining_day_span',title:'{{ trans('app.remaining_day') }}',sort:true, width:120}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
                 ,{field:'sn',title:'{{ trans('airline_bill.label.sn') }}', width:180}
                 ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}', width:180}
-                ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}'}
-                ,{field:'price',title:'{{ trans('airline_bill.label.price') }}'}
-                ,{field:'total',title:'{{ trans('airline_bill.label.total') }}'}
-                ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}'}
-                ,{field:'incl_tax',title:'{{ trans('airline_bill.label.incl_tax') }}'}
-                ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}'}
-                ,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
-                ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}'}
-                ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}'}
+                ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}',templet:function(d){ return $.formatMoney( d.paid_total)},sort:true}
+                ,{field:'price',title:'{{ trans('airline_bill.label.price') }}',templet:function(d){ return $.formatMoney( d.usg)},sort:true}
+                ,{field:'total',title:'{{ trans('airline_bill.label.total') }}',templet:function(d){ return $.formatMoney( d.total)},sort:true}
+                ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}',templet:function(d){ return $.formatMoney( d.paidtax_total)},sort:true}
+                ,{field:'incl_tax',title:'{{ trans('airline_bill.label.incl_tax') }}',templet:function(d){ return $.formatMoney( d.incl_tax)},sort:true}
+                ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}',sort:true}
+                ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}',sort:true}
+                ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}',templet:function(d){ return $.formatMoney( d.paid_total)},sort:true}
+                ,{field:'remark',title:'{{ trans('airline_bill.label.remark') }}',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100, fixed: 'right'}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:500, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:490, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

@@ -47,8 +47,10 @@ class ResourceController extends BaseController
         //已完成
         $supplier_bill_finished_count = SupplierBill::whereIn('status',['finished'])->count();
 
+        $supplier_bill_overdue_count = SupplierBill::whereNotIn('status',['finished','invalid'])->where('pay_date','<',date('Y-m-d 00:00:00'))->count();
+
         return $this->response->title(trans('app.admin.panel'))
-            ->data(compact('supplier_bill_count','supplier_bill_new_count','supplier_bill_pass_count','supplier_bill_invalid_count','supplier_bill_bill_count','supplier_bill_finished_count'))
+            ->data(compact('supplier_bill_count','supplier_bill_new_count','supplier_bill_pass_count','supplier_bill_invalid_count','supplier_bill_bill_count','supplier_bill_finished_count','supplier_bill_overdue_count'))
             ->view('home')
             ->output();
     }

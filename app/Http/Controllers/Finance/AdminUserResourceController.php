@@ -3,10 +3,10 @@ namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Finance\ResourceController as BaseController;
 use App\Models\FinanceUser;
+use App\Repositories\Eloquent\FinanceUserRepository;
 use App\Repositories\Eloquent\PermissionRepositoryInterface;
 use App\Repositories\Eloquent\RoleRepositoryInterface;
 use App\Http\Requests\FinanceUserRequest;
-use App\Repositories\Eloquent\FinanceUserRepositoryInterface;
 
 /**
  * Resource controller class for user.
@@ -33,7 +33,7 @@ class FinanceUserResourceController extends BaseController
      */
 
     public function __construct(
-        FinanceUserRepositoryInterface $finance_user,
+        FinanceUserRepository $finance_user,
         PermissionRepositoryInterface $permissions,
         RoleRepositoryInterface $roles
     )
@@ -43,8 +43,8 @@ class FinanceUserResourceController extends BaseController
         $this->roles = $roles;
         $this->repository = $finance_user;
         $this->repository
-            ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class)
-            ->pushCriteria(\App\Repositories\Criteria\FinanceUserResourceCriteria::class);
+            ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
+            //->pushCriteria(\App\Repositories\Criteria\FinanceUserResourceCriteria::class);
     }
     public function index(FinanceUserRequest $request)
     {

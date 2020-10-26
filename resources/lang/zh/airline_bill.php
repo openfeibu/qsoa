@@ -27,13 +27,19 @@ return [
     'add' => '导入航空公司账单',
     'status' => [
         'one-level' => [
-            'new' => '待收款',
+            'new' => '待提审',
+            'checking' => '待审核',
+            'passed' => '已通过',
+            'rejected' => '待修改',
             'invalid' => '已作废',
             'modified' => '已修改',
             'finished' => '已收款',
         ],
         'two-level' => [
             'new' => '待收款',
+            'checking' => '待审核',
+            'passed' => '已审核',
+            'rejected' => '已驳回',
             'invalid' => '已作废',
             'modified' => '已修改',
             'finished' => '已收款',
@@ -43,8 +49,13 @@ return [
         ],
         'operation' => [
             'new' => '新建',
+            'passed' => '审核',
+            'rejected' => '驳回',
             'invalid' => '作废',
-            'finished' => '收款',
+            'modified' => '已修改',
+            'bill' => '出账',
+            'rebill' => '重出账',
+            'finished' => '完成',
         ],
     ],
     'pay_status' => [

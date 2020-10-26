@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Exceptions\OutputServerMessageException;
+use App\Models\AirlineBillItemInfo;
 use Auth;
 use App\Models\AirlineBill;
 use App\Models\AirlineBillItem;
@@ -88,7 +90,11 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
         $airline_bill_items = AirlineBillItem::where('airline_bill_id',$airline_bill_id)
             ->orderBy('flight_date','asc')
             ->get();
-
+        foreach ($airline_bill_items as $key => $airline_bill_item)
+        {
+            $fields = AirlineBillItemInfo::where('airline_bill_item_id',$airline_bill_item->id)->orderBy('id','asc')->get();
+            $airline_bill_item->fields = $fields->toArray();
+        }
         return $airline_bill_items;
     }
     /*
@@ -104,9 +110,16 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
     */
     public function downloadWord($airline_bill)
     {
-        $airline =  app(AirlineRepository::class)->find($airline_bill->airline_id);
-
-        $airport =  app(AirportRepository::class)->find($airline_bill->airport_id);
+        $airline =  app(AirlineRepository::class)->where('id',$airline_bill->airline_id)->first();
+        if(!$airline)
+        {
+            throw new OutputServerMessageException("航空公司不存在");
+        }
+        $airport =  app(AirportRepository::class)->where('id',$airline_bill->airport_id)->first();
+        if(!$airport)
+        {
+            throw new OutputServerMessageException("机场不存在");
+        }
 
         $supplier_bill = app(SupplierBillRepository::class)->find($airline_bill->supplier_bill_id);
 
@@ -127,9 +140,11 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
         $document->setValue('usg', $airline_bill->usg);
         $document->setValue('price', $airline_bill->price);
         $document->setValue('total', $airline_bill->total);
+        $document->setValue('usd_total', umoney($airline_bill->total));
         $document->setValue('tax', $airline_bill->tax);
         $document->setValue('incl_tax', $airline_bill->incl_tax);
 
+        $document->setValue('address', setting('word_address'));
 
         if(date('j',strtotime($supplier_bill->supply_end_date)) <=15)
         {

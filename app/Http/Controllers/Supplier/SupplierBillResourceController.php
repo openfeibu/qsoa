@@ -113,9 +113,15 @@ class SupplierBillResourceController extends BaseController
         $airports = $this->airportRepository->orderBy('id','desc')->get();
         $airlines = $this->airlineRepository->orderBy('id','desc')->get();
 
+        if(date('j')<=15){
+            $date_of_supply = date('Y-m-01').' ~ '.date('Y-m-15');
+        }else{
+            $date_of_supply = date('Y-m-16').' ~ '.date('Y-m-d', strtotime(date('Y-m-01')." +1 month -1 day"));
+        }
+
         return $this->response->title(trans('app.new') . ' ' . trans('supplier_bill.name'))
             ->view('supplier_bill.create')
-            ->data(compact('airports','airlines','suppliers','supplier_bill'))
+            ->data(compact('airports','airlines','suppliers','supplier_bill','date_of_supply'))
             ->output();
 
     }

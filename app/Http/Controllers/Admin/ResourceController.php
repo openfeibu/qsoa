@@ -50,6 +50,8 @@ class ResourceController extends BaseController
         //已完成
         $supplier_bill_finished_count = SupplierBill::whereIn('status',['finished'])->count();
 
+        $supplier_bill_overdue_count = SupplierBill::whereNotIn('status',['finished','invalid'])->where('pay_date','<',date('Y-m-d 00:00:00'))->count();
+
         //航空公司账单数
         $airline_bill_count = AirlineBill::count();
         //待结算
@@ -59,12 +61,14 @@ class ResourceController extends BaseController
         //已作废
         $airline_bill_invalid_count = AirlineBill::whereIn('status',['invalid'])->count();
 
+        $airline_bill_overdue_count = AirlineBill::whereNotIn('status',['finished','invalid'])->where('pay_date','<',date('Y-m-d 00:00:00'))->count();
+
         $airport_count =Airport::count();
         $airline_count = Airline::count();
         $supplier_count = Supplier::count();
 
         return $this->response->title(trans('app.admin.panel'))
-            ->data(compact('supplier_bill_count','supplier_bill_new_count','supplier_bill_pass_count','supplier_bill_invalid_count','supplier_bill_bill_count','supplier_bill_finished_count','airline_bill_count','airline_bill_new_count','airline_bill_finished_count','airline_bill_invalid_count','airport_count','airline_count','supplier_count'))
+            ->data(compact('supplier_bill_count','supplier_bill_new_count','supplier_bill_pass_count','supplier_bill_invalid_count','supplier_bill_bill_count','supplier_bill_finished_count','supplier_bill_overdue_count','airline_bill_count','airline_bill_new_count','airline_bill_finished_count','airline_bill_invalid_count','airline_bill_overdue_count','airport_count','airline_count','supplier_count'))
             ->view('home')
             ->output();
     }

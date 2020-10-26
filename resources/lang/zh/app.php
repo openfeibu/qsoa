@@ -137,5 +137,7 @@ return [
     'pay_status' => '付款状态',
     'top_up' => '充值',
     'remaining_day' => '期限/天',
-    'fee_deduction' => '扣费'
+    'fee_deduction' => '扣费',
+    'check_submit' => '提交审核',
+    'overdue' => '逾期',
 ];

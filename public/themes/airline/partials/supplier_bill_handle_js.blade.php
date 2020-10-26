@@ -35,7 +35,8 @@
                         }
                     });
                 });
-            } else if(obj.event === 'reject'){
+            }
+            else if(obj.event === 'reject'){
                 layer.confirm('{{ trans('messages.confirm_reject') }}', function(index){
                     layer.close(index);
                     var load = layer.load();
@@ -90,7 +91,8 @@
                         }
                     });
                 });
-            }else if(obj.event === 'add_airline_bill'){
+            }
+            else if(obj.event === 'add_airline_bill'){
                 url = "{{ guard_url('airline_bill/create?supplier_bill_id=') }}"+data.id
                 window.location.href=url
             }

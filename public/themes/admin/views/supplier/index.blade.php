@@ -66,10 +66,11 @@
                 ,{field:'id',title:'ID', width:80, sort: true}
                 ,{field:'name',title:'{{ trans('supplier.name') }}', width:150,edit:'text'}
                 ,{field:'cooperative_airports',title:'{{ trans('airline.label.cooperative_airport') }}', toolbar:'#cooperativeAirportsTEM', width:200,event:"show_cooperative_airports"}
-                ,{field:'used_balance',title:'{{ trans('airport.label.used_balance') }}', width:120}
-                ,{field:'balance',title:'{{ trans('airport.label.balance') }}', width:120}
-                ,{field:'day_consume',title:'{{ trans('supplier.label.day_consume') }}', width:120,edit:'text'}
-                ,{field:'balance_day',title:'{{ trans('supplier.label.balance_day') }}', width:120}
+                ,{field:'used_balance',title:'{{ trans('airport.label.used_balance') }}', width:120, sort:true}
+                ,{field:'balance',title:'{{ trans('airport.label.balance') }}', width:120, sort:true}
+                ,{field:'day_consume',title:'{{ trans('supplier.label.day_consume') }}', width:120,edit:'text', sort:true}
+                ,{field:'balance_day',title:'{{ trans('supplier.label.balance_day') }}', width:120, sort:true}
+                ,{field:'available_until',title:'{{ trans('airport.label.available_until') }}', width:200, sort:true}
                 ,{field:'leader',title:'{{ trans('supplier.label.leader') }}', width:100,edit:'text'}
                 ,{field:'tel',title:'{{ trans('supplier.label.tel') }}', width:100,edit:'text'}
                 ,{field:'email',title:'{{ trans('supplier.label.email') }}', width:100,edit:'text'}

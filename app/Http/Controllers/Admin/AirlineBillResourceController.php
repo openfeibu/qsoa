@@ -11,7 +11,7 @@ use App\Repositories\Eloquent\AirlineRepository;
 use App\Repositories\Eloquent\AirportRepository;
 use App\Repositories\Eloquent\SupplierBillRepository;
 use App\Repositories\Eloquent\SupplierRepository;
-use App\Repositories\Eloquent\SupplierBillItemInfoRepository;
+use App\Repositories\Eloquent\AirlineBillItemInfoRepository;
 use App\Repositories\Eloquent\SupplierBillItemRepository;
 use Auth;
 use Excel;
@@ -28,9 +28,9 @@ class AirlineBillResourceController extends BaseController
     public function __construct(
         SupplierBillRepository $supplierBillRepository,
         SupplierBillItemRepository $supplierBillItemRepository,
-        SupplierBillItemInfoRepository $supplierBillItemInfoRepository,
         AirlineBillRepository $airlineBillRepository,
         AirlineBillItemRepository $airlineBillItemRepository,
+        AirlineBillItemInfoRepository $airlineBillItemInfoRepository,
         AirportRepository $airportRepository,
         AirlineRepository $airlineRepository,
         SupplierRepository $supplierRepository
@@ -44,7 +44,7 @@ class AirlineBillResourceController extends BaseController
         $this->airlineRepository = $airlineRepository;
         $this->supplierRepository = $supplierRepository;
         $this->supplierBillItemRepository = $supplierBillItemRepository;
-        $this->supplierBillItemInfoRepository = $supplierBillItemInfoRepository;
+        $this->airlineBillItemInfoRepository = $airlineBillItemInfoRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -143,6 +143,7 @@ class AirlineBillResourceController extends BaseController
         $supplier_bill = $this->supplierBillRepository->find($airline_bill->supplier_bill_id);
 
         $airline_bill_items = $this->repository->airlineBillItems($airline_bill->id);
+
 
         return $this->response->title(trans('app.view') . ' ' . trans('airline_bill.name'))
             ->data(compact('supplier_bill','airline_bill','airline_bill_items','contract'))

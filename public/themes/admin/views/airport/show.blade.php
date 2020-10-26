@@ -29,6 +29,28 @@
                             <input type="text" name="leader" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="{{ $airport['leader'] }}" >
                         </div>
                     </div>
+                    <div class="layui-form-item level-high">
+                        <label class="layui-form-label">{{ trans('airport_type.name') }}</label>
+                        <div class="layui-input-inline">
+                            <select name="airport_type_id">
+                                <option value="0">请选择</option>
+                                @foreach(app('airport_type_repository')->airport_types() as $key => $airport_type)
+                                    <option value="{{ $airport_type->id }}" @if($airport_type->id == $airport->airport_type_id) selected @endif>{{ $airport_type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item level-high">
+                        <label class="layui-form-label">{{ trans('continent.name') }}</label>
+                        <div class="layui-input-inline">
+                            <select name="continent_id">
+                                <option value="0">请选择</option>
+                                @foreach(app('continent')->continents() as $key => $continent)
+                                    <option value="{{ $continent->id }}" @if($continent->id == $airport->continent_id) selected @endif >{{ $continent->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     {!! Theme::widget('area',['country_id' => $airport->country_id,'province_id' => $airport->province_id,'city_id' => $airport->city_id ])->render() !!}
 

@@ -71,6 +71,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('message', function ($app) {
             return new \App\Repositories\Eloquent\MessageRepository($app);
         });
+        $this->app->bind('continent', function ($app) {
+            return new \App\Repositories\Eloquent\ContinentRepository($app);
+        });
+        $this->app->bind('airport_type_repository', function ($app) {
+            return new \App\Repositories\Eloquent\AirportTypeRepository($app);
+        });
         $this->app->bind('excel_service', function ($app) {
             return new \App\Services\ExcelService($app->request);
         });

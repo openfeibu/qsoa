@@ -60,8 +60,11 @@ return [
         'beforeRenderTheme'  => function ($theme) {
             $theme->asset()->add('layui_css', 'lib/layui/css/layui.css');
             $theme->asset()->add('main_css', 'css/admin/main.css');
+
+           // $theme->asset()->container('footer')->add('jq', 'js/jquery-1.7.2.min.js');
             $theme->asset()->container('footer')->add('layui_js', 'lib/layui/layui.js');
-            $theme->asset()->container('footer')->usePath()->add('main_js', 'js/main.js');
+            $theme->asset()->container('footer')->add('main_js', 'js/admin/main.js');
+            //$theme->asset()->container('footer')->usePath()->add('main_js', 'js/main.js');
 
             $theme->asset()->container('ueditor')->add('ueditor_config','lib/ueditor/ueditor.config.js');
             $theme->asset()->container('ueditor')->add('ueditor_js','lib/ueditor/ueditor.all.min.js');

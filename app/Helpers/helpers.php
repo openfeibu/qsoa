@@ -849,6 +849,8 @@ if (!function_exists('get_admin_model')) {
                 return 'App\Models\SupplierUser';
             case $admin instanceof \App\Models\AdminUser:
                 return 'App\Models\AdminUser';
+            case $admin instanceof \App\Models\FinanceUser:
+                return 'App\Models\FinanceUser';
         }
     }
 }
@@ -882,29 +884,204 @@ if(!function_exists('bill_round')) {
         return round($price,4);
     }
 }
-function buildResponse($content)
-{
-    // define mime type
-    $mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $content);
+if(!function_exists('buildResponse')) {
+    function buildResponse($content)
+    {
+        // define mime type
+        $mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $content);
 
-    // return http response
-    return new \Illuminate\Http\Response($content, 200, array(
-        'Content-Type' => $mime,
-        'Cache-Control' => 'max-age='.(config('image.lifetime')*60).', public',
-        'Etag' => md5($content)
-    ));
-}
-function diffBetweenTwoDays ($day1, $day2)
-{
-    $second1 = strtotime($day1);
-    $second2 = strtotime($day2);
-    $str = '';
-    if ($second1 < $second2) {
-        $tmp = $second2;
-        $second2 = $second1;
-        $second1 = $tmp;
-        $str = '-';
+        // return http response
+        return new \Illuminate\Http\Response($content, 200, array(
+            'Content-Type' => $mime,
+            'Cache-Control' => 'max-age=' . (config('image.lifetime') * 60) . ', public',
+            'Etag' => md5($content)
+        ));
     }
-    $day = ($second1 - $second2) / 86400;
-    return $str.$day;
+}
+if(!function_exists('diffBetweenTwoDays')) {
+    function diffBetweenTwoDays($day1, $day2)
+    {
+        $second1 = strtotime($day1);
+        $second2 = strtotime($day2);
+        $str = '';
+        if ($second1 < $second2) {
+            $tmp = $second2;
+            $second2 = $second1;
+            $second1 = $tmp;
+            $str = '-';
+        }
+        $day = ($second1 - $second2) / 86400;
+        return $str . $day;
+    }
+}
+if(!function_exists('fmoney')) {
+    function fmoney($num)
+    {
+        $num = 0 + $num;
+        $num = sprintf("%.02f", $num);
+        if (strlen($num) <= 6) return $num;
+//从最后开始算起，每3个数它加一个","
+        for ($i = strlen($num) - 1, $k = 1, $j = 100; $i >= 0; $i--, $k++) {
+            $one_num = substr($num, $i, 1);
+            if ($one_num == ".") {
+                $numArray[$j--] = $one_num;
+                $k = 0;
+                continue;
+            }
+
+            if ($k % 3 == 0 and $i != 0) {
+//如果正好只剩下3个数字，则不加','
+                $numArray[$j--] = $one_num;
+                $numArray[$j--] = ",";
+                $k = 0;
+            } else {
+                $numArray[$j--] = $one_num;
+            }
+        }
+        ksort($numArray);
+        return join("", $numArray);
+    }
+}
+if(!function_exists('umoney')) {
+    function umoney($num, $type = "usd")
+    {
+        if ($num <= 0) {
+            return '';
+        }
+        global $numTable, $commaTable, $moneyType;
+
+        $numTable[0] = "ZERO ";
+        $numTable[1] = "ONE ";
+        $numTable[2] = "TWO ";
+        $numTable[3] = "THREE ";
+        $numTable[4] = "FOUR ";
+        $numTable[5] = "FIVE ";
+        $numTable[6] = "SIX ";
+        $numTable[7] = "SEVEN ";
+        $numTable[8] = "EIGHT ";
+        $numTable[9] = "NINE ";
+        $numTable[10] = "TEN ";
+        $numTable[11] = "ELEVEN ";
+        $numTable[12] = "TWELVE ";
+        $numTable[13] = "THIRTEEN ";
+        $numTable[14] = "FOURTEEN ";
+        $numTable[15] = "FIFTEEN ";
+        $numTable[16] = "SIXTEEN ";
+        $numTable[17] = "SEVENTEEN ";
+        $numTable[18] = "EIGHTEEN ";
+        $numTable[19] = "NINETEEN ";
+        $numTable[20] = "TWENTY ";
+        $numTable[30] = "THIRTY ";
+        $numTable[40] = "FORTY ";
+        $numTable[50] = "FIFTY ";
+        $numTable[60] = "SIXTY ";
+        $numTable[70] = "SEVENTY ";
+        $numTable[80] = "EIGHTY ";
+        $numTable[90] = "NINETY ";
+
+        $commaTable[0] = "HUNDRED ";
+        $commaTable[1] = "THOUSAND ";
+        $commaTable[2] = "MILLION ";
+        $commaTable[3] = "MILLIARD ";
+        $commaTable[4] = "BILLION ";
+        $commaTable[5] = "????? ";
+
+//单位
+        $moneyType["usd"] = "DOLLARS ";
+        $moneyType["usd_1"] = "CENTS ONLY";
+        $moneyType["rmb"] = "YUAN ";
+        $moneyType["rmb_1"] = "FEN ONLY";
+
+
+        if ($type == "") $type = "usd";
+        $fnum = fmoney($num);
+        $numArray = explode(",", $fnum);
+        $resultArray = array();
+        $k = 0;
+        $cc = count($numArray);
+        for ($i = 0; $i < count($numArray); $i++) {
+            $num_str = $numArray[$i];
+            //echo "<br>";
+            //小数位的处理400.21
+            if (eregi("\.", $num_str)) {
+                $dotArray = explode(".", $num_str);
+                if ($dotArray[1] != 0) {
+                    $resultArray[$k++] = format3num($dotArray[0] + 0);
+                    $resultArray[$k++] = $moneyType[strtolower($type)];
+                    $resultArray[$k++] = "AND ";
+                    $resultArray[$k++] = format3num($dotArray[1] + 0);
+                    $resultArray[$k++] = $moneyType[strtolower($type) . "_1"];
+                } else {
+                    $resultArray[$k++] = format3num($dotArray[0] + 0);
+                    $resultArray[$k++] = $moneyType[strtolower($type)];
+                }
+            } else {
+//非小数位的处理
+                if (($num_str + 0) != 0) {
+                    $resultArray[$k++] = format3num($num_str + 0);
+                    $resultArray[$k++] = $commaTable[--$cc];
+//判断：除小数外其余若不为零则加and
+                    for ($j = $i; $j <= $cc; $j++) {
+//echo "<br>";
+//echo $numArray[$j];
+                        if ($numArray[$j] != 0) {
+                            $resultArray[$k++] = "AND ";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return join("", $resultArray);
+    }
+}
+
+if(!function_exists('format3num')) {
+    function format3num($num)
+    {
+        global $numTable, $commaTable;
+        $numlen = strlen($num);
+        for ($i = 0, $j = 0; $i < $numlen; $i++) {
+            $bitenum[$j++] = substr($num, $i, 1);
+        }
+        if ($num == 0) return "";
+        if ($numlen == 1) return $numTable[$num];
+        if ($numlen == 2) {
+            if ($num <= 20) return $numTable[$num];
+//第一位不可能零
+            if ($bitenum[1] == 0) {
+                return $numTable[$num];
+            } else {
+                return trim($numTable[$bitenum[0] * 10]) . "-" . $numTable[$bitenum[1]];
+            }
+
+        }
+//第一个不可能为零
+        if ($numlen == 3) {
+            if ($bitenum[1] == 0 && $bitenum[2] == 0) {
+//100
+                return $numTable[$bitenum[0]] . $commaTable[0];
+            } elseif ($bitenum[1] == 0) {
+//102
+                return $numTable[$bitenum[0]] . $commaTable[0] . $numTable[$bitenum[2]];
+            } elseif ($bitenum[2] == 0) {
+//120
+                return $numTable[$bitenum[0]] . $commaTable[0] . $numTable[$bitenum[1] * 10];
+            } else {
+//123
+                return $numTable[$bitenum[0]] . $commaTable[0] . trim($numTable[$bitenum[1] * 10]) . "-" . $numTable[$bitenum[2]];
+            }
+        }
+        return $num;
+    }
+}
+if(!function_exists('eregi')){
+    function eregi($pattern, $subject, &$matches = [])
+    {
+        return preg_match('/'.$pattern.'/i', $subject, $matches);
+    }
+}
+function letters()
+{
+    return ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 }

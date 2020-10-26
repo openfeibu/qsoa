@@ -11,10 +11,13 @@
 |
 */
 Route::get('test', 'TestController@test');
+Route::get('select_supplier/{supplier_id}', 'HomeController@selectSupplier');
+Route::get('select_airport/{airport_id}', 'HomeController@selectAirport');
 
 Route::get('/', function () {
     return redirect('/admin');
 });
+
 // Admin  routes  for user
 Route::group([
     'namespace' => 'Admin',
@@ -87,8 +90,12 @@ Route::group([
     Route::post('/media/upload', 'MediaResourceController@upload')->name('media.upload');
     Route::delete('/media/destroy', 'MediaResourceController@destroy')->name('media.destroy');
     Route::get('/world_city/list', 'WorldCityResourceController@getList')->name('world_city.list');
+    Route::resource('airline_bill_template_field', 'AirlineBillTemplateFieldResourceController');
+    Route::post('/airline_bill_template_field/destroyAll', 'AirlineBillTemplateFieldResourceController@destroyAll')->name('airline_bill_template_field.destroy_all');
+
     Route::resource('supplier_bill_template_field', 'SupplierBillTemplateFieldResourceController');
     Route::post('/supplier_bill_template_field/destroyAll', 'SupplierBillTemplateFieldResourceController@destroyAll')->name('supplier_bill_template_field.destroy_all');
+
 
     Route::resource('supplier_user', 'SupplierUserResourceController');
     Route::post('/supplier_user/destroyAll', 'SupplierUserResourceController@destroyAll')->name('supplier_user.destroy_all');
@@ -110,6 +117,7 @@ Route::group([
     //供应商账单
     Route::get('supplier_bill', 'SupplierBillResourceController@index')->name('supplier_bill.index');
     Route::get('supplier_bill/{supplier_bill}', 'SupplierBillResourceController@show')->name('supplier_bill.show');
+    Route::delete('/supplier_bill/{supplier_bill}', 'SupplierBillResourceController@destroy')->name('supplier_bill.destroy');
     Route::post('/supplier_bill/pass', 'SupplierBillResourceController@pass')->name('supplier_bill.pass');
     Route::post('/supplier_bill/reject', 'SupplierBillResourceController@reject')->name('supplier_bill.reject');
     Route::post('/supplier_bill/invalid', 'SupplierBillResourceController@invalid')->name('supplier_bill.invalid');
@@ -218,6 +226,8 @@ Route::group([
     Route::get('airline_bill/pay/{airline_bill}', 'AirlineBillResourceController@pay');
     Route::post('airline_bill/pay/{airline_bill}', 'AirlineBillResourceController@paySubmit');
 
+    Route::post('airline_bill/check_submit', 'AirlineBillResourceController@checkSubmit');
+
     Route::resource('message', 'MessageResourceController');
 
     Route::resource('airline_user', 'AirlineUserResourceController');
@@ -241,8 +251,8 @@ Route::group([
     Route::get('logout', 'Auth\LoginController@logout');
     Route::get('/', 'ResourceController@home')->name('home');
     Route::get('/home', 'ResourceController@home');
-    Route::get('password', 'AirlineUserController@getPassword');
-    Route::post('password', 'AirlineUserController@postPassword');
+   // Route::get('password', 'AirlineUserController@getPassword');
+    //Route::post('password', 'AirlineUserController@postPassword');
 
     Route::resource('airport', 'AirportResourceController');
     Route::post('/airport/destroyAll', 'AirportResourceController@destroyAll')->name('airport.destroy_all');
@@ -252,6 +262,16 @@ Route::group([
 
     Route::resource('finance_user', 'FinanceUserResourceController');
     Route::post('/finance_user/destroyAll', 'FinanceUserResourceController@destroyAll')->name('finance_user.destroy_all');
+
+    Route::get('airline_bill', 'AirlineBillResourceController@index')->name('airline_bill.index');
+    Route::get('airline_bill/{airline_bill}', 'AirlineBillResourceController@show')->name('airline_bill.show');
+    Route::put('airline_bill/{airline_bill}', 'AirlineBillResourceController@update')->name('airline_bill.update');
+    Route::post('/airline_bill/pass', 'AirlineBillResourceController@pass')->name('airline_bill.pass');
+    Route::post('/airline_bill/reject', 'AirlineBillResourceController@reject')->name('airline_bill.reject');
+    Route::post('/airline_bill/invalid', 'AirlineBillResourceController@invalid')->name('airline_bill.invalid');
+
+    Route::get('supplier_bill', 'SupplierBillResourceController@index')->name('supplier_bill.index');
+    Route::get('supplier_bill/{supplier_bill}', 'SupplierBillResourceController@show')->name('supplier_bill.show');
 
     Route::resource('permission', 'PermissionResourceController');
     Route::post('/permission/destroyAll', 'PermissionResourceController@destroyAll')->name('permission.destroy_all');

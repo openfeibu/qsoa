@@ -21,7 +21,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['name','code','country','country_id','province','province_id','city','city_id','leader','content','created_at','updated_at'],
+        'fillable'     => ['continent_id','airport_type_id','name','code','country','country_id','province','province_id','city','city_id','leader','content','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/airport',
         'encrypt'      => ['id'],
@@ -30,6 +30,8 @@ return [
         'search'        => [
             'name'  => 'like',
             'id' => '=',
+            'continent_id' => '=',
+            'airport_type_id' => '=',
         ],
     ],
     'can_cooperative_airline_airport'     => [
@@ -49,5 +51,21 @@ return [
             'title'  => 'name',
         ],
     ],
-
+    'airport_type'     => [
+        'model'        => 'App\Models\AirportType',
+        'table'        => 'airport_types',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'fillable'     => ['name'],
+        'translate'    => [],
+        'upload_folder' => '',
+        'encrypt'      => ['id'],
+        'revision'     => ['name'],
+        'perPage'      => '20',
+        'search'        => [
+            'name'  => 'like',
+        ],
+    ],
 ];

@@ -9,7 +9,7 @@
                         <div carousel-item="">
                             <ul class="layui-row fb-clearfix dataBox layui-col-space5">
                                 <li class="layui-col-xs3 ">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" href="{{ guard_url('supplier_bill') }}" class="fb-backlog-body">
                                         <h3>供应商账单总数</h3>
                                         <p><cite>{{ $supplier_bill_count }}</cite></p>
                                     </a>

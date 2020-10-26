@@ -57,10 +57,11 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['sn','supplier_bill_id','agreement_no','airline_id','airline_name','airport_id','airport_name','supplier_id','supplier_name','mt','usg','price','tax','incl_tax','total','issuing_date','status','pay_status','pay_date','paid_date','paid_total','remark','created_at','updated_at'],
+        'fillable'     => ['sn','supplier_bill_id','agreement_no','airline_id','airline_name','airport_id','airport_name','supplier_id','supplier_name','litre','mt','usg','price','tax','incl_tax','total','issuing_date','status','pay_status','pay_date','paid_date','paid_total','remark','created_at','updated_at'],
         'translate'    => [],
         'status_button' => [
             'new' => 'layui-btn-primary',
+            'checking' => 'layui-btn-primary',
             'passed' => 'layui-btn-normal',
             'rejected' => 'layui-btn-warm',
             'invalid' => 'layui-btn-danger',
@@ -92,7 +93,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['airline_bill_id','supplier_bill_id','supplier_bill_item_id','airline_id','airline_name','airport_id','airport_name','supplier_id','supplier_name','flight_date','flight_number','board_number','order_number','num_of_orders','mt','usg','price','total','created_at','updated_at'],
+        'fillable'     => ['airline_bill_id','supplier_bill_id','supplier_bill_item_id','airline_id','airline_name','airport_id','airport_name','supplier_id','supplier_name','flight_date','flight_number','board_number','order_number','num_of_orders','litre','mt','usg','price','total','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/airline',
         'encrypt'      => ['id'],
@@ -101,6 +102,24 @@ return [
         'search'        => [
             'airline_bill_id' => '=',
             'supplier_bill_id' => '=',
+        ],
+    ],
+    'airline_bill_item_info'     => [
+        'model'        => 'App\Models\AirlineBillItemInfo',
+        'table'        => 'airline_bill_item_infos',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'fillable'     => ['airline_bill_id','airline_bill_item_id','field','field_comment','field_value','field_mark','order','created_at','updated_at'],
+        'translate'    => [],
+        'upload_folder' => '/airline',
+        'encrypt'      => ['id'],
+        'revision'     => ['sn'],
+        'perPage'      => '20',
+        'search'        => [
+            'sn'  => 'like',
+            'date' => '='
         ],
     ],
     'airline_bill_record'     => [
@@ -119,6 +138,25 @@ return [
         'search'        => [
             'sn'  => 'like',
             'date' => '='
+        ],
+    ],
+    'airline_bill_template_field' => [
+        'model'        => 'App\Models\AirlineBillTemplateField',
+        'table'        => 'airline_bill_template_fields',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'fillable'     => ['field','field_type','field_comment','field_default','field_mark','order','created_at','updated_at'],
+        'field_mark' => [
+            'USG','USD/USG','SUM'
+        ],
+        'translate'    => [],
+        'upload_folder' => '/airline',
+        'encrypt'      => ['id'],
+        'revision'     => ['name'],
+        'perPage'      => '20',
+        'search'        => [
         ],
     ],
 ];

@@ -63,6 +63,37 @@
                     });
                 });
             }
+            if(obj.event === 'check_submit'){
+                layer.confirm('{{ trans('messages.confirm_check_submit') }}',{
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    layer.close(index);
+                    var load = layer.load();
+                    $.ajax({
+                        url : main_url+'/check_submit',
+                        data : {'id':data.id,'_token':"{!! csrf_token() !!}"},
+                        type : 'post',
+                        success : function (data) {
+                            layer.close(load);
+                            if(data.code == 0)
+                            {
+                                table.reload('fb-table', {
+                                    page: {
+                                        curr: nPage //重新从第 1 页开始
+                                    }
+                                });
+                            }else{
+                                layer.msg(data.message);
+                            }
+                        },
+                        error : function (jqXHR, textStatus, errorThrown) {
+                            layer.close(load);
+                            $.ajax_error(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                });
+            }
+
         }
         active.add_airline_bill = function () {
             var checkStatus = table.checkStatus('fb-table')

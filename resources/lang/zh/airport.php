@@ -9,6 +9,7 @@ return [
         'country' => '国家',
         'city' => '城市',
         'used_balance' => '总使用资金',
+        'available_until' => '资金可用至',
         'balance' => '剩余资金',
         'leader' => '负责人',
         'content' => '附文',
