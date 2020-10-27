@@ -163,6 +163,7 @@ Route::group([
     Route::resource('supplier_bill', 'SupplierBillResourceController');
     Route::get('supplier_bill/pay/{supplier_bill}', 'SupplierBillResourceController@pay');
     Route::post('supplier_bill/pay/{supplier_bill}', 'SupplierBillResourceController@paySubmit');
+    Route::post('supplier_bill/request_pay', 'SupplierBillResourceController@requestPay');
 
     Route::get('supplier_bill_import', 'SupplierBillResourceController@import')->name('supplier_bill.import');
     Route::post('/supplier_bill_submit_import', 'SupplierBillResourceController@submitImport')->name('supplier_bill.submit_import');
@@ -272,6 +273,8 @@ Route::group([
 
     Route::get('supplier_bill', 'SupplierBillResourceController@index')->name('supplier_bill.index');
     Route::get('supplier_bill/{supplier_bill}', 'SupplierBillResourceController@show')->name('supplier_bill.show');
+    Route::get('supplier_bill/pay/{supplier_bill}', 'SupplierBillResourceController@pay');
+    Route::post('supplier_bill/pay/{supplier_bill}', 'SupplierBillResourceController@paySubmit');
 
     Route::resource('permission', 'PermissionResourceController');
     Route::post('/permission/destroyAll', 'PermissionResourceController@destroyAll')->name('permission.destroy_all');

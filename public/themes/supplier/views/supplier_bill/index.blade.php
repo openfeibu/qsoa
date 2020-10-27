@@ -97,3 +97,4 @@
 </script>
 
 {!! Theme::partial('common_handle_js') !!}
+{!! Theme::partial('supplier_bill_handle_js') !!}

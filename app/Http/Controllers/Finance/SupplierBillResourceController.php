@@ -9,6 +9,7 @@ use App\Repositories\Eloquent\SupplierBillRepository;
 use App\Repositories\Eloquent\SupplierBillItemRepository;
 use App\Repositories\Eloquent\SupplierBillItemInfoRepository;
 use App\Repositories\Eloquent\SupplierRepository;
+use App\Repositories\Eloquent\SupplierBalanceRecordRepository;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\SupplierBill;
@@ -26,7 +27,8 @@ class SupplierBillResourceController extends BaseController
         SupplierBillItemInfoRepository $supplierBillItemInfoRepository,
         AirportRepository $airportRepository,
         AirlineRepository $airlineRepository,
-        SupplierRepository $supplierRepository
+        SupplierRepository $supplierRepository,
+        SupplierBalanceRecordRepository $supplierBalanceRecordRepository
     )
     {
         parent::__construct();
@@ -36,6 +38,7 @@ class SupplierBillResourceController extends BaseController
         $this->supplierRepository = $supplierRepository;
         $this->supplierBillItemRepository = $supplierBillItemRepository;
         $this->supplierBillItemInfoRepository = $supplierBillItemInfoRepository;
+        $this->supplierBalanceRecordRepository = $supplierBalanceRecordRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -117,5 +120,43 @@ class SupplierBillResourceController extends BaseController
                 ->redirect();
         }
     }
+    public function pay(Request $request,SupplierBill $supplier_bill)
+    {
 
+        return $this->response->title(trans('app.pay') . ' ' . trans('supplier_bill.name'))
+            ->view('supplier_bill.pay')
+            ->data(compact('supplier_bill'))
+            ->output();
+    }
+    public function paySubmit(Request $request,SupplierBill $supplier_bill)
+    {
+        try {
+            $attributes = $request->all();
+            $attributes['pay_status'] = 'paid';
+
+            $this->supplierBalanceRecordRepository->pay(
+                $supplier_bill->supplier_id,
+                $attributes['paid_total'],
+                [
+                    'out_trade_no' => $supplier_bill->sn,
+                    'trade_type' => 'PAY_SUPPLIER_BILL',
+                    'description' => '支付供应商账单',
+                ]
+            );
+
+            $supplier_bill->update($attributes);
+
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier_bill.name')]))
+                ->code(0)
+                ->status('success')
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
+                ->url(guard_url('supplier_bill/pay/'.$supplier_bill->id))
+                ->redirect();
+        }
+    }
 }

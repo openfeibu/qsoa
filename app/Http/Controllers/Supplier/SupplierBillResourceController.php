@@ -306,6 +306,35 @@ class SupplierBillResourceController extends BaseController
                 ->redirect();
         }
     }
+    public function requestPay(Request $request)
+    {
+        try {
+            $attributes = $request->all();
+            $supplier_bill =  $this->repository->find($attributes['id']);
+            bii_operation_verify($supplier_bill->pay_status,['unpaid',['refund']]);
+
+            $this->repository->update(
+                [
+                    'pay_status' => 'request_pay'
+                ]
+                ,$supplier_bill->id
+            );
+
+            $supplier_bill->update($attributes);
+
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('supplier_bill.name')]))
+                ->code(0)
+                ->status('success')
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->http_code(400)
+                ->status('error')
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+        }
+    }
 
     public function import(Request $request)
     {

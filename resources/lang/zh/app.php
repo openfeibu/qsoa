@@ -140,4 +140,5 @@ return [
     'fee_deduction' => '扣费',
     'check_submit' => '提交审核',
     'overdue' => '逾期',
+    'request_pay' => '付款申请',
 ];

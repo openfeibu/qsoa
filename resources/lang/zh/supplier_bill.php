@@ -17,6 +17,7 @@ return [
         'pay_status' => '付款状态',
         'file' => '账单文件',
         'remark' => '备注',
+        'pay_image' => '银行付款单',
     ],
     'message'     => [
         'nopage' => 'Page not found.',
@@ -59,6 +60,7 @@ return [
     ],
     'pay_status' => [
         'unpaid' => '待付款',
+        'request_pay' => '申请付款',
         'paid' => '已付款',
         'refund' => '已退款',
     ],
