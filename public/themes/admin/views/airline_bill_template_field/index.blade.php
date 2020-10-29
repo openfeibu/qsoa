@@ -11,7 +11,8 @@
             <div class="tabel-message">
                 <div class="layui-inline tabel-btn">
                     <button class="layui-btn layui-btn-warm " data-type="add" data-events="add">{{ trans('app.add') }}</button>
-                    <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">{{ trans('app.delete') }}</button>
+                    <!--
+                    <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">{{ trans('app.delete') }}</button>-->
                 </div>
 
             </div>
@@ -102,8 +103,11 @@
 </div>
 
 <script type="text/html" id="barDemo">
+    @{{# if(d.system != 1){ }}
     <a class="layui-btn layui-btn-sm" lay-event="ajax_edit">{{ trans('app.edit') }}</a>
+
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
+    @{{# } }}
 </script>
 <script type="text/html" id="imageTEM">
     <img src="@{{d.image}}" alt="" height="28">
@@ -124,11 +128,11 @@
             ,cols: [[
                 {checkbox: true, fixed: true}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'field',title:'{{ trans('airline_bill_template_field.label.field') }}',edit:'text'}
-                ,{field:'field_comment',title:'{{ trans('airline_bill_template_field.label.field_comment') }}',edit:'text'}
-                ,{field:'field_default',title:'{{ trans('airline_bill_template_field.label.field_default') }}',edit:'text'}
+                ,{field:'field',title:'{{ trans('airline_bill_template_field.label.field') }}'}
+                ,{field:'field_comment',title:'{{ trans('airline_bill_template_field.label.field_comment') }}'}
+                ,{field:'field_default',title:'{{ trans('airline_bill_template_field.label.field_default') }}'}
                 ,{field:'field_mark',title:'{{ trans('airline_bill_template_field.label.field_mark') }}'}
-                ,{field:'order',title:'{{ trans('app.label.order') }}',edit:'text'}
+                ,{field:'order',title:'{{ trans('app.label.order') }}'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:260, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
