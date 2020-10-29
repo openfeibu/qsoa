@@ -140,7 +140,8 @@ Route::group([
     Route::post('/role/destroyAll', 'RoleResourceController@destroyAll')->name('role.destroy_all');
     Route::get('logout', 'Auth\LoginController@logout');
 
-
+    Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
+    Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
 });
 Route::group([
     'namespace' => 'Supplier',
@@ -183,6 +184,9 @@ Route::group([
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
     Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
+
+    Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
+    Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
 });
 
 Route::group([
@@ -241,6 +245,9 @@ Route::group([
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
     Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
+
+    Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
+    Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
 });
 
 Route::group([
@@ -283,6 +290,9 @@ Route::group([
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
     Route::post('/file/{config}/{path?}', 'UploadController@uploadFile')->where('path', '(.*)');
+
+    Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
+    Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
 });
 /*
 Route::group([

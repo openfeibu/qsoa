@@ -70,7 +70,8 @@
                 ,{field:'pay_date',title:'{{ trans('supplier_bill.label.pay_date') }}',width:160,sort:true}
                 ,{field:'paid_total',title:'{{ trans('supplier_bill.label.paid_total') }}',width:160, templet:function(d){ return $.formatMoney(d.paid_total)},sort:true}
                 ,{field:'paid_date',title:'{{ trans('supplier_bill.label.paid_date') }}',width:160,sort:true}
-                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div>@{{#  if(d.file){ }}<a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }} @{{# } }}</div>'}
+                ,{field:'pay_image',title:'{{ trans('supplier_bill.label.pay_image') }}',width:100,templet:'<div>@{{# if(d.pay_image){ }}<a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.pay_image }}">{{ trans('app.download') }}</a>@{{# } }}</div>'}
+                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }}</a></div>'}
                 ,{field:'remark',title:'{{ trans('supplier_bill.label.remark') }}',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}',width:100 ,fixed: 'right'}
                 ,{field:'pay_status_button',title:'{{ trans('app.pay_status') }}',width:100, fixed: 'right'}
