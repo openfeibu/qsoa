@@ -205,4 +205,22 @@ return [
             'airport_id' => '='
         ],
     ],
+    'supplier_pay_apply' => [
+        'model'        => 'App\Models\SupplierPayApply',
+        'table'        => 'supplier_pay_applies',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'fillable'     => ['supplier_bill_id','supplier_user_id','supplier_username','apartment','check_date','payment','account','reason','date','check_date','payment','account','created_at','updated_at'],
+        'translate'    => [],
+        'upload_folder' => '/airport',
+        'encrypt'      => ['id'],
+        'revision'     => ['name'],
+        'perPage'      => '20',
+        'search'        => [
+            'title'  => 'name',
+            'airport_id' => '='
+        ],
+    ],
 ];

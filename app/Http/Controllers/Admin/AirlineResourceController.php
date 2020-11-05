@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\ResourceController as BaseController;
-use App\Models\airline;
+use App\Models\Airline;
 use App\Repositories\Eloquent\AirlineRepository;
 use App\Repositories\Eloquent\AirportRepository;
 use App\Repositories\Eloquent\WorldCityRepository;

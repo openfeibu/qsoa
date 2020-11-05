@@ -1,5 +1,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-sm layui-btn-normal" href="{{ guard_url('supplier_bill') }}/@{{ d.supplier_bill_id }}" target="_blank">{{ trans('supplier_bill.name') }}</a>
+    <a class="layui-btn layui-btn-sm layui-btn-normal"  href="{{ guard_url('airline_bill/download_word') }}/@{{ d.id }}">{{ trans('app.download') }} W</a>
+    <a class="layui-btn layui-btn-sm layui-btn-normal"  href="{{ guard_url('airline_bill/download_excel') }}/@{{ d.id }}">{{ trans('app.download') }} E</a>
     @{{#  if(d.status == 'new'){ }}
 
     @{{#  } else if(d.status == 'checking'){ }}

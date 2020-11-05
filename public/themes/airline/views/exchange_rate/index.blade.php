@@ -16,6 +16,14 @@
                     <input class="layui-input search_key" name="date" id="date" placeholder="{{ trans('exchange_rate.label.date') }}" autocomplete="off" style="width: 200px;">
                 </div>
                 <div class="layui-inline">
+                    <select name="source" class="layui-select search_key" lay-search>
+                        <option value="">{{ trans('exchange_rate.label.source') }}</option>
+                        @foreach($sources as $key => $source)
+                            <option value="{{ $source }}">{{ $source }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="layui-inline">
                     <select name="currencyCode" class="layui-select search_key" lay-search>
                         <option value="">{{ trans('exchange_rate.label.currencyCode') }}</option>
                         @foreach($currencies as $key => $currency)

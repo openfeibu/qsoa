@@ -61,9 +61,9 @@
             ,cols: [[
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID',totalRowText: 'Total：', width:80, sort: true}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180}
-                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180}
-                ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}', width:180,sort:true}
+                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}', width:180,sort:true}
+                ,{field:'airline_name',title:'{{ trans('airline.name') }}', width:180,sort:true}
                 ,{field:'sn',title:'{{ trans('airline_bill.name') }} {{ trans('airline_bill.label.sn') }}', width:180}
                 ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}',width:180}

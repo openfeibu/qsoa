@@ -51,8 +51,9 @@ trait ExchangeRateResource
                 ->output();
         }
         $currencies = Currency::orderBy('currencyCode','asc')->get();
+        $sources = ExchangeRate::groupBy('source')->pluck('source');
         return $this->response->title(trans('exchange_rate.title'))
-            ->data(compact('currencies'))
+            ->data(compact('currencies','sources'))
             ->view('exchange_rate.index')
             ->output();
     }

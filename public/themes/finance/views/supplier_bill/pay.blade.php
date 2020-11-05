@@ -29,8 +29,8 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('supplier_bill.label.pay_image') }}</label>
                         {!! $supplier_bill->files('pay_image')
-                        ->url($supplier_bill->getUploadUrl('pay_image'))
-                        ->uploader()!!}
+                        ->url($supplier_bill->getFileURL('pay_image'))
+                        ->uploaderFile()!!}
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">

@@ -61,9 +61,9 @@
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
                 ,{field:'remaining_day_span',title:'{{ trans('app.remaining_day') }}',sort:true, width:120}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
-                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
-                ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}',sort:true}
+                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}',sort:true}
+                ,{field:'airline_name',title:'{{ trans('airline.name') }}',sort:true}
                 ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',width:140,sort:true}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}',width:160, templet:function(d){ return $.formatMoney(d.total)},sort:true}
@@ -75,7 +75,7 @@
                 ,{field:'remark',title:'{{ trans('supplier_bill.label.remark') }}',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}',width:100 ,fixed: 'right'}
                 ,{field:'pay_status_button',title:'{{ trans('app.pay_status') }}',width:100, fixed: 'right'}
-                ,{field:'score',title:'{{ trans('app.actions') }}', width:220, align: 'right',toolbar:'#barDemo', fixed: 'right'}
+                ,{field:'score',title:'{{ trans('app.actions') }}', width:250, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
             ,page: true

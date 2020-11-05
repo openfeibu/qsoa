@@ -142,6 +142,8 @@ Route::group([
 
     Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
     Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
+
+
 });
 Route::group([
     'namespace' => 'Supplier',
@@ -165,6 +167,9 @@ Route::group([
     Route::get('supplier_bill/pay/{supplier_bill}', 'SupplierBillResourceController@pay');
     Route::post('supplier_bill/pay/{supplier_bill}', 'SupplierBillResourceController@paySubmit');
     Route::post('supplier_bill/request_pay', 'SupplierBillResourceController@requestPay');
+
+    Route::get('/supplier_bill/supplier_pay_apply/{supplier_bill}', 'SupplierPayApplyResourceController@supplierPayApply')->name('supplier_pay_apply');
+    Route::post('/supplier_bill/supplier_pay_apply/{supplier_bill}', 'SupplierPayApplyResourceController@supplierPayApplyStore')->name('supplier_pay_apply.store');
 
     Route::get('supplier_bill_import', 'SupplierBillResourceController@import')->name('supplier_bill.import');
     Route::post('/supplier_bill_submit_import', 'SupplierBillResourceController@submitImport')->name('supplier_bill.submit_import');
@@ -296,6 +301,10 @@ Route::group([
 
     Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
     Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
+
+    Route::get('/supplier_bill/supplier_pay_apply/{supplier_bill}', 'SupplierPayApplyResourceController@supplierPayApply')->name('supplier_pay_apply');
+    Route::post('/supplier_bill/supplier_pay_apply/pay', 'SupplierPayApplyResourceController@supplierPayApply')->name('supplier_pay_apply.pay');
+    Route::post('/supplier_bill/supplier_pay_apply/reject', 'SupplierPayApplyResourceController@reject')->name('supplier_pay_apply.reject');
 });
 /*
 Route::group([

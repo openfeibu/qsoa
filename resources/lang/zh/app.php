@@ -141,4 +141,5 @@ return [
     'check_submit' => '提交审核',
     'overdue' => '逾期',
     'request_pay' => '付款申请',
+    'edit_request_pay' => '修改付款申请',
 ];

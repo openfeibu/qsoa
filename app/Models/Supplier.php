@@ -21,8 +21,7 @@ class Supplier extends BaseModel
      */
     protected $config = 'model.supplier.supplier';
 
-
-    protected $appends = ['area','can_cooperative_airports','balance_day','available_until'];
+    protected $appends = ['area','can_cooperative_airports','balance_day','available_until','balance_day_span'];
 
     public function canCooperativeAirports()
     {
@@ -47,6 +46,15 @@ class Supplier extends BaseModel
     {
         $available_until = date('Y-m-d',strtotime('+'.$this->balance_day.'day'));
         return $available_until;
+    }
+
+    public function getBalanceDaySpanAttribute()
+    {
+        if($this->balance_day < 10)
+        {
+            return "<span style='color:#FF5722'>".$this->balance_day."</span>";
+        }
+        return $this->balance_day;
     }
 
 }

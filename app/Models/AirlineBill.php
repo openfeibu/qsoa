@@ -45,7 +45,7 @@ class AirlineBill extends BaseModel
     }
     public function getRemainingDaySpanAttribute()
     {
-        if($this->remaining_day < 0)
+        if($this->remaining_day < 7)
         {
             return "<span style='color:#FF5722'>".$this->remaining_day."</span>";
         }

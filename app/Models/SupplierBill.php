@@ -15,7 +15,7 @@ class SupplierBill extends BaseModel
 
     protected $config = 'model.supplier.supplier_bill';
 
-    protected $appends = ['remaining_day','remaining_day_span'];
+    protected $appends = ['remaining_day','remaining_day_span','supplier_pay_apply_id'];
 
     public function airport()
     {
@@ -59,10 +59,16 @@ class SupplierBill extends BaseModel
     }
     public function getRemainingDaySpanAttribute()
     {
-        if($this->remaining_day < 0)
+        if($this->remaining_day < 7)
         {
             return "<span style='color:#FF5722'>".$this->remaining_day."</span>";
         }
         return $this->remaining_day;
+    }
+    public function getSupplierPayApplyIdAttribute()
+    {
+        $supplier_pay_apply_id = SupplierPayApply::where('supplier_bill_id',$this->attributes['id'])->value('id');
+
+        return  $supplier_pay_apply_id ?? '';
     }
 }

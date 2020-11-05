@@ -59,9 +59,9 @@
                 ,{field:'id',title:'ID', width:80, sort: true}
                 //,{field:'remaining_day',title:'{{ trans('app.remaining_day') }}'}
                 ,{field:'remaining_day_span',title:'{{ trans('app.remaining_day') }}',sort:true}
-                ,{field:'airport_name',title:'{{ trans('airport.name') }}'}
-                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}'}
-                ,{field:'airline_name',title:'{{ trans('airline.name') }}'}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}',sort:true}
+                ,{field:'supplier_name',title:'{{ trans('supplier.name') }}',sort:true}
+                ,{field:'airline_name',title:'{{ trans('airline.name') }}',sort:true}
                 ,{field:'sn',title:'{{ trans('supplier_bill.label.sn') }}', width:180}
                 ,{field:'invoice_date',title:'{{ trans('supplier_bill.label.invoice_date') }}',sort:true}
                 ,{field:'total',title:'{{ trans('supplier_bill.label.total') }}', templet:function(d){ return $.formatMoney(d.total)},sort:true}

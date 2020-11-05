@@ -16,6 +16,9 @@
                     <input class="layui-input search_key" name="FDate" id="date" placeholder="{{ trans('jinqi.label.FDate') }}" autocomplete="off" style="width: 200px;">
                 </div>
                 <div class="layui-inline">
+                    <input class="layui-input search_key" name="symbolChnName" placeholder="{{ trans('jinqi.label.symbolChnName') }}" autocomplete="off" style="width: 200px;">
+                </div>
+                <div class="layui-inline">
                     <input class="layui-input search_key" name="symbolName" placeholder="{{ trans('jinqi.label.symbolName') }}" autocomplete="off" style="width: 200px;">
                 </div>
                 <div class="layui-inline">
