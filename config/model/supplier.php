@@ -103,8 +103,11 @@ return [
         ],
         'pay_status_button' => [
             'unpaid' => 'layui-btn-primary',
+            'request_pay' => 'layui-btn-normal',
+            'rejected' => 'layui-btn-danger',
             'paid' => 'layui-btn-normal',
             'refund' => 'layui-btn-danger',
+
         ],
         'upload_folder' => '/supplier_bill',
         'encrypt'      => ['id'],
@@ -212,7 +215,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['supplier_bill_id','supplier_user_id','supplier_username','apartment','check_date','payment','account','reason','date','check_date','payment','account','created_at','updated_at'],
+        'fillable'     => ['supplier_bill_id','supplier_user_id','supplier_username','apartment','check_date','payment','account','reason','date','check_date','payment','remark','account','created_at','updated_at'],
         'translate'    => [],
         'upload_folder' => '/airport',
         'encrypt'      => ['id'],

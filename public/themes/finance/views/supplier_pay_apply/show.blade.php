@@ -98,7 +98,14 @@
                             <p class="input-p">{{ $supplier_pay_apply->account }}</p>
                         </div>
                     </div>
-
+                    @if($supplier_bill->pay_status == 'rejected')
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{{ trans('supplier_pay_apply.label.remark') }}</label>
+                            <div class="layui-input-inline">
+                                <p class="input-p">{{ $supplier_pay_apply->remark }}</p>
+                            </div>
+                        </div>
+                    @endif
                     @if($supplier_bill->pay_status == 'request_pay')
 
                     <div class="layui-form-item">
@@ -135,22 +142,23 @@
             ,value:"{{ $supplier_pay_apply->check_date }}"
         });
         form.on('submit(reject)', function(data){
-            layer.confirm('{{ trans('messages.confirm_reject') }}', function(index){
+            layer.prompt({
+                formType: 0,
+                value: '',
+                title: '{{ trans('supplier_pay_apply.label.remark') }}：',
+            }, function(value, index, elem){
                 layer.close(index);
+                // 加载样式
                 var load = layer.load();
                 $.ajax({
-                    url : main_url+'/pass',
-                    data : {'id':data.id,'_token':"{!! csrf_token() !!}"},
+                    url : "{{ guard_url('supplier_bill/supplier_pay_apply/reject') }}",
+                    data : {'supplier_bill_id':"{{ $supplier_pay_apply->supplier_bill_id }}",'_token':"{!! csrf_token() !!}",'remark':value},
                     type : 'post',
                     success : function (data) {
                         layer.close(load);
                         if(data.code == 0)
                         {
-                            table.reload('fb-table', {
-                                page: {
-                                    curr: nPage //重新从第 1 页开始
-                                }
-                            });
+                            window.location.href = "{{ guard_url('supplier_bill') }}";
                         }else{
                             layer.msg(data.message);
                         }
@@ -161,6 +169,8 @@
                     }
                 });
             });
+
+            return false;
         });
     });
 </script>

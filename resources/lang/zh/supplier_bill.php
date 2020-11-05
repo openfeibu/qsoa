@@ -61,6 +61,7 @@ return [
     'pay_status' => [
         'unpaid' => '待付款',
         'request_pay' => '申请付款',
+        'rejected' => '已驳回',
         'paid' => '已付款',
         'refund' => '已退款',
     ],

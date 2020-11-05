@@ -92,35 +92,7 @@ class SupplierBillResourceController extends BaseController
             ->output();
     }
 
-    public function pass(Request $request)
-    {
-        try {
-            $data = $request->all();
-            $id = $data['id'];
-            $supplier_bill = $this->repository->find($data['id']);
-            if(!in_array($supplier_bill->status,['new','rejected','modified']) )
-            {
-                throw new OutputServerMessageException(trans('messages.operation.illegal'));
-            }
-            $this->repository->operation([
-                'id' => $id,
-                'status' => 'passed'
-            ]);
 
-            return $this->response->message(trans('messages.operation.success'))
-                ->status("success")
-                ->http_code(201)
-                ->url(guard_url('supplier_bill'))
-                ->redirect();
-
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->status("error")
-                ->http_code(400)
-                ->url(guard_url('supplier_bill'))
-                ->redirect();
-        }
-    }
     public function pay(Request $request,SupplierBill $supplier_bill)
     {
 
@@ -160,4 +132,5 @@ class SupplierBillResourceController extends BaseController
                 ->redirect();
         }
     }
+
 }

@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    @if($supplier_bill->pay_status == 'unpaid')
+                    @if(in_array($supplier_bill->pay_status,['unpaid','request_pay','rejected']))
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" lay-submit="" lay-filter="demo1">{{ trans('app.submit_now') }}</button>

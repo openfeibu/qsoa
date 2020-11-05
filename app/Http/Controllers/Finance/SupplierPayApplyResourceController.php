@@ -34,5 +34,35 @@ class SupplierPayApplyResourceController extends BaseController
             ->view($view)
             ->output();
     }
+    public function reject(Request $request)
+    {
+        try {
+            $data = $request->all();
 
+            $supplier_bill = $this->supplierBillRepository->find($data['supplier_bill_id']);
+            $supplier_pay_apply = $this->repository->where('supplier_bill_id',$supplier_bill->id)->first();
+
+            bii_operation_verify($supplier_bill->pay_status,['request_pay']);
+
+            $this->supplierBillRepository->update([
+                'pay_status' => 'rejected'
+            ],$supplier_bill->id);
+            $this->repository->update([
+                'remark' => $data['remark']
+            ],$supplier_pay_apply->id);
+
+            return $this->response->message(trans('messages.operation.success'))
+                ->status("success")
+                ->http_code(201)
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+
+        } catch (Exception $e) {
+            return $this->response->message($e->getMessage())
+                ->status("error")
+                ->http_code(400)
+                ->url(guard_url('supplier_bill'))
+                ->redirect();
+        }
+    }
 }

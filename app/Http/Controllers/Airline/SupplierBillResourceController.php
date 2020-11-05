@@ -194,10 +194,9 @@ class SupplierBillResourceController extends BaseController
             $data = $request->all();
             $id = $data['id'];
             $supplier_bill = $this->repository->find($data['id']);
-            if(!in_array($supplier_bill->status,['new','modified']))
-            {
-                throw new OutputServerMessageException(trans('messages.operation.illegal'));
-            }
+
+            bii_operation_verify($supplier_bill->status,['new','modified']);
+
             $this->repository->operation([
                 'id' => $id,
                 'status' => 'rejected'

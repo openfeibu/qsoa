@@ -14,7 +14,7 @@ return [
         'check_date' => '审单日期（NBO）',
         'payment' => '付款方式',
         'account' => '收款人名称/银行/账号',
-
+        'remark' => '驳回理由',
     ],
     'message'     => [
         'nopage' => 'Page not found.',
