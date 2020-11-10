@@ -9,19 +9,19 @@
                         <div carousel-item="">
                             <ul class="layui-row fb-clearfix dataBox layui-col-space5">
                                 <li class="layui-col-xs3 ">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" class="fb-backlog-body layui-bg-blue">
                                         <h3>机场总数</h3>
                                         <p><cite>{{ $airport_count }}</cite></p>
                                     </a>
                                 </li>
                                 <li class="layui-col-xs3">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" class="fb-backlog-body layui-bg-blue">
                                         <h3>航空公司总数</h3>
                                         <p><cite>{{ $airline_count }}</cite></p>
                                     </a>
                                 </li>
                                 <li class="layui-col-xs3">
-                                    <a lay-href="" class="fb-backlog-body">
+                                    <a lay-href="" class="fb-backlog-body layui-bg-blue">
                                         <h3>供应商总数</h3>
                                         <p><cite>{{ $supplier_count }}</cite></p>
                                     </a>
