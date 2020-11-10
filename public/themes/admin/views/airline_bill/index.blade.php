@@ -67,6 +67,7 @@
                 ,{field:'paid_total',title:'{{ trans('airline_bill.label.paid_total') }}', templet:function(d){ return $.formatMoney(d.paid_total)},sort:true}
                 ,{field:'remark',title:'{{ trans('airline_bill.label.remark') }}',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100,fixed: 'right'}
+                ,{field:'pay_status_button',title:'{{ trans('app.pay_status') }}',width:100, fixed: 'right'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:380, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'

@@ -62,6 +62,7 @@
                 ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }}</a></div>'}
                 ,{field:'remark',title:'{{ trans('supplier_bill.label.remark') }}',edit:'text',fixed: 'right',width:120}
                 ,{field:'status_button',title:'{{ trans('app.status') }}', width:100,fixed: 'right'}
+                ,{field:'pay_status_button',title:'{{ trans('app.pay_status') }}',width:100, fixed: 'right'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:280, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'

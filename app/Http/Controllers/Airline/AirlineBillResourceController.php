@@ -87,6 +87,7 @@ class AirlineBillResourceController extends BaseController
             foreach ($bills as $key => $bill)
             {
                 $bill->status_button = $bill->getStatusOneLevelButton($bill->status);
+                $bill->pay_status_button = $bill->getPayStatusButton($bill->pay_status);
             }
             return $this->response
                 ->success()

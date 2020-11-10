@@ -35,6 +35,11 @@ class AirlineBill extends BaseModel
         $html = '<button class="layui-btn %s layui-btn-xs">%s</button>';
         return sprintf($html,config($this->config.'.status_button.'.$status),$this->getStatusTwoLevelDesc($status));
     }
+    public function getPayStatusButton($pay_status)
+    {
+        $html = '<button class="layui-btn %s layui-btn-xs">%s</button>';
+        return sprintf($html,config($this->config.'.pay_status_button.'.$pay_status), trans('supplier_bill.pay_status.'.$pay_status));
+    }
     public function getRemainingDayAttribute()
     {
         if(!$this->attributes['pay_date'] || $this->attributes['paid_date'])
