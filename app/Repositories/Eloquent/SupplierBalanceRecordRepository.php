@@ -44,9 +44,9 @@ class SupplierBalanceRecordRepository extends BaseRepository implements Supplier
     }
     public function pay($supplier_id,$total,$data)
     {
-        return [
-            'return_code' => 'SUCCESS',
-        ];
+//        return [
+//            'return_code' => 'SUCCESS',
+//        ];
 
         $supplier = Supplier::where('id',$supplier_id)->first();
 
