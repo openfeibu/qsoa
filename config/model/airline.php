@@ -70,6 +70,8 @@ return [
         ],
         'pay_status_button' => [
             'unpaid' => 'layui-btn-primary',
+            'request_pay' => 'layui-btn-normal',
+            'rejected' => 'layui-btn-danger',
             'paid' => 'layui-btn-normal',
             'refund' => 'layui-btn-danger',
         ],

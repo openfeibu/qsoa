@@ -37,10 +37,14 @@ class SupplierBillRepository extends BaseRepository implements SupplierBillRepos
                 'status' => $data['status'],
                 'content' => $data['content'] ?? ''
             ]);
-            if(in_array($data['status'],['invalid','rejected']))
-            {
-                //$this->refund($data['id']);
-            }
+//            if(in_array($data['status'],['invalid','rejected']))
+//            {
+//                $this->refund($data['id']);
+//            }
+//            if(in_array($data['status'],['invalid']))
+//            {
+//                $this->refund($data['id']);
+//            }
             app(OperationRepository::class)->createOperation([
                 'operationable_id' => $data['id'],
                 'operationable_type' => config('model.supplier.supplier_bill.model'),
