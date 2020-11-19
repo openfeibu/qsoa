@@ -11,6 +11,7 @@ return [
         'image' => '合同',
         'contract_partner' => '合作对象',
         'increase_price' => '合作费率',
+        'remaining_day' => '合同期限/天'
     ],
     'message'     => [
         'nopage' => 'Page not found.',
