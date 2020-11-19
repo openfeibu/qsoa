@@ -104,7 +104,7 @@
         laydate.render({
             elem: '#pay_date'
             ,type: 'date'
-            ,value:"{!! date('Y-m-d') !!}"
+            ,value:"{!! $pay_date !!}"
         });
 
         laydate.render({

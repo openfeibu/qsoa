@@ -259,18 +259,21 @@ layui.use(['form'], function(){
 				layer.closeAll("loading");
 				var c = result.data;
 				$("#s_airport").html("");
-				$("#s_airport").append("<option value=''>请选择</option>");
 				if(c.length > 0) {
 					for (v in c) {
 						var cc = c[v].id;
 						$("#s_airport").append("<option value=" + cc + ">" + c[v].name + "</option>")
 					}
 				}
+				$.select_s_ariport(data);
 				form.render();
 			})
 		}
 	});
 	form.on('select(s_airport)', function (data) {
+		$.select_s_ariport(data);
+	});
+	$.select_s_ariport = function(data){
 		var airport_id = $("#s_airport").val();
 		if (airport_id) {
 			layer.load();
@@ -278,7 +281,6 @@ layui.use(['form'], function(){
 				layer.closeAll("loading");
 				var c = result.data;
 				$("#s_airline").html("");
-				$("#s_airline").append("<option value=''>请选择</option>");
 				if(c.length > 0) {
 					for (v in c) {
 						var cc = c[v].id;
@@ -288,7 +290,7 @@ layui.use(['form'], function(){
 				form.render();
 			})
 		}
-	});
+	}
 });
 /**
  * 金额按千位逗号分割

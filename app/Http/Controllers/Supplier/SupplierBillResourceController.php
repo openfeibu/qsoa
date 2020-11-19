@@ -115,13 +115,15 @@ class SupplierBillResourceController extends BaseController
 
         if(date('j')<=15){
             $date_of_supply = date('Y-m-01').' ~ '.date('Y-m-15');
+            $pay_date = date('Y-m-d',strtotime(date('Y-m-15')." +14 day")) ;
         }else{
             $date_of_supply = date('Y-m-16').' ~ '.date('Y-m-d', strtotime(date('Y-m-01')." +1 month -1 day"));
+            $pay_date = date('Y-m-d', strtotime(date('Y-m-01')." +1 month +13 day"));
         }
 
         return $this->response->title(trans('app.new') . ' ' . trans('supplier_bill.name'))
             ->view('supplier_bill.create')
-            ->data(compact('airports','airlines','suppliers','supplier_bill','date_of_supply'))
+            ->data(compact('airports','airlines','suppliers','supplier_bill','date_of_supply','pay_date'))
             ->output();
 
     }
