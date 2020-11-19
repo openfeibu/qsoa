@@ -81,7 +81,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('supplier_pay_apply.label.total') }}</label>
                         <div class="layui-input-inline">
-                            <p class="input-p">{{ $supplier_bill->total }}</p>
+                            <p class="input-p">{{ number_format($supplier_bill->total,3) }}</p>
                         </div>
                     </div>
 

@@ -250,61 +250,19 @@ layui.use('jquery', function(){
 
 layui.use(['form'], function(){
 	var form = layui.form;
-	form.render();
-	form.on('select(s_supplier)', function (data) {
-		var supplier_id = $("#s_supplier").val();
-		if (supplier_id) {
-			layer.load();
-			$.get("/select_supplier/" + supplier_id, function (result) {
-				layer.closeAll("loading");
-				var c = result.data;
-				$("#s_airport").html("");
-				if(c.length > 0) {
-					for (v in c) {
-						var cc = c[v].id;
-						$("#s_airport").append("<option value=" + cc + ">" + c[v].name + "</option>")
-					}
-				}
-				$.select_s_ariport(data);
-				form.render();
-			})
-		}
-	});
-	form.on('select(s_airport)', function (data) {
-		$.select_s_ariport(data);
-	});
-	$.select_s_ariport = function(data){
-		var airport_id = $("#s_airport").val();
-		if (airport_id) {
-			layer.load();
-			$.get("/select_airport/" + airport_id, function (result) {
-				layer.closeAll("loading");
-				var c = result.data;
-				$("#s_airline").html("");
-				if(c.length > 0) {
-					for (v in c) {
-						var cc = c[v].id;
-						$("#s_airline").append("<option value=" + cc + ">" + c[v].name + "</option>")
-					}
-				}
-				form.render();
-			})
-		}
-	}
-});
-/**
- * 金额按千位逗号分割
- * @character_set UTF-8
- *  Example
- *  <code>
- *      alert($.formatMoney(1234.345, 2)); //=>1,234.35
- *      alert($.formatMoney(-1234.345, 2)); //=>-1,234.35
- *      alert($.unformatMoney(1,234.345)); //=>1234.35
- *      alert($.unformatMoney(-1,234.345)); //=>-1234.35
- *  </code>
- */
-layui.use(['jquery'], function(){
 	$ = layui.$;
+
+	/**
+	 * 金额按千位逗号分割
+	 * @character_set UTF-8
+	 *  Example
+	 *  <code>
+	 *      alert($.formatMoney(1234.345, 2)); //=>1,234.35
+	 *      alert($.formatMoney(-1234.345, 2)); //=>-1,234.35
+	 *      alert($.unformatMoney(1,234.345)); //=>1234.35
+	 *      alert($.unformatMoney(-1,234.345)); //=>-1234.35
+	 *  </code>
+	 */
 	$.extend({
 		/**
 		 * 数字千分位格式化
@@ -359,4 +317,55 @@ layui.use(['jquery'], function(){
 			return (isNaN(fTmp) ? 0 : fTmp);
 		},
 	});
-})
+
+	form.render();
+
+	/* 选择供应商 */
+	form.on('select(s_supplier)', function (data) {
+		var supplier_id = $("#s_supplier").val();
+		if (supplier_id) {
+			layer.load();
+			$.get("/select_supplier/" + supplier_id, function (result) {
+				layer.closeAll("loading");
+				var c = result.data;
+				$("#s_airport").html("");
+				if(c.length > 0) {
+					for (v in c) {
+						var cc = c[v].id;
+						$("#s_airport").append("<option value=" + cc + ">" + c[v].name + "</option>")
+					}
+				}
+				$.select_s_ariport(data);
+				form.render();
+			})
+		}
+	});
+	form.on('select(s_airport)', function (data) {
+		$.select_s_ariport(data);
+	});
+	$.select_s_ariport = function(data){
+		var airport_id = $("#s_airport").val();
+		if (airport_id) {
+			layer.load();
+			$.get("/select_airport/" + airport_id, function (result) {
+				layer.closeAll("loading");
+				var c = result.data;
+				$("#s_airline").html("");
+				if(c.length > 0) {
+					for (v in c) {
+						var cc = c[v].id;
+						$("#s_airline").append("<option value=" + cc + ">" + c[v].name + "</option>")
+					}
+				}
+				form.render();
+			})
+		}
+	}
+	/* 输入金额 */
+	$('.format_money_input').on('input propertychange',function(){
+		var value = $(this).val();
+		//value = value.replace(',','');
+		//$(this).val($.formatMoney(value));
+		$(this).parent().siblings('.format_money_aux').text($.formatMoney(value));
+	});
+});

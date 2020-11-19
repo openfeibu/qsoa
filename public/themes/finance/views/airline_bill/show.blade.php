@@ -53,7 +53,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('supplier_bill.label.total') }}</label>
                         <div class="layui-input-inline">
-                            <p class="input-p">{{ $supplier_bill['total'] }}</p>
+                            <p class="input-p">{{ number_format($supplier_bill->total,3) }}</p>
                         </div>
                     </div>
                     <!--
@@ -67,7 +67,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('airline_bill.label.total') }}</label>
                         <div class="layui-input-inline">
-                            <p class="input-p">{{ $airline_bill['total'] }}</p>
+                            <p class="input-p">{{ number_format($airline_bill->total,3) }}</p>
                         </div>
                     </div>
                     <div class="layui-form-item">

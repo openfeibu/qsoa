@@ -65,8 +65,9 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('supplier_bill.label.total') }}</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="total" lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input" value="" >
+                            <input type="text" name="total" lay-verify="required" autocomplete="off" placeholder="" class="layui-input format_money_input" value="" >
                         </div>
+                        <div class="layui-form-mid layui-word-aux email-aux format_money_aux"></div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{  trans('supplier_bill.label.file') }}</label>
