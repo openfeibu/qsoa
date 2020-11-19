@@ -15,7 +15,7 @@ class Contract extends BaseModel
 
     protected $config = 'model.contract.contract';
 
-    protected $appends = ['images'];
+    protected $appends = ['images','remaining_day','remaining_day_span'];
 
     public function contractable()
     {
@@ -30,5 +30,21 @@ class Contract extends BaseModel
     public function airport()
     {
         return $this->belongsTo('App\Models\Airport');
+    }
+    public function getRemainingDayAttribute()
+    {
+        if(!$this->attributes['end_time'])
+        {
+            return "";
+        }
+        return diffBetweenTwoDays(date('Y-m-d',strtotime($this->attributes['end_time'])),date('Y-m-d'));
+    }
+    public function getRemainingDaySpanAttribute()
+    {
+        if($this->remaining_day < 30)
+        {
+            return "<span style='color:#FF5722'>".$this->remaining_day."</span>";
+        }
+        return $this->remaining_day;
     }
 }

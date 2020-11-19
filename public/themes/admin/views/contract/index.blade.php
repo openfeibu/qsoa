@@ -61,6 +61,7 @@
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
                 ,{field:'name',title:'{{ trans('contract.label.name') }}', edit:'text'}
+                ,{field:'remaining_day_span',title:'{{ trans('contract.label.remaining_day') }}',sort:true}
                 ,{field:'airport_name',title:'{{ trans('airport.name') }}', }
                 ,{field:'contract_partner',title:'{{ trans('contract.label.contract_partner') }}', }
                 ,{field:'start_time',title:'{{ trans('contract.label.start_time') }}', edit:'text'}
