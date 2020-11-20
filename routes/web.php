@@ -195,6 +195,7 @@ Route::group([
 
     Route::resource('quotation', 'QuotationResourceController');
     Route::post('/quotation/destroyAll', 'QuotationResourceController@destroyAll')->name('quotation.destroy_all');
+
 });
 
 Route::group([
@@ -256,6 +257,9 @@ Route::group([
 
     Route::get('/exchange_rate', 'ExchangeRateResourceController@index')->name('exchange_rate.index');
     Route::get('/jinqi', 'JinqiResourceController@index')->name('jinqi.index');
+
+    Route::resource('quotation', 'QuotationResourceController');
+    Route::post('/quotation/destroyAll', 'QuotationResourceController@destroyAll')->name('quotation.destroy_all');
 });
 
 Route::group([
