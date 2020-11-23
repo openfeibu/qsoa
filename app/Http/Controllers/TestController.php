@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Eloquent\SupplierBalanceRecordRepository;
 use App\Services\BillMessageService;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -23,6 +24,7 @@ class TestController extends BaseController
        // $this->billMessageService->deadlineSoonNewSupplierBill();
         //$this->billMessageService->overdueNewSupplierBill();
         //$this->billMessageService->deadlineSoonUnpaidSupplierBill();
-        $this->billMessageService->lessThanAirportPayTotal();
+       // $this->billMessageService->lessThanAirportPayTotal();
+        app(SupplierBalanceRecordRepository::class)->dayConsumeDeduction();
     }
 }

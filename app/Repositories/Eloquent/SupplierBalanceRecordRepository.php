@@ -164,7 +164,7 @@ class SupplierBalanceRecordRepository extends BaseRepository implements Supplier
                 'price'	=> $total,
                 'type' => -1,
                 'date' => date('Y-m-d'),
-                'out_trade_no' => build_order_sn('tp'),
+                'out_trade_no' => build_order_sn('fd'),
                 'trade_type' => 'FEE_DEDUCTION',
                 'description' => '充值',
             );
@@ -175,5 +175,50 @@ class SupplierBalanceRecordRepository extends BaseRepository implements Supplier
         }else{
             throw new OutputServerMessageException('扣费失败');
         }
+    }
+
+    public function dayConsumeDeduction()
+    {
+
+        $suppliers = Supplier::where(function ($query) {
+            $time = date('Y-m-d 00:00:00');
+            return $query->where('last_day_consume','<',$time)->orWhereNull('last_day_consume');
+        })->where(function ($query) {
+            return $query->where('day_consume','>',0)->whereNotNull('day_consume');
+        })->get();
+
+        foreach ($suppliers as $key => $supplier)
+        {
+            if($supplier->balance < $supplier->day_consume)
+            {
+                $content = $supplier->name.' 余额不足，日消费扣款失败';
+                app(MessageRepository::class)->createMessage([
+                    'admin_group' => config('model.supplier_user.supplier_user.model.model'),
+                    'content' => $content
+                ]);
+                continue;
+            }
+
+            $new_balance = $supplier->balance - $supplier->day_consume;
+            $balanceData = array(
+                'admin_id' => 1,
+                'admin_name' => 'Super User',
+                'admin_model' => config('model.user.admin.model.model'),
+                'supplier_id' => $supplier->id,
+                'supplier_name' => $supplier->name,
+                'balance' => $new_balance,
+                'price'	=> $supplier->day_consume,
+                'type' => -1,
+                'date' => date('Y-m-d'),
+                'out_trade_no' => build_order_sn('dcd'),
+                'trade_type' => 'DAY_CONSUME_DEDUCTION',
+                'description' => '日消费',
+            );
+            $this->create($balanceData);
+
+            Supplier::where('id',$supplier->id)->update(['last_day_consume' => date('Y-m-d H:i:s'),'balance' => $new_balance]);
+
+        }
+
     }
 }
