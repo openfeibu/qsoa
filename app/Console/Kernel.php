@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //Log::info('schedule');
-        $schedule->command('bill_message:auto')->dailyAt('9:00');
+        $schedule->command('bill_message:auto')->dailyAt('01:00');
         $schedule->command('day_consume:auto')->dailyAt('00:10');
         // $schedule->command('inspire')
         //          ->hourly();
