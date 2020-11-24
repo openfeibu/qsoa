@@ -16,6 +16,7 @@ return [
         'cooperative_airport' => '合作机场',
         'day_consume' => '日消费',
         'balance_day' => '余额天数',
+        'last_day_consume' => '上次日消费',
     ],
     'message'     => [
         'nopage' => 'Page not found.',

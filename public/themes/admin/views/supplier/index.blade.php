@@ -69,6 +69,7 @@
                 ,{field:'used_balance',title:'{{ trans('airport.label.used_balance') }}', width:120, sort:true, templet:function(d){ return $.formatMoney(d.used_balance)}}
                 ,{field:'balance',title:'{{ trans('airport.label.balance') }}', width:120, sort:true, templet:function(d){ return $.formatMoney(d.balance)}}
                 ,{field:'day_consume',title:'{{ trans('supplier.label.day_consume') }}', width:120,edit:'text', sort:true, templet:function(d){ return $.formatMoney(d.day_consume)}}
+                ,{field:'last_day_consume',title:'{{ trans('supplier.label.last_day_consume') }}', width:120}
                 ,{field:'balance_day_span',title:'{{ trans('supplier.label.balance_day') }}', width:120, sort:true}
                 ,{field:'available_until',title:'{{ trans('airport.label.available_until') }}', width:200, sort:true}
                 ,{field:'leader',title:'{{ trans('supplier.label.leader') }}', width:100,edit:'text'}
