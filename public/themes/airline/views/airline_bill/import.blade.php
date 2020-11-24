@@ -12,7 +12,7 @@
                 <form class="form-horizontal" method="POST" action="{{ guard_url('airline_bill_submit_import') }}" enctype="multipart/form-data"  id="airline_bill_submit_import_form">
                     <div class="layui-row layui-col-space10">
                         <div class="tabel-btn layui-col-md12">
-                            <button class="layui-btn layui-btn-warm "><a href="{{url('image/original/system/airline_bill_template.xlsx')}}">下载模板</a></button>
+                            <button class="layui-btn layui-btn-warm "><a href="{{url('image/original/system/new_airline_bill_template.xlsx')}}">下载模板</a></button>
                         </div>
                          <div class="tabel-btn layui-col-md12">
                              <input type="hidden" name="supplier_bill_id" value="{{ $supplier_bill_id }}">
