@@ -216,7 +216,7 @@ class SupplierBalanceRecordRepository extends BaseRepository implements Supplier
             );
             $this->create($balanceData);
 
-            Supplier::where('id',$supplier->id)->update(['last_day_consume' => date('Y-m-d H:i:s'),'balance' => $new_balance]);
+            Supplier::where('id',$supplier->id)->update(['last_day_consume' => date('Y-m-d H:i:s'),'balance' => $new_balance,'used_balance' => $supplier->used_balance + $supplier->day_consume]);
 
         }
 
