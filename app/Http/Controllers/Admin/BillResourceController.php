@@ -104,10 +104,10 @@ class BillResourceController extends BaseController
                 $bill->supplier_bill->paid_date = $bill->supplier_bill->paid_date ? $bill->supplier_bill->paid_date : '';
                 $bill->supplier_bill = $bill->supplier_bill;
             }
-            $airline_bill_total = (string)number_format($airline_bill_total,3);
-            $airline_bill_paid_total = (string)number_format($airline_bill_paid_total,3);
-            $supplier_bill_total = (string)number_format($supplier_bill_total,3);
-            $supplier_bill_paid_total = (string)number_format($supplier_bill_paid_total,3);
+            $airline_bill_total = (string)common_number_format($airline_bill_total);
+            $airline_bill_paid_total = (string)common_number_format($airline_bill_paid_total);
+            $supplier_bill_total = (string)common_number_format($supplier_bill_total);
+            $supplier_bill_paid_total = (string)common_number_format($supplier_bill_paid_total);
 
             return $this->response
                 ->success()
@@ -145,8 +145,8 @@ class BillResourceController extends BaseController
                 $airline_bill_total = $bill->total ? $airline_bill_total + $bill->total : $airline_bill_total ;
                 $airline_bill_paid_total = $bill->paid_total ? $airline_bill_paid_total + $bill->paid_total : $airline_bill_paid_total ;
             }
-            $airline_bill_total = (string)number_format($airline_bill_total,3);
-            $airline_bill_paid_total = (string)number_format($airline_bill_paid_total,3);
+            $airline_bill_total = (string)common_number_format($airline_bill_total);
+            $airline_bill_paid_total = (string)common_number_format($airline_bill_paid_total);
             return $this->response
                 ->success()
                 ->count($bills->total())
@@ -183,8 +183,8 @@ class BillResourceController extends BaseController
                 $supplier_bill_total += $bill->total;
                 $supplier_bill_paid_total += $bill->paid_total;
             }
-            $supplier_bill_total = (string)number_format($supplier_bill_total,3);
-            $supplier_bill_paid_total = (string)number_format($supplier_bill_paid_total,3);
+            $supplier_bill_total = (string)common_number_format($supplier_bill_total);
+            $supplier_bill_paid_total = (string)common_number_format($supplier_bill_paid_total);
             return $this->response
                 ->success()
                 ->count($bills->total())

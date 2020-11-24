@@ -174,9 +174,10 @@
             cellMinWidth :'180'
             ,totalRow: true //开启合计行
             ,done:function(res, curr, count) {
-                var total = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='total']").find("div").text("{{ $airline_bill['total'] }}")
-                var mt = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='mt']").find("div").text("{{ $airline_bill['mt'] }}")
-                var usg = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='usg']").find("div").text("{{ $airline_bill['usg'] }}")
+                var litre = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='litre']").find("div").text("{{ number_format($airline_bill['litre'],2) }}")
+                var mt = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='mt']").find("div").text("{{ number_format($airline_bill['mt'],2) }}")
+                var usg = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='usg']").find("div").text("{{ number_format($airline_bill['usg'],2) }}")
+                var total = $('#airline_bill_item').parent().find(".layui-table-total").find("td[data-field='total']").find("div").text("{{ number_format($airline_bill['total'],2) }}")
 
             }
         });

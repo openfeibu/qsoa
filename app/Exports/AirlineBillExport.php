@@ -75,7 +75,7 @@ class AirlineBillExport implements FromCollection,WithEvents
         $airline_bill_data = [
             [$title],
             ['DATE 日期','Airport机场','加油量（L）','Price单价（美元）','Sum总金额  （美元）','Tax','Incl.Tax USD'],
-            [ date('d.m.Y',strtotime($supplier_bill['supply_start_date']))."-". date('d.m.Y',strtotime($supplier_bill['supply_end_date'])),$airport->code,$airline_bill->litre,$airline_bill->price,$airline_bill->total,$airline_bill->tax,$airline_bill->incl_tax],
+            [ date('d.m.Y',strtotime($supplier_bill['supply_start_date']))."-". date('d.m.Y',strtotime($supplier_bill['supply_end_date'])),$airport->code,common_number_format($airline_bill->litre),$airline_bill->price,common_number_format($airline_bill->total),common_number_format($airline_bill->tax),common_number_format($airline_bill->incl_tax)],
             ['TOTAL：'.$usd_total],
             ['']
         ];
@@ -125,7 +125,7 @@ class AirlineBillExport implements FromCollection,WithEvents
         {
             array_push($airline_bill_item_data[$i],'');
         }
-        $airline_bill_item_data[$i] = array_merge($airline_bill_item_data[$i],[$airline_bill->litre,$airline_bill->mt,$airline_bill->usg,'','',$airline_bill->total]);
+        $airline_bill_item_data[$i] = array_merge($airline_bill_item_data[$i],[common_number_format($airline_bill->litre),common_number_format($airline_bill->mt),common_number_format($airline_bill->usg),'','',common_number_format($airline_bill->total)]);
 
         $data = array_merge($airline_bill_data,$airline_bill_item_data);
         return  new Collection($data);

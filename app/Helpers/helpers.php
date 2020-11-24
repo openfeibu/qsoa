@@ -1085,3 +1085,7 @@ function letters()
 {
     return ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 }
+function common_number_format($number,$decimals=2)
+{
+    return number_format($number,$decimals);
+}

@@ -293,7 +293,7 @@ layui.use(['form'], function(){
 			};
 
 			if (typeof(iAccuracy) === 'undefined')
-				iAccuracy = 3;
+				iAccuracy = 2;
 			bPositive = (mVal >= 0);//取出正负号
 			fTmp = (isNaN(fTmp = parseFloat(mVal))) ? 0 : Math.abs(fTmp);//强制转换为绝对值数浮点
 			//所有内容用正数规则处理
