@@ -93,11 +93,11 @@
                                 <tr>
                                     <td>{{ $supplier_bill['supply_start_date'] }} ~ {{ $supplier_bill['supply_end_date'] }}</td>
                                     <td>{{ $airline_bill['airport_name'] }}</td>
-                                    <td>{{ $airline_bill['litre'] }}</td>
+                                    <td>{{ number_format($airline_bill['litre'],2) }}</td>
                                     <td>{{ $airline_bill['price'] }}</td>
-                                    <td>{{ $airline_bill['total'] }}</td>
-                                    <td>{{ $airline_bill['tax'] }}</td>
-                                    <td>{{ $airline_bill['incl_tax'] }}</td>
+                                    <td>{{ number_format($airline_bill['total'],2) }}</td>
+                                    <td>{{ number_format($airline_bill['tax'],2) }}</td>
+                                    <td>{{ number_format($airline_bill['incl_tax'],2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

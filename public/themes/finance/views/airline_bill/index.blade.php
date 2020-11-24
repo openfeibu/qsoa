@@ -54,10 +54,10 @@
                 ,{field:'sn',title:'{{ trans('airline_bill.label.sn') }}', width:180}
                 ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}', width:180}
-                ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}',templet:function(d){ return $.formatMoney( d.paid_total)},sort:true}
-                ,{field:'price',title:'{{ trans('airline_bill.label.price') }}',templet:function(d){ return $.formatMoney( d.usg)},sort:true}
+                ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}',templet:function(d){ return $.formatMoney( d.usg)},sort:true}
+                ,{field:'price',title:'{{ trans('airline_bill.label.price') }}',templet:function(d){ return $.formatMoney( d.price)},sort:true}
                 ,{field:'total',title:'{{ trans('airline_bill.label.total') }}',templet:function(d){ return $.formatMoney( d.total)},sort:true}
-                ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}',templet:function(d){ return $.formatMoney( d.paidtax_total)},sort:true}
+                ,{field:'tax',title:'{{ trans('airline_bill.label.tax') }}',templet:function(d){ return $.formatMoney( d.tax)},sort:true}
                 ,{field:'incl_tax',title:'{{ trans('airline_bill.label.incl_tax') }}',templet:function(d){ return $.formatMoney( d.incl_tax)},sort:true}
                 ,{field:'pay_date',title:'{{ trans('airline_bill.label.pay_date') }}',sort:true}
                 ,{field:'paid_date',title:'{{ trans('airline_bill.label.paid_date') }}',sort:true}
