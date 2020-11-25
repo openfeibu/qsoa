@@ -97,7 +97,7 @@ class AirlineBillExport implements FromCollection,WithEvents
         $airline_bill_item_data = [
             ['STATEMENT OF ACCOUNT'],
             $statement_fields,
-            [setting('company_name'),'',$airline->name,$airline->country.'/'.$airline->city,'',$airport->name.'/'.$airport->code,'','',date('Y/m/d',strtotime($supplier_bill->supply_start_date)),date('Y/m/d',strtotime($supplier_bill->supply_end_date))],
+            [setting('company_name'),'',$airline->name,$airport->country.'/'.$airport->city,'',$airport->name,'','','','',date('Y/m/d',strtotime($supplier_bill->supply_start_date)),date('Y/m/d',strtotime($supplier_bill->supply_end_date))],
             $fields
         ];
 
