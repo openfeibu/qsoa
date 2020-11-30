@@ -135,7 +135,7 @@ class AirlineBillRepository extends BaseRepository implements AirlineBillReposit
         $document->setValue('supply_end_date', date('d.m.Y',strtotime($supplier_bill->supply_end_date)));
         $document->setValue('issuing_date', date('d.m.Y',strtotime($airline_bill->issuing_date)));
         $document->setValue('week',date("l",strtotime($airline_bill->issuing_date)));
-        $document->setValue('date',date("F n, Y",strtotime($airline_bill->issuing_date)));
+        $document->setValue('date',date("F j, Y",strtotime($airline_bill->issuing_date)));
 
         $document->setValue('airport_code', $airport->code);
         $document->setValue('usg', common_number_format($airline_bill->usg));
