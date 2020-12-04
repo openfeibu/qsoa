@@ -52,7 +52,7 @@
                 ,{field:'supplier_name',title:'{{ trans('supplier.name') }}',sort:true}
                 ,{field:'airline_name',title:'{{ trans('airline.name') }}',sort:true}
                 ,{field:'sn',title:'{{ trans('airline_bill.label.sn') }}', width:180}
-                ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}', width:180}
+                ,{field:'issuing_date',title:'{{ trans('airline_bill.label.issuing_date') }}',sort:true, width:180}
                 ,{field:'agreement_no',title:'{{ trans('airline_bill.label.agreement_no') }}', width:180}
                 ,{field:'usg',title:'{{ trans('airline_bill.label.usg') }}',templet:function(d){ return $.formatMoney( d.usg)},sort:true}
                 ,{field:'price',title:'{{ trans('airline_bill.label.price') }}',templet:function(d){ return $.formatMoney(d.price,4)},sort:true}
