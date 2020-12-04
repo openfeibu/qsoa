@@ -21,7 +21,7 @@ return [
         'hidden'       => [],
         'visible'      => [],
         'guarded'      => ['*'],
-        'fillable'     => ['name','file'],
+        'fillable'     => ['name','file','airport_id','billing_date'],
         'translate'    => [],
         'upload_folder' => '/quotation',
         'encrypt'      => ['id'],
@@ -29,6 +29,8 @@ return [
         'perPage'      => '20',
         'search'        => [
             'name'  => 'like',
+            'billing_date' => '=',
+            'airport_id' => '=',
         ],
     ],
 

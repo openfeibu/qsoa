@@ -252,6 +252,14 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $this->model = $this->model->whereIn($field, $values);
         return $this;
     }
+
+    public function whereBetween($column, array $values, $boolean = 'and', $not = false)
+    {
+        $this->model = $this->model->whereBetween($column, $values,$boolean,$not);
+        return $this;
+
+    }
+
     public function whereNotIn($field,$values)
     {
         $this->model = $this->model->whereNotIn($field, $values);

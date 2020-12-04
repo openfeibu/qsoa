@@ -64,7 +64,7 @@ class AirlineBillResourceController extends BaseController
     {
         return $this->airlineBills($request,'invalid');
     }
-
+    /*
     public function airlineBills(Request $request,$status,$view='')
     {
         $view = $view ? $view : $status;
@@ -73,6 +73,17 @@ class AirlineBillResourceController extends BaseController
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
             $bills = $this->repository;
+
+            if(isset($search['billing_date']) && $search['billing_date'])
+            {
+                $bills->where(function ($query) use ($search){
+                    $billing_date = $search['billing_date'];
+                    $billing_date_arr = explode('-',$billing_date);
+                    $days = cal_days_in_month(CAL_GREGORIAN, ltrim($billing_date_arr[1],'0'), $billing_date_arr[0]);
+
+                    return $query->whereBetween('supplier_bills.supply_start_date',[$billing_date.'-01',$billing_date.'-'.$days]);
+                });
+            }
 
             $bills = is_array($status) ? $bills->whereIn('status',$status) : $bills->where('status',$status);
 
@@ -97,17 +108,27 @@ class AirlineBillResourceController extends BaseController
             ->output();
 
     }
+    */
     public function index(Request $request)
     {
         $limit = $request->input('limit',config('app.limit'));
         $search = $request->input('search',[]);
         $search_name = isset($search['search_name']) ? $search['search_name'] : '';
         if ($this->response->typeIs('json')) {
-            $bills = $this->repository;
+            $bills = $this->repository->join('supplier_bills','supplier_bills.id','airline_bills.supplier_bill_id');
+            if(isset($search['billing_date']) && $search['billing_date'])
+            {
+                $bills->where(function ($query) use ($search){
+                    $billing_date = $search['billing_date'];
+                    $billing_date_arr = explode('-',$billing_date);
+                    $days = cal_days_in_month(CAL_GREGORIAN, ltrim($billing_date_arr[1],'0'), $billing_date_arr[0]);
 
+                    return $query->whereBetween('supplier_bills.supply_start_date',[$billing_date.'-01',$billing_date.'-'.$days]);
+                });
+            }
             $bills = $bills
                 ->orderBy('id','desc')
-                ->paginate($limit);
+                ->paginate($limit,['airline_bills.*']);
             foreach ($bills as $key => $bill)
             {
                 $bill->status_button = $bill->getStatusOneLevelButton($bill->status);

@@ -142,4 +142,6 @@ return [
     'overdue' => '逾期',
     'request_pay' => '付款申请',
     'edit_request_pay' => '修改付款申请',
+    'billing_date' => '账单日期',
+    'preview' => '预览'
 ];

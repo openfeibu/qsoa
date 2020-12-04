@@ -14,8 +14,13 @@
                     <input class="layui-input search_key" name="issuing_date" id="issuing_date" placeholder="{{ trans('airline_bill.label.issuing_date') }}" autocomplete="off">
                 </div>
                 <div class="layui-inline">
+                    <input class="layui-input search_key" name="billing_date" id="billing_date" placeholder="{{ trans('app.billing_date') }}" autocomplete="off">
+                </div>
+                <div class="layui-inline">
                     <input class="layui-input search_key" name="sn" id="demoReload" placeholder="{{ trans('airline_bill.label.sn') }}" autocomplete="off">
                 </div>
+
+
                 <div class="layui-inline">
                     <input class="layui-input search_key" name="agreement_no" id="demoReload" placeholder="{{ trans('airline_bill.label.agreement_no') }}" autocomplete="off">
                 </div>
@@ -79,6 +84,11 @@
             elem: '#issuing_date'
             ,type: 'date'
         });
+        laydate.render({
+            elem: '#billing_date'
+            ,type: 'month'
+        });
+
     });
 </script>
 

@@ -17,13 +17,28 @@
                             <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
                         </div>
                     </div>
+                    <div class="layui-form-item level-high">
+                        <label class="layui-form-label">{{ trans('airport.label.name') }}</label>
+                        <div class="layui-input-inline">
+                            <select name="airport_id"  lay-search lay-verify="required">
+                                @foreach($airports as $key => $airport)
+                                        <option value="{{ $airport->id }}" >{{ $airport->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{  trans('quotation.label.file') }}</label>
                         {!! $quotation->files('file')
                         ->url($quotation->getFileURL('file'))
                         ->uploaderFile()!!}
                     </div>
-
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{ trans('app.billing_date') }}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="billing_date" id="billing_date" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
+                        </div>
+                    </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" lay-submit="" lay-filter="demo1">{{ trans('app.submit_now') }}</button>
@@ -39,4 +54,19 @@
 {!! Theme::asset()->container('ueditor')->scripts() !!}
 <script>
     var ue = getUe();
+</script>
+<script>
+
+    layui.use(['jquery','element','table','laydate'], function(){
+        var $ = layui.$;
+        var table = layui.table;
+        var form = layui.form;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#billing_date'
+            ,type: 'month'
+            ,value: '{{ date('Y-m') }}'
+        });
+    });
 </script>

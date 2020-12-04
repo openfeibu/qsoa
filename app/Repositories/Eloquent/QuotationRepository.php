@@ -11,5 +11,9 @@ class QuotationRepository extends BaseRepository implements QuotationRepositoryI
     {
         return config('model.quotation.quotation.model');
     }
+    public function boot()
+    {
+        $this->fieldSearchable = config('model.quotation.quotation.search');
+    }
 
 }

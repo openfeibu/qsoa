@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 
 class QuotationResourceController extends BaseController
 {
-    public function __construct(QuotationRepository $quotationRepository)
+    public function __construct(QuotationRepository $quotationRepository,
+        AirportRepository $airportRepository)
     {
         parent::__construct();
         $this->repository = $quotationRepository;
+        $this->airportRepository = $airportRepository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -22,18 +24,17 @@ class QuotationResourceController extends BaseController
     {
         $limit = $request->input('limit',config('app.limit'));
         $search = $request->input('search',[]);
-        $search_name = isset($search['search_name']) ? $search['search_name'] : '';
-
+        $airports = $this->airportRepository->orderBy('id','desc')->get();
         if ($this->response->typeIs('json')) {
             $quotations = $this->repository;
-            if(!empty($search_name))
-            {
-                $quotations = $quotations->where(function ($query) use ($search_name){
-                    return $query->where('name','like','%'.$search_name.'%');
-                });
-            }
+
             $quotations = $quotations->orderBy('id','desc')
                 ->paginate($limit);
+
+            foreach ($quotations as $key => $quotation)
+            {
+                $quotation->airport_name = $quotation->airport->name;
+            }
             return $this->response
                 ->success()
                 ->count($quotations->total())
@@ -42,15 +43,16 @@ class QuotationResourceController extends BaseController
         }
 
         return $this->response->title(trans('quotation.title'))
+            ->data(compact('airports'))
             ->view('quotation.index')
             ->output();
     }
     public function create(Request $request)
     {
         $quotation = $this->repository->newInstance([]);
-
+        $airports = $this->airportRepository->orderBy('id','desc')->get();
         return $this->response->title(trans('quotation.title'))
-            ->data(compact('quotation'))
+            ->data(compact('quotation','airports'))
             ->view('quotation.create')
             ->output();
     }
@@ -81,9 +83,9 @@ class QuotationResourceController extends BaseController
         } else {
             $view = 'quotation.create';
         }
-
+        $airports = $this->airportRepository->orderBy('id','desc')->get();
         return $this->response->title(trans('app.view') . ' ' . trans('quotation.name'))
-            ->data(compact('quotation'))
+            ->data(compact('quotation','airports'))
             ->view($view)
             ->output();
     }

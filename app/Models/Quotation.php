@@ -15,4 +15,8 @@ class Quotation extends BaseModel
 
     protected $config = 'model.quotation.quotation';
 
+    public function airport()
+    {
+        return $this->belongsTo('App\Models\Airport');
+    }
 }

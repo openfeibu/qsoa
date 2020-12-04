@@ -9,11 +9,23 @@
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
+
                 <div class="layui-inline tabel-btn">
                     <button class="layui-btn layui-btn-warm "><a href="{{ guard_url('quotation/create') }}">{{ trans('app.add') }}</a></button>
                 </div>
                 <div class="layui-inline">
-                    <input class="layui-input search_key" name="search_name" id="demoReload" placeholder="{{ trans('quotation.label.name') }}" autocomplete="off">
+                    <select name="airport_id" class="layui-select search_key" lay-search>
+                        <option value="">{{ trans('airport.name') }}</option>
+                        @foreach($airports as $key => $airport)
+                            <option value="{{ $airport['id'] }}">{{ $airport['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <input class="layui-input search_key" name="name" id="demoReload" placeholder="{{ trans('quotation.label.name') }}" autocomplete="off">
+                </div>
+                <div class="layui-inline">
+                    <input class="layui-input search_key" name="billing_date" id="billing_date" placeholder="{{ trans('app.billing_date') }}" autocomplete="off">
                 </div>
                 <button class="layui-btn" data-type="reload">{{ trans('app.search') }}</button>
             </div>
@@ -29,23 +41,7 @@
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
 </script>
-<script type="text/html" id="imageTEM">
-    <img src="@{{d.image}}" alt="" height="28">
-</script>
-<script type="text/html" id="canCooperativeAirportsTEM">
-    <span class="layui-breadcrumb" lay-separator="|">
-    @{{#  layui.each(d.can_cooperative_airports, function(index, item){ }}
-        <a><cite>@{{ item.name }}</cite></a>
-    @{{#  }); }}
-    </span>
-</script>
-<script type="text/html" id="cooperativeAirportsTEM">
-    <span class="layui-breadcrumb" lay-separator="|">
-    @{{#  layui.each(d.cooperative_airports, function(index, item){ }}
-        <a><cite>@{{ item.name }}</cite></a>
-        @{{#  }); }}
-    </span>
-</script>
+
 <script>
     var main_url = "{{guard_url('quotation')}}";
     var delete_all_url = "{{guard_url('quotation/destroyAll')}}";
@@ -54,6 +50,7 @@
         var table = layui.table;
         var form = layui.form;
         var element = layui.element;
+        var laydate = layui.laydate;
 
         table.render({
             elem: '#fb-table'
@@ -62,7 +59,9 @@
                 {checkbox: true, fixed: 'left'}
                 ,{field:'id',title:'ID', width:80, sort: true}
                 ,{field:'name',title:'{{ trans('quotation.label.name') }}',edit:'text'}
-                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/download') }}/@{{ d.file }}">{{ trans('app.download') }}</a></div>'}
+                ,{field:'airport_name',title:'{{ trans('airport.name') }}',sort:true}
+                ,{field:'billing_date',title:'{{ trans('app.billing_date') }}',edit:'text'}
+                ,{field:'file',title:'{{ trans('supplier_bill.label.file') }}',width:100,templet:'<div><a type="button" class="layui-btn layui-btn-normal layui-btn-xs" href="{{ url('image/original') }}/@{{ d.file }}" target="_blank">{{ trans('app.preview') }}</a></div>'}
                 ,{field:'score',title:'{{ trans('app.actions') }}', width:260, align: 'right',toolbar:'#barDemo', fixed: 'right'}
             ]]
             ,id: 'fb-table'
@@ -72,6 +71,10 @@
             ,done:function () {
                 element.init();
             }
+        });
+        laydate.render({
+            elem: '#billing_date'
+            ,type: 'month'
         });
 
     });
