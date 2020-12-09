@@ -603,7 +603,7 @@ class AirlineBillResourceController extends BaseController
                 $items[] = $item = [
                     'flight_date' => $flight_date,
                     'litre' => $item['L'],
-                    'mt' => $item['MT'],
+                    'mt' => floatval($item['MT']),
                     'usg' => $item['USG'],
                     'unit' => $item['Unit'],
                     'price' => $item['Price'],
