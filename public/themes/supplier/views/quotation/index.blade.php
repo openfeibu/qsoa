@@ -25,7 +25,6 @@
     </div>
 </div>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-sm" href="{{ guard_url('quotation_contract/create?quotation_id=') }}@{{d.id}}">增加合作机场</a>
     <a class="layui-btn layui-btn-sm" lay-event="edit">{{ trans('app.edit') }}</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">{{ trans('app.delete') }}</a>
 </script>
